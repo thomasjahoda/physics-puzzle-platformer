@@ -1,2 +1,1 @@
-rootProject.name = 'physics-puzzle-platformer'
-
+include 'desktop', 'android', 'ios', 'core'
