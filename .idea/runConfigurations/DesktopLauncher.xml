@@ -1,14 +1,13 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="DesktopLauncher" type="Application" factoryName="Application" nameIsGenerated="true">
-    <option name="MAIN_CLASS_NAME" value="com.jafleck.game.desktop.DesktopLauncher" />
+  <configuration default="false" name="DesktopLauncher" type="JetRunConfigurationType" factoryName="Kotlin">
     <module name="desktop" />
-    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/android/assets" />
-    <extension name="coverage">
-      <pattern>
-        <option name="PATTERN" value="com.jafleck.game.desktop.*" />
-        <option name="ENABLED" value="true" />
-      </pattern>
-    </extension>
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="MAIN_CLASS_NAME" value="com.jafleck.game.desktop.DesktopLauncher" />
+    <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$/android/assets" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
