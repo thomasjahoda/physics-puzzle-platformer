@@ -5,12 +5,17 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import org.koin.core.context.startKoin
 
-class PhysicsPuzzlePlatformer : ApplicationAdapter() {
+class GdxApplication : ApplicationAdapter() {
     private var batch: SpriteBatch? = null
     private var img: Texture? = null
 
     override fun create() {
+        startKoin {
+            printLogger()
+            modules(createMainModule(this@GdxApplication))
+        }
         batch = SpriteBatch()
         img = Texture("badlogic.jpg")
     }
