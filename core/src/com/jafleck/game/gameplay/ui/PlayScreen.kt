@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.jafleck.extensions.libgdxktx.clearScreen
 import ktx.app.KtxScreen
+import ktx.scene2d.label
+import ktx.scene2d.table
 
 
 @Suppress("ConstantConditionIf")
@@ -16,6 +18,12 @@ class PlayScreen(
 
     init {
         stage.apply {
+            val rootTable = table {
+                label("test")
+            }
+            rootTable.setFillParent(true)
+            addActor(rootTable)
+
             // example from https://libgdx.info/basic_image/
             val texture = Texture(Gdx.files.internal("player.png"))
             val image = Image(texture)

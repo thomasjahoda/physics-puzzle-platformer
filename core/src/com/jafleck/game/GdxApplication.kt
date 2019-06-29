@@ -3,6 +3,7 @@ package com.jafleck.game
 import com.badlogic.gdx.Screen
 import com.jafleck.game.gameplay.createModuleLoadingLevelForGameplay
 import com.jafleck.game.gameplay.ui.PlayScreen
+import com.jafleck.game.util.ui.GdxHoloSkin
 import ktx.app.KtxGame
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
@@ -13,6 +14,7 @@ import org.koin.core.context.stopKoin
 class GdxApplication : KtxGame<Screen>() {
 
     override fun create() {
+        GdxHoloSkin.registerAsDefault()
         val koinApplication = startKoin {
             printLogger()
             modules(listOf(
