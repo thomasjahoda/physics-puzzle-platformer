@@ -27,10 +27,12 @@ allprojects {
         gdxVersion = '1.9.9'
         roboVMVersion = '2.3.6'
         box2DLightsVersion = '1.4'
-        ashleyVersion = '1.7.0'
+        ashleyVersion = '1.7.3'
         aiVersion = '1.8.0'
         ktxVersion = gdxVersion + '-b2'
         koinVersion = '2.0.1'
+        junitVersion = '5.4.2'
+        assertJVersion = '3.12.2'
     }
 
     repositories {
@@ -110,6 +112,7 @@ project(":core") {
         api "io.github.libktx:ktx-actors:$ktxVersion"
         api "io.github.libktx:ktx-app:$ktxVersion"
         api "io.github.libktx:ktx-assets:$ktxVersion"
+        api "io.github.libktx:ktx-ashley:$ktxVersion"
         api "io.github.libktx:ktx-collections:$ktxVersion"
         api "io.github.libktx:ktx-graphics:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
@@ -118,6 +121,15 @@ project(":core") {
         
         implementation "org.koin:koin-core:$koinVersion"
         testImplementation "org.koin:koin-test:$koinVersion"
+
+        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+
+        testImplementation "org.assertj:assertj-core:$assertJVersion"
+    }
+
+    test {
+        useJUnitPlatform()
     }
 }
 
