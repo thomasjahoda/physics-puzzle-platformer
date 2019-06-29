@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
 class GdxApplication : ApplicationAdapter() {
     private var batch: SpriteBatch? = null
@@ -31,5 +32,6 @@ class GdxApplication : ApplicationAdapter() {
     override fun dispose() {
         batch?.dispose()
         img?.dispose()
+        stopKoin()
     }
 }
