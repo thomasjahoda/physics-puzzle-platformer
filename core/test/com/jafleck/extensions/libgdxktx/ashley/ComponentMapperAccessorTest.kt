@@ -26,7 +26,7 @@ internal class ComponentMapperAccessorTest {
                 value = "some value"
             })
         }
-        val dummyComponentA = DummyComponentA[entity]
+        val dummyComponentA = entity[DummyComponentA]
         Assertions.assertThat(dummyComponentA).isNotNull
         Assertions.assertThat(dummyComponentA.value).isEqualTo("some value")
     }
@@ -41,9 +41,9 @@ internal class ComponentMapperAccessorTest {
                 value = "some other value"
             })
         }
-        val dummyComponentA = DummyComponentA[entity]
+        val dummyComponentA = entity[DummyComponentA]
         Assertions.assertThat(dummyComponentA.value).isEqualTo("some value")
-        val dummyComponentB = DummyComponentB[entity]
+        val dummyComponentB = entity[DummyComponentB]
         Assertions.assertThat(dummyComponentB.value).isEqualTo("some other value")
     }
 
@@ -52,7 +52,7 @@ internal class ComponentMapperAccessorTest {
         val entity = Entity().apply {
             add(DummyComponentB())
         }
-        Assertions.assertThatThrownBy { DummyComponentA[entity] }
+        Assertions.assertThatThrownBy { entity[DummyComponentA] }
             .isExactlyInstanceOf(IllegalStateException::class.java)
             .hasMessage("componentMapper[entity] must not be null")
     }
