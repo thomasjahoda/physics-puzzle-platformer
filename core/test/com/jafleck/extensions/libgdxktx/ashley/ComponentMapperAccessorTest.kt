@@ -58,13 +58,24 @@ internal class ComponentMapperAccessorTest {
     }
 
     @Test
-    fun `contains - true`() {
+    fun `contains - true (use overloaded 'in' operator)`() {
         val entity = Entity().apply {
             add(DummyComponentA().apply {
                 value = "some value"
             })
         }
-        val containsComponentA = entity in DummyComponentA
+        val containsComponentA = DummyComponentA in entity
+        Assertions.assertThat(containsComponentA).isTrue()
+    }
+
+    @Test
+    fun `contains - true (use isIn function directly)`() {
+        val entity = Entity().apply {
+            add(DummyComponentA().apply {
+                value = "some value"
+            })
+        }
+        val containsComponentA = DummyComponentA.isIn(entity)
         Assertions.assertThat(containsComponentA).isTrue()
     }
 
@@ -75,7 +86,7 @@ internal class ComponentMapperAccessorTest {
                 value = "some value"
             })
         }
-        val containsComponentB = entity in DummyComponentB
+        val containsComponentB = DummyComponentB in entity
         Assertions.assertThat(containsComponentB).isFalse()
     }
 }

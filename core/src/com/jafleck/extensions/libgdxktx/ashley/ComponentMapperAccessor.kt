@@ -10,5 +10,9 @@ open class ComponentMapperAccessor<T : Component>(componentClass: KClass<T>) {
 
     operator fun get(entity: Entity): T = componentMapper[entity]
 
-    operator fun contains(entity: Entity): Boolean = componentMapper.has(entity)
+    fun isIn(entity: Entity): Boolean = componentMapper.has(entity)
+}
+
+operator fun <T : Component> Entity.contains(componentMapperAccessor: ComponentMapperAccessor<T>): Boolean {
+    return componentMapperAccessor.isIn(this)
 }
