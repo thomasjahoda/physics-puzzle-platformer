@@ -1,5 +1,6 @@
 package com.jafleck.game.gameplay.ui
 
+import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Texture
@@ -13,38 +14,24 @@ import ktx.scene2d.table
 
 @Suppress("ConstantConditionIf")
 class PlayScreen(
-    private val stage: Stage
+    private val stage: Stage,
+    private val engine: Engine
 ) : KtxScreen {
 
     init {
         stage.apply {
-            val rootTable = table {
-                label("test")
-            }
-            rootTable.setFillParent(true)
-            addActor(rootTable)
-
-            // example from https://libgdx.info/basic_image/
-            val texture = Texture(Gdx.files.internal("player.png"))
-            val image = Image(texture)
-//            image.setPosition(Gdx.graphics.width / 3 - image.width / 2, Gdx.graphics.height * 2 / 3 - image.height / 2)
-            image.setPosition(0f, 0f)
-            addActor(image)
+            // add UI here when necessary
         }
     }
 
     override fun render(delta: Float) {
-        update(delta)
-        draw(delta)
+        updateAndRender(delta)
     }
 
-    private fun update(delta: Float) {
-        // TODO update game logic, but if systems draw entities this has to be called at draw instead
-    }
-
-    private fun draw(delta: Float) {
+    private fun updateAndRender(deltaSeconds: Float) {
         clearScreen(Color.WHITE)
         stage.draw()
+        engine.update(deltaSeconds)
     }
 
     override fun resize(width: Int, height: Int) {

@@ -10,3 +10,9 @@ sourceSets.test.java.srcDirs = [ "test/" ]
 eclipse.project {
     name = appName + "-core"
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}
