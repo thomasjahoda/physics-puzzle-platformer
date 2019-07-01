@@ -1,5 +1,6 @@
 buildscript {
     ext.kotlinVersion = '1.3.40'
+    ext.gdxVersion = '1.9.9'
 
     repositories {
         mavenLocal()
@@ -13,9 +14,10 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.2.0'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.6'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-
+        classpath "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
     }
 }
+import com.badlogic.gdx.tools.texturepacker.TexturePacker
 
 allprojects {
     apply plugin: "eclipse"
@@ -102,6 +104,11 @@ project(":ios") {
 project(":core") {
     apply plugin: "kotlin"
 
+    ext {
+        texturePackerDirectory = "$projectDir/textures"
+        texturePackerOutputDirectory = "$rootDir/android/assets/atlas"
+        texturePackerAtlasName = "textures.atlas"
+    }
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -118,7 +125,7 @@ project(":core") {
         api "io.github.libktx:ktx-log:$ktxVersion"
         api "io.github.libktx:ktx-math:$ktxVersion"
         api "io.github.libktx:ktx-scene2d:$ktxVersion"
-        
+
         implementation "org.koin:koin-core:$koinVersion"
         testImplementation "org.koin:koin-test:$koinVersion"
 
@@ -131,6 +138,19 @@ project(":core") {
     test {
         useJUnitPlatform()
     }
+
+    task texturePacker {
+        if (project.ext.has('texturePackerDirectory')) {
+            inputs.dir(texturePackerDirectory)
+            outputs.dir(texturePackerOutputDirectory)
+            doLast {
+                logger.info("Calling TexturePacker:")
+                TexturePacker.process(texturePackerDirectory, texturePackerOutputDirectory, texturePackerAtlasName)
+            }
+        }
+    }
+
+    classes.dependsOn texturePacker
 }
 
 tasks.eclipse.doLast {
