@@ -3,7 +3,7 @@ package com.jafleck.game.components
 import com.badlogic.ashley.core.Component
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class PlayerComponent : Component {
+class PlatformComponent : Component {
 
-    companion object : ComponentMapperAccessor<PlayerComponent>(PlayerComponent::class)
+    companion object : ComponentMapperAccessor<PlatformComponent>(PlatformComponent::class)
 }

@@ -5,13 +5,9 @@ import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
 class RectangleSizeComponent(
-    width: Float,
-    height: Float
+    val vector: Vector2
 ) : Component {
-
-    companion object : ComponentMapperAccessor<RectangleSizeComponent>(RectangleSizeComponent::class)
-
-    val vector = Vector2(width, height)
+    constructor(width: Float, height: Float) : this(Vector2(width, height))
 
     var width
         get() = vector.x
@@ -23,4 +19,6 @@ class RectangleSizeComponent(
         set(value) {
             vector.y = value
         }
+
+    companion object : ComponentMapperAccessor<RectangleSizeComponent>(RectangleSizeComponent::class)
 }

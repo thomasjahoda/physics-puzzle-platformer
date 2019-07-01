@@ -1,15 +1,10 @@
 package com.jafleck.game.gameplay.ui
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Image
 import com.jafleck.extensions.libgdxktx.clearScreen
 import ktx.app.KtxScreen
-import ktx.scene2d.label
-import ktx.scene2d.table
 
 
 @Suppress("ConstantConditionIf")

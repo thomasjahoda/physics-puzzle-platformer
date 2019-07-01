@@ -5,13 +5,9 @@ import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
 class VelocityComponent(
-    x: Float,
-    y: Float
+    val vector: Vector2
 ) : Component {
-
-    companion object : ComponentMapperAccessor<VelocityComponent>(VelocityComponent::class)
-
-    val vector = Vector2(x, y)
+    constructor(width: Float, height: Float) : this(Vector2(width, height))
 
     var x
         get() = vector.x
@@ -23,4 +19,6 @@ class VelocityComponent(
         set(value) {
             vector.y = value
         }
+
+    companion object : ComponentMapperAccessor<VelocityComponent>(VelocityComponent::class)
 }

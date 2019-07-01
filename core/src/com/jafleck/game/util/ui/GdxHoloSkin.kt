@@ -1,14 +1,12 @@
 package com.jafleck.game.util.ui
 
-import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.scenes.scene2d.ui.Skin
+import com.badlogic.gdx.assets.AssetManager
+import com.jafleck.game.assets.Assets
 import ktx.scene2d.Scene2DSkin
 
-object GdxHoloSkin {
+class GdxHoloSkin(private val assetManager: AssetManager) {
 
-    fun registerAsDefault() {
-        Scene2DSkin.defaultSkin = load()
+    fun setAsDefault() {
+        Scene2DSkin.defaultSkin = assetManager.get(Assets.gdxHoloSkin)
     }
-
-    fun load() = Skin(Gdx.files.internal("gdx-holo-skin/uiskin.json"))
 }

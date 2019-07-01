@@ -9,5 +9,4 @@ class DrawableVisualComponent(
 ) : Component {
 
     companion object : ComponentMapperAccessor<DrawableVisualComponent>(DrawableVisualComponent::class)
-
 }

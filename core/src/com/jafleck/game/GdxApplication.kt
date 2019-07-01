@@ -1,8 +1,13 @@
 package com.jafleck.game
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
-import com.jafleck.game.gameplay.createModuleLoadingLevelForGameplay
+import com.jafleck.game.gameplay.MapLoader
+import com.jafleck.game.gameplay.createGameplayModule
 import com.jafleck.game.gameplay.ui.PlayScreen
+import com.jafleck.game.util.GdxLoggingLevel
+import com.jafleck.game.util.globalLoggingLevel
+import com.jafleck.game.util.toKoinLoggingLevel
 import com.jafleck.game.util.ui.GdxHoloSkin
 import ktx.app.KtxGame
 import org.koin.core.context.startKoin
@@ -14,14 +19,26 @@ import org.koin.core.context.stopKoin
 class GdxApplication : KtxGame<Screen>() {
 
     override fun create() {
-        GdxHoloSkin.registerAsDefault()
+        val loggingLevel = GdxLoggingLevel.INFO
+        Gdx.app.logLevel = loggingLevel.asInt()
+        globalLoggingLevel = loggingLevel
+
         val koinApplication = startKoin {
-            printLogger()
+            val koinLoggingLevel = loggingLevel.toKoinLoggingLevel()
+            if (koinLoggingLevel != null) {
+                printLogger(koinLoggingLevel)
+            }
             modules(listOf(
                 createMainModule(this@GdxApplication),
-                createModuleLoadingLevelForGameplay()
+                createGameplayModule()
             ))
         }
+
+        koinApplication.koin.get<GdxHoloSkin>().setAsDefault()
+
+        val mapLoader = koinApplication.koin.get<MapLoader>()
+        mapLoader.loadMap()
+
         val screen = koinApplication.koin.get<PlayScreen>()
         addScreen(screen)
         setScreen<PlayScreen>()
