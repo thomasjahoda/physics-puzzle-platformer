@@ -19,7 +19,7 @@ inline class PlayerEntity(val entity: Entity) {
 
     companion object {
         val SIZE = Vector2(100f, 100f)
-        val HALF_SIZE = Vector2(SIZE).scl(0.5f)
+        val HALF_SIZE: Vector2 = Vector2(SIZE).scl(0.5f)
         const val DENSITY = 10f
         const val FRICTION = 0.2f
         val COLOR: Color = Color.RED
