@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.assets.Assets
+import com.jafleck.game.assets.ScreenToWorldScalingPropagator
+import com.jafleck.game.assets.autoScale
 import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
 import ktx.box2d.body
@@ -19,7 +21,7 @@ import ktx.box2d.body
 inline class PlatformEntity(val entity: Entity) {
 
     companion object {
-        val COLOR = Color.GREEN
+        val COLOR = Color.PURPLE
     }
 
     fun asDrawableRectangle() = DrawableRectangle(entity)
@@ -36,13 +38,16 @@ inline class PlatformEntity(val entity: Entity) {
 
 class PlatformEntityCreator(
     private val engine: Engine,
-    private val assetManager: AssetManager,
-    private val world: World
+    private val world: World,
+    assetManager: AssetManager,
+    screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
 ) {
     private val platformNinePatch = assetManager.get(Assets.atlas).createPatch("platform").apply {
         color = PlatformEntity.COLOR
     }
-    private val drawable: Drawable = NinePatchDrawable(platformNinePatch)
+    private val drawable: Drawable = NinePatchDrawable(platformNinePatch).apply {
+        autoScale(screenToWorldScalingPropagator)
+    }
 
     fun createPlatformEntity(
         rectangle: Rectangle

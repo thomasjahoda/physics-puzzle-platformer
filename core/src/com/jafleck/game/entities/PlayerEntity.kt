@@ -13,12 +13,13 @@ import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.assets.Assets
 import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
+import com.jafleck.game.families.MovingBody
 import ktx.box2d.body
 
 inline class PlayerEntity(val entity: Entity) {
 
     companion object {
-        val SIZE = Vector2(100f, 100f)
+        val SIZE = Vector2(1f, 1f)
         val HALF_SIZE: Vector2 = Vector2(SIZE).scl(0.5f)
         const val DENSITY = 10f
         const val FRICTION = 0.2f
@@ -26,6 +27,7 @@ inline class PlayerEntity(val entity: Entity) {
     }
 
     fun asDrawableRectangle() = DrawableRectangle(entity)
+    fun asMovingBody() = MovingBody(entity)
 
     val position
         get() = entity[OriginPositionComponent]
