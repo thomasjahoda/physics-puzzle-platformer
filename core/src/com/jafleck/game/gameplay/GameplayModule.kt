@@ -18,6 +18,7 @@ import com.jafleck.game.entities.PlayerEntityCreator
 import com.jafleck.game.gameplay.systems.PhysicsSimulationStepSystem
 import com.jafleck.game.gameplay.systems.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.SyncMovingBodySystem
+import com.jafleck.game.gameplay.systems.TrackPlayerWithCameraSystem
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.util.*
 import com.jafleck.game.util.ui.GdxHoloSkin
@@ -46,6 +47,7 @@ fun createGameplayModule(): Module {
                 var systemPriority = 0
                 addSystem(PhysicsSimulationStepSystem(systemPriority++, get()))
                 addSystem(SyncMovingBodySystem(systemPriority++))
+                addSystem(TrackPlayerWithCameraSystem(systemPriority++, get()))
                 addSystem(RenderDrawableRectangleComponentsSystem(systemPriority++, get(), get(), get()))
             }
         }
