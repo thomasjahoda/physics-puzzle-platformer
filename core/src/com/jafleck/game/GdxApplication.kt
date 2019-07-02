@@ -2,12 +2,10 @@ package com.jafleck.game
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.jafleck.game.config.LoggingConfig
 import com.jafleck.game.gameplay.MapLoader
 import com.jafleck.game.gameplay.createGameplayModule
 import com.jafleck.game.gameplay.ui.PlayScreen
-import com.jafleck.game.util.GdxLoggingLevel
-import com.jafleck.game.util.globalLoggingLevel
-import com.jafleck.game.util.toKoinLoggingLevel
 import com.jafleck.game.util.ui.GdxHoloSkin
 import ktx.app.KtxGame
 import org.koin.core.context.startKoin
@@ -19,14 +17,11 @@ import org.koin.core.context.stopKoin
 class GdxApplication : KtxGame<Screen>() {
 
     override fun create() {
-        val loggingLevel = GdxLoggingLevel.INFO
-        Gdx.app.logLevel = loggingLevel.asInt()
-        globalLoggingLevel = loggingLevel
+        Gdx.app.logLevel = LoggingConfig.gdxLoggingLevel
 
         val koinApplication = startKoin {
-            val koinLoggingLevel = loggingLevel.toKoinLoggingLevel()
-            if (koinLoggingLevel != null) {
-                printLogger(koinLoggingLevel)
+            if (LoggingConfig.koinLoggingLevel != null) {
+                printLogger(LoggingConfig.koinLoggingLevel)
             }
             modules(listOf(
                 createMainModule(this@GdxApplication),

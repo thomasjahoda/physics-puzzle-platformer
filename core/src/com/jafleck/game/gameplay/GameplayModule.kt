@@ -11,13 +11,15 @@ import com.badlogic.gdx.utils.Logger
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.jafleck.extensions.kotlin.round
 import com.jafleck.game.assets.Assets
+import com.jafleck.game.config.LoggingConfig
+import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.entities.PlatformEntityCreator
 import com.jafleck.game.entities.PlayerEntityCreator
 import com.jafleck.game.gameplay.systems.PhysicsSimulationStepSystem
 import com.jafleck.game.gameplay.systems.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.SyncMovingBodySystem
 import com.jafleck.game.gameplay.ui.PlayScreen
-import com.jafleck.game.util.globalLoggingLevel
+import com.jafleck.game.util.asGdxLoggingLevel
 import com.jafleck.game.util.ui.GdxHoloSkin
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
@@ -25,7 +27,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 import kotlin.system.measureNanoTime
 
-private val gameplayModuleLogger = Logger("GameplayModule", globalLoggingLevel.asInt())
+private val gameplayModuleLogger = Logger("GameplayModule", LoggingConfig.gameLoggingLevel.asGdxLoggingLevel())
 
 fun createGameplayModule(): Module {
     return module {
@@ -61,8 +63,8 @@ fun createGameplayModule(): Module {
             Box2D.init()
             createWorld(gravity = earthGravity)
         }
-        single {
-            Box2DDebugRenderer()
+        if (PhysicsConfiguration.debugRendering) {
+            single { Box2DDebugRenderer() }
         }
     }
 }
