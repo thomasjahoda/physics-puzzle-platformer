@@ -62,7 +62,6 @@ class PlayScreen(
     override fun resize(width: Int, height: Int) {
         gameViewport.update(width, height, false)
         uiViewport.update(width, height, true)
-        uiCamera.update()
 
         gameViewport.camera.update()
         screenToWorldScalingPropagator.scaling = Vector2(gameViewport.camera.combined.scaleX, gameViewport.camera.combined.scaleY)
