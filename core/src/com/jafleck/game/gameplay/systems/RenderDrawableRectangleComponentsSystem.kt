@@ -12,7 +12,8 @@ import com.jafleck.game.families.DrawableRectangle
 class RenderDrawableRectangleComponentsSystem(
     priority: Int,
     private val spriteBatch: SpriteBatch,
-    private val camera: OrthographicCamera) : EntitySystem(priority) {
+    private val camera: OrthographicCamera
+) : EntitySystem(priority) {
 
     private lateinit var entities: ImmutableArray<Entity>
 
@@ -26,15 +27,19 @@ class RenderDrawableRectangleComponentsSystem(
     override fun update(deltaSeconds: Float) {
         camera.update()
 
-        spriteBatch.begin()
         spriteBatch.projectionMatrix = camera.combined
+        spriteBatch.begin()
 
         for (untypedEntity in entities) {
             val entity = DrawableRectangle(untypedEntity)
             val drawable = entity.drawableVisual.drawable
             val position = entity.position
             val size = entity.size
-            drawable.draw(spriteBatch, position.x, position.y, size.width, size.height)
+            drawable.draw(spriteBatch,
+                position.originX - size.width / 2f,
+                position.originY - size.height / 2f,
+                size.width,
+                size.height)
         }
 
         spriteBatch.end()

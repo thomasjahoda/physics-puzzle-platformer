@@ -5,15 +5,16 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.assets.Assets
-import com.jafleck.game.components.DrawableVisualComponent
-import com.jafleck.game.components.PlatformComponent
-import com.jafleck.game.components.PositionComponent
-import com.jafleck.game.components.RectangleSizeComponent
+import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
+import ktx.box2d.body
 
 inline class PlatformEntity(val entity: Entity) {
 
@@ -24,7 +25,7 @@ inline class PlatformEntity(val entity: Entity) {
     fun asDrawableRectangle() = DrawableRectangle(entity)
 
     val position
-        get() = entity[PositionComponent]
+        get() = entity[OriginPositionComponent]
     val size
         get() = entity[RectangleSizeComponent]
     val drawableVisual
@@ -35,7 +36,8 @@ inline class PlatformEntity(val entity: Entity) {
 
 class PlatformEntityCreator(
     private val engine: Engine,
-    private val assetManager: AssetManager
+    private val assetManager: AssetManager,
+    private val world: World
 ) {
     private val platformNinePatch = assetManager.get(Assets.atlas).createPatch("platform").apply {
         color = PlatformEntity.COLOR
@@ -46,9 +48,18 @@ class PlatformEntityCreator(
         rectangle: Rectangle
     ): PlatformEntity {
         val entity = engine.createEntity().apply {
-            add(PositionComponent(rectangle.x, rectangle.y))
-            add(RectangleSizeComponent(rectangle.width, rectangle.height))
+            val originPosition = rectangle.getCenter(Vector2())
+            add(OriginPositionComponent(originPosition))
+            add(RectangleSizeComponent(rectangle.getSize(Vector2())))
             add(DrawableVisualComponent(drawable))
+            add(BodyComponent(world.body {
+                type = BodyDef.BodyType.StaticBody
+                box(rectangle.width, rectangle.height) {
+                    density = PlayerEntity.DENSITY
+                    friction = PlayerEntity.FRICTION
+                }
+                position.set(originPosition)
+            }))
             add(PlatformComponent())
         }
         engine.addEntity(entity)

@@ -4,10 +4,15 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
+/**
+ * Velocity of the entity.
+ * Entities with this component shall only be either dynamic or kinematic.
+ * Entities without this component shall only be static bodies.
+ */
 class VelocityComponent(
     val vector: Vector2
 ) : Component {
-    constructor(width: Float, height: Float) : this(Vector2(width, height))
+    constructor(x: Float, y: Float) : this(Vector2(x, y))
 
     var x
         get() = vector.x

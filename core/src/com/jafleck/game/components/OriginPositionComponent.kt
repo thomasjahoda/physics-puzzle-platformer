@@ -4,21 +4,24 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class PositionComponent(
+/**
+ * Origin (center) position of entity in the world.
+ */
+class OriginPositionComponent(
     val vector: Vector2
 ) : Component {
-    constructor(width: Float, height: Float) : this(Vector2(width, height))
+    constructor(x: Float, y: Float) : this(Vector2(x, y))
 
-    var x
+    var originX
         get() = vector.x
         set(value) {
             vector.x = value
         }
-    var y
+    var originY
         get() = vector.y
         set(value) {
             vector.y = value
         }
 
-    companion object : ComponentMapperAccessor<PositionComponent>(PositionComponent::class)
+    companion object : ComponentMapperAccessor<OriginPositionComponent>(OriginPositionComponent::class)
 }
