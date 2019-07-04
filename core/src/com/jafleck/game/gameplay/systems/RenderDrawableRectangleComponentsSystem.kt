@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.util.GameCamera
@@ -41,11 +42,25 @@ class RenderDrawableRectangleComponentsSystem(
             val size = entity.size
             val leftBottomX = position.originX - size.width / 2f
             val leftBottomY = position.originY - size.height / 2f
-            drawable.draw(spriteBatch,
-                leftBottomX,
-                leftBottomY,
-                size.width,
-                size.height)
+            if (drawable is TransformDrawable) {
+                val rotationDegrees = entity.rotation?.degrees ?: 0f
+                drawable.draw(spriteBatch,
+                    leftBottomX,
+                    leftBottomY,
+                    size.width / 2f,
+                    size.height / 2f,
+                    size.width,
+                    size.height,
+                    1f,
+                    1f,
+                    rotationDegrees)
+            } else {
+                drawable.draw(spriteBatch,
+                    leftBottomX,
+                    leftBottomY,
+                    size.width,
+                    size.height)
+            }
         }
 
         spriteBatch.end()

@@ -58,6 +58,29 @@ internal class ComponentMapperAccessorTest {
     }
 
     @Test
+    fun `getOrNull - non-null`() {
+        val entity = Entity().apply {
+            add(DummyComponentA().apply {
+                value = "some value"
+            })
+        }
+        val dummyComponentA = entity.getOrNull(DummyComponentA)
+        Assertions.assertThat(dummyComponentA).isNotNull
+        Assertions.assertThat(dummyComponentA!!.value).isEqualTo("some value")
+    }
+
+    @Test
+    fun `getOrNull - null`() {
+        val entity = Entity().apply {
+            add(DummyComponentA().apply {
+                value = "some value"
+            })
+        }
+        val notFoundComponent = entity.getOrNull(DummyComponentB)
+        Assertions.assertThat(notFoundComponent).isNull()
+    }
+
+    @Test
     fun `contains - true (use overloaded 'in' operator)`() {
         val entity = Entity().apply {
             add(DummyComponentA().apply {

@@ -9,6 +9,7 @@ open class ComponentMapperAccessor<T : Component>(componentClass: KClass<T>) {
     private var componentMapper = ComponentMapper.getFor(componentClass.java)
 
     fun getFrom(entity: Entity): T = componentMapper[entity]
+    fun getFromOrNull(entity: Entity): T? = componentMapper[entity]
 
     fun isIn(entity: Entity): Boolean = componentMapper.has(entity)
 }
@@ -19,4 +20,8 @@ operator fun <T : Component> Entity.contains(componentMapperAccessor: ComponentM
 
 operator fun <T : Component> Entity.get(componentMapperAccessor: ComponentMapperAccessor<T>): T {
     return componentMapperAccessor.getFrom(this)
+}
+
+fun <T : Component> Entity.getOrNull(componentMapperAccessor: ComponentMapperAccessor<T>): T? {
+    return componentMapperAccessor.getFromOrNull(this)
 }
