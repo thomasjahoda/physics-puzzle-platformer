@@ -6,16 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.badlogic.gdx.utils.Logger
 import com.jafleck.game.config.LoggingConfig
 import com.jafleck.game.util.asGdxLoggingLevel
+import ktx.math.div
 import kotlin.math.max
 
 private val logger = Logger("NinePatchAutoScaling", LoggingConfig.gameLoggingLevel.asGdxLoggingLevel())
 
-// some default scaling is necessary as even one pixel is already too big for most applications
-val defaultNinePatchScaling = Vector2(0.3f, 0.3f)
 
-fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch, initialScaling: Vector2 = defaultNinePatchScaling) {
-    // TODO #10: this is a work-in-progress, I don't know what a good solution would be and some trial-and-error lead me to this.
-    //  The camera scaleX and scaleY itself might already be wrong for this use-case. Some other value should maybe be used instead.
+fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch,
+                                                      initialScaling: Vector2) {
     logger.debug("Auto-scaling nine-patch")
     logger.debug("- Initial middle width: ${ninePatch.middleWidth}")
 
@@ -46,6 +44,13 @@ fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch, init
 
 private fun keepAspectWhenScaling(oldScaling: Vector2) = max(oldScaling.x, oldScaling.y)
 
-fun NinePatchDrawable.autoScale(screenToWorldScalingPropagator: ScreenToWorldScalingPropagator) {
-    screenToWorldScalingPropagator.autoScaleNinePatch(this.patch)
+fun NinePatchDrawable.autoScale(screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
+                                initialScaling: Vector2) {
+    screenToWorldScalingPropagator.autoScaleNinePatch(this.patch, initialScaling)
+}
+
+fun NinePatchDrawable.autoScaleByExpectedWorldSize(screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
+                                                   expectedWorldSize: Vector2) {
+    val minScreenSize = Vector2(max(this.patch.leftWidth + this.patch.rightWidth, 1f), max(this.patch.topHeight + this.patch.bottomHeight, 1f))
+    screenToWorldScalingPropagator.autoScaleNinePatch(this.patch, expectedWorldSize.cpy().div(minScreenSize))
 }
