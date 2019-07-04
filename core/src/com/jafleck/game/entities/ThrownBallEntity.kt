@@ -57,19 +57,21 @@ class ThrownBallEntityCreator(
     }
 
     fun createThrownBall(
-        originPosition: Vector2
+        originPosition: Vector2,
+        velocity: Vector2
     ): ThrownBallEntity {
         val entity = engine.createEntity().apply {
             add(OriginPositionComponent(originPosition))
             add(RectangleSizeComponent(ThrownBallEntity.SIZE))
             add(DrawableVisualComponent(drawable))
-            add(VelocityComponent(0f, 0f))
+            add(VelocityComponent(velocity))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.DynamicBody
                 circle(radius = ThrownBallEntity.HALF_SIZE.x) {
                     density = ThrownBallEntity.DENSITY
                     friction = ThrownBallEntity.FRICTION
                 }
+                linearVelocity.set(velocity)
                 this.position.set(originPosition)
             }))
             add(ThrownBallComponent())

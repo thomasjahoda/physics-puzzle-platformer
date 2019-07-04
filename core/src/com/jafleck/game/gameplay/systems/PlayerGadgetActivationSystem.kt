@@ -51,8 +51,8 @@ class PlayerGadgetActivationSystem(
             if (gadget is MouseActivatedGadget) {
                 gadget.activate(playerEntity.entity, targetPosition)
             }
-            // TODO throw ball into this direction instead
             // TODO dispose balls after some time
+            // TODO rotate entities
         }
         clickedWorldPositions.clear()
     }
