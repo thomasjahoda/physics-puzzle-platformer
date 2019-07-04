@@ -20,9 +20,6 @@ fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch,
     ninePatch.scale(initialScaling.x, initialScaling.y)
     logger.debug("- Middle width after scaling with initialScaling ($initialScaling): ${ninePatch.middleWidth}")
 
-    // maybe try something in relation to the nine-patch size instead? (but then remove initialScaling param)
-    //    ninePatch.scale(1 / ninePatch.totalWidth, 1 / ninePatch.totalHeight)
-
     ninePatch.scale(scaling.x, scaling.y)
     logger.debug("- Middle width after applying current scale: ${ninePatch.middleWidth}")
 
@@ -52,5 +49,6 @@ fun NinePatchDrawable.autoScale(screenToWorldScalingPropagator: ScreenToWorldSca
 fun NinePatchDrawable.autoScaleByExpectedWorldSize(screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
                                                    expectedWorldSize: Vector2) {
     val minScreenSize = Vector2(max(this.patch.leftWidth + this.patch.rightWidth, 1f), max(this.patch.topHeight + this.patch.bottomHeight, 1f))
-    screenToWorldScalingPropagator.autoScaleNinePatch(this.patch, expectedWorldSize.cpy().div(minScreenSize))
+    val initialScaling = expectedWorldSize.cpy().div(max(minScreenSize.x, minScreenSize.y))
+    screenToWorldScalingPropagator.autoScaleNinePatch(this.patch, initialScaling)
 }
