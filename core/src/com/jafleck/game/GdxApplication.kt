@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.LoggingConfig
-import com.jafleck.game.gameplay.EntitySystemLoader
+import com.jafleck.game.gameplay.EngineLogicLoader
 import com.jafleck.game.gameplay.MapLoader
 import com.jafleck.game.gameplay.createGameplayModule
 import com.jafleck.game.gameplay.ui.PlayScreen
@@ -45,7 +45,7 @@ class GdxApplication : KtxGame<Screen>() {
     }
 
     private fun loadSystems(koinApplication: KoinApplication) {
-        koinApplication.koin.get<EntitySystemLoader>().load(koinApplication.koin.get())
+        koinApplication.koin.get<EngineLogicLoader>().load(koinApplication.koin.get())
 
         // can be used in case the entity systems are defined as separate beans
 //        koinApplication.koin.rootScope.beanRegistry.getAllDefinitions().filter {

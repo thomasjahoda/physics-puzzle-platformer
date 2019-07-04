@@ -41,6 +41,10 @@ inline class ThrownBallEntity(val entity: Entity) {
         get() = entity[PlayerComponent]
     val body
         get() = entity[BodyComponent]
+
+    fun addLimitedDuration(secondsLeft: Float) {
+        entity.add(RemoveAfterDurationComponent(secondsLeft))
+    }
 }
 
 class ThrownBallEntityCreator(

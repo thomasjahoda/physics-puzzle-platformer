@@ -1,6 +1,7 @@
 package com.jafleck.game.gameplay
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.ashley.core.EntityListener
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Box2D
@@ -17,9 +18,11 @@ import com.jafleck.game.entities.PlatformEntityCreator
 import com.jafleck.game.entities.PlayerEntityCreator
 import com.jafleck.game.entities.ThrownBallEntityCreator
 import com.jafleck.game.gadgets.BallThrowerGadget
+import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.systems.*
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.util.*
+import com.jafleck.game.util.listeners.EntityFamilyListener
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 import org.koin.core.module.Module
@@ -28,7 +31,7 @@ import kotlin.system.measureNanoTime
 
 private val gameplayModuleLogger = Logger("GameplayModule", LoggingConfig.gameLoggingLevel.asGdxLoggingLevel())
 
-interface EntitySystemLoader {
+interface EngineLogicLoader {
     fun load(engine: Engine)
 }
 
@@ -63,6 +66,9 @@ fun createGameplayModule(): Module {
                 SyncMovingBodySystem(systemPriority++),
                 SyncRotatingBodySystem(systemPriority++),
 
+                // logic
+                RemoveEntityAfterDurationSystem(systemPriority++, get()),
+
                 // input handling
                 PlayerGadgetActivationSystem(systemPriority++, get(), get()),
 
@@ -70,14 +76,26 @@ fun createGameplayModule(): Module {
                 TrackPlayerWithCameraSystem(systemPriority++, get()),
                 RenderDrawableRectangleComponentsSystem(systemPriority++, get(), get(), get())
             )
-            val loader: EntitySystemLoader = object : EntitySystemLoader {
+
+            val standaloneEntityListeners = listOf<EntityListener>(
+                SyncRemovedBodiesToWorldEntityListener(get())
+            )
+
+            val logicLoader: EngineLogicLoader = object : EngineLogicLoader {
                 override fun load(engine: Engine) {
                     systems.forEach {
                         engine.addSystem(it)
                     }
+                    standaloneEntityListeners.forEach {
+                        if (it is EntityFamilyListener) {
+                            engine.addEntityListener(it.family, it)
+                        } else {
+                            engine.addEntityListener(it)
+                        }
+                    }
                 }
             }
-            loader
+            logicLoader
         }
         single {
             AssetManager().apply {

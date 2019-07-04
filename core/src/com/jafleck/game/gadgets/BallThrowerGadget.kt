@@ -14,6 +14,7 @@ class BallThrowerGadget(
 ) : MouseActivatedGadget {
 
     private val throwSpeed = 20f
+    private val secondsAlive = 10f
 
     override fun activate(handler: Entity, targetPosition: Vector2) {
         val entityPosition = handler[OriginPositionComponent].vector
@@ -23,7 +24,9 @@ class BallThrowerGadget(
         val velocity = throwDirection * throwSpeed
         val spawnPosition = entityPosition + throwDirection * (entityRectangleSize / 2 + ThrownBallEntity.HALF_SIZE)
 
-        thrownBallEntityCreator.createThrownBall(spawnPosition, velocity)
+        thrownBallEntityCreator.createThrownBall(spawnPosition, velocity).apply {
+            addLimitedDuration(secondsAlive)
+        }
     }
 
 }
