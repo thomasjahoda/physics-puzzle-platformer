@@ -1,18 +1,15 @@
 package com.jafleck.game.gameplay.ui
 
 import com.badlogic.ashley.core.Engine
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup
 import com.jafleck.extensions.libgdxktx.clearScreen
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
-import com.jafleck.game.util.GameCamera
-import com.jafleck.game.util.GameViewport
-import com.jafleck.game.util.UiCamera
-import com.jafleck.game.util.UiViewport
+import com.jafleck.game.util.*
 import ktx.app.KtxScreen
 import ktx.scene2d.label
 import ktx.scene2d.table
@@ -27,6 +24,8 @@ class PlayScreen(
     private val uiCamera: UiCamera,
     private val uiViewport: UiViewport,
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
+    private val gameInputMultiplexer: GameInputMultiplexer,
+    private val uiInputMultiplexer: UiInputMultiplexer,
     private val box2DDebugRenderer: Box2DDebugRenderer?
 ) : KtxScreen {
 
@@ -35,10 +34,16 @@ class PlayScreen(
             // add UI here when necessary
             addActor(table {
                 label("some UI text")
-                setFillParent(true)
+//                setFillParent(true)
                 pack()
             })
         }
+        uiInputMultiplexer.addProcessor(stage)
+        uiInputMultiplexer.addProcessor(gameInputMultiplexer)
+    }
+
+    override fun show() {
+        Gdx.input.inputProcessor = uiInputMultiplexer
     }
 
     override fun render(delta: Float) {
