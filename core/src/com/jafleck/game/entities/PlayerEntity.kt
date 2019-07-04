@@ -15,6 +15,7 @@ import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.families.MovingBody
 import com.jafleck.game.families.PositionedPlayer
+import com.jafleck.game.gadgets.Gadget
 import ktx.box2d.body
 
 inline class PlayerEntity(val entity: Entity) {
@@ -25,6 +26,10 @@ inline class PlayerEntity(val entity: Entity) {
         const val DENSITY = 10f
         const val FRICTION = 0.2f
         val COLOR: Color = Color.RED
+
+        fun isPlayer(entity: Entity): Boolean {
+            return PlayerComponent.isIn(entity)
+        }
     }
 
     fun asDrawableRectangle() = DrawableRectangle(entity)
@@ -41,12 +46,15 @@ inline class PlayerEntity(val entity: Entity) {
         get() = entity[PlayerComponent]
     val body
         get() = entity[BodyComponent]
+    val selectedGadget
+        get() = entity[SelectedGadgetComponent]
 }
 
 class PlayerEntityCreator(
     private val engine: Engine,
-    private val assetManager: AssetManager,
-    private val world: World
+    private val world: World,
+    private val initialGadget: Gadget,
+    assetManager: AssetManager
 ) {
     private val playerTextureRegion = assetManager.get(Assets.atlas).findRegion("player")
     private val drawable: Drawable = TextureRegionDrawable(playerTextureRegion).tint(PlayerEntity.COLOR)
@@ -70,6 +78,7 @@ class PlayerEntityCreator(
                 this.position.set(originPosition)
             }))
             add(PlayerComponent())
+            add(SelectedGadgetComponent(initialGadget))
         }
         engine.addEntity(entity)
         return PlayerEntity(entity)

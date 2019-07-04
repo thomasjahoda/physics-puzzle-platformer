@@ -16,6 +16,7 @@ import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.entities.PlatformEntityCreator
 import com.jafleck.game.entities.PlayerEntityCreator
 import com.jafleck.game.entities.ThrownBallEntityCreator
+import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.systems.*
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.util.*
@@ -33,6 +34,7 @@ interface EntitySystemLoader {
 
 fun createGameplayModule(): Module {
     return module {
+        // ui
         single { GameCamera() }
         single { GameViewport(10f, 10f, get()) }
         single { UiCamera() }
@@ -42,9 +44,15 @@ fun createGameplayModule(): Module {
         single { SpriteBatch() }
         single { UiInputMultiplexer() }
         single { GameInputMultiplexer() }
-        single { PlayerEntityCreator(get(), get(), get()) }
+        single { GdxHoloSkin(get()) }
+        single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull()) }
+        // gadgets
+        single { BallThrowerGadget(get()) }
+        // entities
+        single { PlayerEntityCreator(get(), get(), get(BallThrowerGadget::class, null, null), get()) }
         single { PlatformEntityCreator(get(), get(), get(), get()) }
         single { ThrownBallEntityCreator(get(), get(), get(), get()) }
+        // entity component system
         single { Engine() }
         single {
             var systemPriority = 0
@@ -56,7 +64,7 @@ fun createGameplayModule(): Module {
                 SyncRotatingBodySystem(systemPriority++),
 
                 // input handling
-                GadgetActivationSystem(systemPriority++, get(), get(), get()),
+                PlayerGadgetActivationSystem(systemPriority++, get(), get()),
 
                 // rendering
                 TrackPlayerWithCameraSystem(systemPriority++, get()),
@@ -81,8 +89,6 @@ fun createGameplayModule(): Module {
                 gameplayModuleLogger.info("Took ${millisTakenToLoadAssets}ms to load assets")
             }
         }
-        single { GdxHoloSkin(get()) }
-        single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull()) }
         single { MapLoader(get(), get()) }
         single {
             Box2D.init()

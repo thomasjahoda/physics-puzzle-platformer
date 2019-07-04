@@ -45,8 +45,8 @@ inline class ThrownBallEntity(val entity: Entity) {
 
 class ThrownBallEntityCreator(
     private val engine: Engine,
-    private val assetManager: AssetManager,
     private val world: World,
+    assetManager: AssetManager,
     screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
 ) {
     private val platformNinePatch = assetManager.get(Assets.atlas).createPatch("ugly-ball").apply {

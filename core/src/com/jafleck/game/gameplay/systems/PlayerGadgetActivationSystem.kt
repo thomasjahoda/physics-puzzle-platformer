@@ -5,18 +5,17 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.entities.PlayerEntity
-import com.jafleck.game.entities.ThrownBallEntityCreator
+import com.jafleck.game.gadgets.MouseActivatedGadget
 import com.jafleck.game.util.BasicGameGestureDetector
 import com.jafleck.game.util.GameInputMultiplexer
 import com.jafleck.game.util.GameViewport
 import com.jafleck.game.util.systems.PlayerEntitySystem
 
 
-class GadgetActivationSystem(
+class PlayerGadgetActivationSystem(
     priority: Int,
     private val gameViewport: GameViewport,
-    private val gameInputMultiplexer: GameInputMultiplexer,
-    private val thrownBallEntityCreator: ThrownBallEntityCreator
+    private val gameInputMultiplexer: GameInputMultiplexer
 ) : PlayerEntitySystem(priority) {
 
     private val gestureListener = GestureListener()
@@ -47,11 +46,13 @@ class GadgetActivationSystem(
     }
 
     override fun processPlayer(playerEntity: PlayerEntity) {
-        clickedWorldPositions.forEach {
-            // TODO extract to gadget class
+        clickedWorldPositions.forEach { targetPosition ->
+            val gadget = playerEntity.selectedGadget.value
+            if (gadget is MouseActivatedGadget) {
+                gadget.activate(playerEntity.entity, targetPosition)
+            }
             // TODO throw ball into this direction instead
             // TODO dispose balls after some time
-            thrownBallEntityCreator.createThrownBall(it)
         }
         clickedWorldPositions.clear()
     }
