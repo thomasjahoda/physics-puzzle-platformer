@@ -10,6 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.libgdxktx.clearScreen
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.util.*
+import com.jafleck.game.util.input.GameInputMultiplexer
+import com.jafleck.game.util.input.UiInputMultiplexer
 import ktx.app.KtxScreen
 import ktx.scene2d.label
 import ktx.scene2d.table

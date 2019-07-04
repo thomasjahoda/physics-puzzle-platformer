@@ -6,8 +6,7 @@ import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.entities.PlayerEntity
 import com.jafleck.game.gadgets.MouseActivatedGadget
-import com.jafleck.game.util.BasicGameGestureDetector
-import com.jafleck.game.util.GameInputMultiplexer
+import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.GameViewport
 import com.jafleck.game.util.systems.PlayerEntitySystem
 
@@ -18,8 +17,7 @@ class PlayerGadgetActivationSystem(
     private val gameInputMultiplexer: GameInputMultiplexer
 ) : PlayerEntitySystem(priority) {
 
-    private val gestureListener = GestureListener()
-    private val basicGameGestureDetector = BasicGameGestureDetector(gestureListener)
+    private val basicGameGestureDetector = GestureDetector(GestureListener())
     private val clickedWorldPositions = arrayListOf<Vector2>()
 
     override fun addedToEngine(engine: Engine) {
@@ -51,8 +49,6 @@ class PlayerGadgetActivationSystem(
             if (gadget is MouseActivatedGadget) {
                 gadget.activate(playerEntity.entity, targetPosition)
             }
-            // TODO dispose balls after some time
-            // TODO rotate entities
         }
         clickedWorldPositions.clear()
     }

@@ -22,6 +22,8 @@ import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWo
 import com.jafleck.game.gameplay.systems.*
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.util.*
+import com.jafleck.game.util.input.GameInputMultiplexer
+import com.jafleck.game.util.input.UiInputMultiplexer
 import com.jafleck.game.util.listeners.EntityFamilyListener
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
@@ -66,11 +68,13 @@ fun createGameplayModule(): Module {
                 SyncMovingBodySystem(systemPriority++),
                 SyncRotatingBodySystem(systemPriority++),
 
+                // input handling
+                PlayerMovementInputSystem(systemPriority++, get(), get()),
+                PlayerGadgetActivationSystem(systemPriority++, get(), get()),
+
                 // logic
                 RemoveEntityAfterDurationSystem(systemPriority++, get()),
-
-                // input handling
-                PlayerGadgetActivationSystem(systemPriority++, get(), get()),
+                PlayerMovementSystem(systemPriority++),
 
                 // rendering
                 TrackPlayerWithCameraSystem(systemPriority++, get()),

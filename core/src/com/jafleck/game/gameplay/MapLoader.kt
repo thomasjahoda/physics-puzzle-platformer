@@ -12,8 +12,6 @@ class MapLoader(
     fun loadMap() {
         // hard-coded level
         // TODO load level from file
-
-        // TODO use world-coordinates in meters instead of pixels
         playerEntityCreator.createPlayerEntity(Vector2(1f, 1f))
 
         platformEntityCreator.createPlatformEntity(Rectangle(0f, 0f, 5f, 0.5f))
