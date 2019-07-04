@@ -1,6 +1,5 @@
 package com.jafleck.game.gameplay.systems
 
-import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.jafleck.extensions.libgdxktx.ashley.get
@@ -9,8 +8,7 @@ import ktx.ashley.allOf
 
 
 class RemoveEntityAfterDurationSystem(
-    priority: Int,
-    engine: Engine
+    priority: Int
 ) : IteratingSystem(allOf(
     RemoveAfterDurationComponent::class
 ).get(), priority) {

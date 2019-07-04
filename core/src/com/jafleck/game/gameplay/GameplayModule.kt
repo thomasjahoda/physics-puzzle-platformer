@@ -73,7 +73,7 @@ fun createGameplayModule(): Module {
                 PlayerGadgetActivationSystem(systemPriority++, get(), get()),
 
                 // logic
-                RemoveEntityAfterDurationSystem(systemPriority++, get()),
+                RemoveEntityAfterDurationSystem(systemPriority++),
                 PlayerMovementSystem(systemPriority++),
 
                 // rendering
