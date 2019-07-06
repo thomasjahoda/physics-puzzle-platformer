@@ -110,7 +110,7 @@ eclipse {
     }
 
     project {
-        name = appName + "-android"
+        name = "physics-puzzle-platformer" + "-android" // TODO fix on conversion
         natures "com.android.ide.eclipse.adt.AndroidNature"
         buildCommands.clear();
         buildCommand "com.android.ide.eclipse.adt.ResourceManagerBuilder"

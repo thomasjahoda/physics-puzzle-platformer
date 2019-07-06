@@ -29,7 +29,7 @@ task dist(type: Jar) {
     from files(sourceSets.main.output.resourcesDir)
     from {configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }}
     from files(project.assetsDir);
- 
+
     manifest {
         attributes "Main-Class": project.mainClassName
     }
@@ -39,7 +39,7 @@ dist.dependsOn classes
 
 eclipse {
     project {
-        name = appName + "-desktop"
+        name = "physics-puzzle-platformer" + "-desktop" // TODO fix on conversion
         linkedResource name: "assets", type: "2", location: "PARENT-1-PROJECT_LOC/android/assets"
     }
 }

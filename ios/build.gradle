@@ -17,6 +17,6 @@ robovm {
 }
 
 eclipse.project {
-    name = appName + "-ios"
+    name = "physics-puzzle-platformer" + "-ios" // TODO fix on conversion
     natures "org.robovm.eclipse.RoboVMNature"
 }
