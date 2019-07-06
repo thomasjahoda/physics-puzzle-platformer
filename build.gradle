@@ -53,17 +53,17 @@ project(":desktop") {
 
 
     dependencies {
-        api project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-        api "org.redundent:kotlin-xml-builder:$thirdPartyKotlinXmlBuilder"
+        api(project(":core"))
+        api("com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion")
+        api("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+        api("com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop")
+        api("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+        api("org.redundent:kotlin-xml-builder:$thirdPartyKotlinXmlBuilder")
 
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+        testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
 
-        testImplementation "org.assertj:assertj-core:$assertJVersion"
+        testImplementation("org.assertj:assertj-core:$assertJVersion")
     }
 }
 
@@ -74,21 +74,21 @@ project(":android") {
     configurations { natives }
 
     dependencies {
-        api project(":core")
-        api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+        api(project(":core"))
+        api("com.badlogicgames.gdx:gdx-backend-android:$gdxVersion")
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        api("com.badlogicgames.gdx:gdx-box2d:$gdxVersion")
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
-        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        api("com.badlogicgames.ashley:ashley:$ashleyVersion")
+        api("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     }
 }
 
@@ -98,13 +98,13 @@ project(":ios") {
 
 
     dependencies {
-        api project(":core")
-        api "com.mobidevelop.robovm:robovm-rt:$roboVMVersion"
-        api "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
-        api "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-        api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        api(project(":core"))
+        api("com.mobidevelop.robovm:robovm-rt:$roboVMVersion")
+        api("com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion")
+        api("com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion")
+        api("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios")
+        api("com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-ios")
+        api("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
     }
 }
 
@@ -118,30 +118,30 @@ project(":core") {
     }
 
     dependencies {
-        api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
-        api "com.badlogicgames.ashley:ashley:$ashleyVersion"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
-        api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+        api("com.badlogicgames.gdx:gdx:$gdxVersion")
+        api("com.badlogicgames.gdx:gdx-box2d:$gdxVersion")
+        api("com.badlogicgames.ashley:ashley:$ashleyVersion")
+        api("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+        api("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
 
-        api "io.github.libktx:ktx-actors:$ktxVersion"
-        api "io.github.libktx:ktx-app:$ktxVersion"
-        api "io.github.libktx:ktx-assets:$ktxVersion"
-        api "io.github.libktx:ktx-ashley:$ktxVersion"
-        api "io.github.libktx:ktx-collections:$ktxVersion"
-        api "io.github.libktx:ktx-graphics:$ktxVersion"
-        api "io.github.libktx:ktx-log:$ktxVersion"
-        api "io.github.libktx:ktx-math:$ktxVersion"
-        api "io.github.libktx:ktx-scene2d:$ktxVersion"
-        api "io.github.libktx:ktx-box2d:$ktxVersion"
+        api("io.github.libktx:ktx-actors:$ktxVersion")
+        api("io.github.libktx:ktx-app:$ktxVersion")
+        api("io.github.libktx:ktx-assets:$ktxVersion")
+        api("io.github.libktx:ktx-ashley:$ktxVersion")
+        api("io.github.libktx:ktx-collections:$ktxVersion")
+        api("io.github.libktx:ktx-graphics:$ktxVersion")
+        api("io.github.libktx:ktx-log:$ktxVersion")
+        api("io.github.libktx:ktx-math:$ktxVersion")
+        api("io.github.libktx:ktx-scene2d:$ktxVersion")
+        api("io.github.libktx:ktx-box2d:$ktxVersion")
 
-        implementation "org.koin:koin-core:$koinVersion"
-        testImplementation "org.koin:koin-test:$koinVersion"
+        implementation("org.koin:koin-core:$koinVersion")
+        testImplementation("org.koin:koin-test:$koinVersion")
 
-        testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+        testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 
-        testImplementation "org.assertj:assertj-core:$assertJVersion"
+        testImplementation("org.assertj:assertj-core:$assertJVersion")
     }
 
     test {
