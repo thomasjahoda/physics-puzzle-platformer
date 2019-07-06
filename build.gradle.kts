@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    kotlin("jvm") version "1.3.41"
 }
 
 buildscript {
@@ -169,7 +170,4 @@ project(":core") {
 
 //    tasks.classes.dependsOn(tasks.texturePacker)
 }
-//
-//tasks.eclipse.doLast {
-//    delete ".project"
-//}
+
