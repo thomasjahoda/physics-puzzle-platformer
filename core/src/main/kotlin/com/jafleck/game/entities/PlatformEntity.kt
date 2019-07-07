@@ -22,6 +22,7 @@ inline class PlatformEntity(val entity: Entity) {
 
     companion object {
         val COLOR = Color.PURPLE
+        const val FRICTION = 0.2f
     }
 
     fun asDrawableRectangle() = DrawableRectangle(entity)
@@ -60,8 +61,7 @@ class PlatformEntityCreator(
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.StaticBody
                 box(rectangle.width, rectangle.height) {
-                    density = PlayerEntity.DENSITY
-                    friction = PlayerEntity.FRICTION
+                    friction = PlatformEntity.FRICTION
                 }
                 position.set(originPosition)
             }))
