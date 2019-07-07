@@ -6,5 +6,5 @@ interface Gadget {
 
     fun selected(handler: Entity) {}
 
-    fun onUnselect(handler: Entity) {}
+    fun unselected(handler: Entity) {}
 }
