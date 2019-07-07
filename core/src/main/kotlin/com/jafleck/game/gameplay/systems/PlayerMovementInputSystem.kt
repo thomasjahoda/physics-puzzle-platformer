@@ -135,8 +135,7 @@ class PlayerMovementInputSystem(
 
         if (playerEntity.player.movementState != currentMovementState) {
             logger.debug { "Changed player movement from ${playerEntity.player.movementState} to $currentMovementState" }
+            playerEntity.player.movementState = currentMovementState
         }
-
-        playerEntity.player.movementState = currentMovementState
     }
 }

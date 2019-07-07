@@ -10,15 +10,19 @@ class PlayerMovementSystem(
     priority: Int
 ) : PlayerEntitySystem(priority) {
 
-    private val acceleration = 1f
+    private val acceleration = 0.25f
 
     override fun processPlayer(playerEntity: PlayerEntity) {
         when (playerEntity.player.movementState) {
-            PlayerMovementState.LEFT -> playerEntity.body.value.applyLinearImpulse(Vector2(-acceleration, 0f), playerEntity.position.vector, true)
-            PlayerMovementState.RIGHT -> playerEntity.body.value.applyLinearImpulse(Vector2(acceleration, 0f), playerEntity.position.vector, true)
+            PlayerMovementState.LEFT -> acceleratePlayer(playerEntity, -acceleration)
+            PlayerMovementState.RIGHT -> acceleratePlayer(playerEntity, acceleration)
             PlayerMovementState.NONE -> {
                 // breaking automatically
             }
         }
+    }
+
+    private fun acceleratePlayer(playerEntity: PlayerEntity, acceleration: Float) {
+        playerEntity.body.value.applyLinearImpulse(Vector2(acceleration * playerEntity.body.value.mass, 0f), playerEntity.position.vector, true)
     }
 }
