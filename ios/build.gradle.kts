@@ -7,14 +7,6 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/"))
-        }
-    }
-}
-
 val mainClassName = "com.jafleck.game.IOSLauncher"
 val assetsDir = File("../android/assets")
 tasks.launchIPhoneSimulator {

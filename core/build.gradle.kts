@@ -11,16 +11,3 @@ tasks.withType<JavaCompile> {
 tasks.withType<KotlinCompile> {
     kotlinOptions.freeCompilerArgs += "-XXLanguage:+InlineClasses"
 }
-
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/"))
-        }
-    }
-    test {
-        java {
-            setSrcDirs(listOf("test/"))
-        }
-    }
-}

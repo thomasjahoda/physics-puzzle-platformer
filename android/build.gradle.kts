@@ -14,10 +14,6 @@ android {
     sourceSets {
         getByName("main") {
             manifest.srcFile("AndroidManifest.xml")
-            java.srcDirs("src")
-            aidl.srcDirs("src")
-            renderscript.srcDirs("src")
-            res.srcDirs("res")
             assets.srcDirs("assets")
             jniLibs.srcDirs("libs")
         }

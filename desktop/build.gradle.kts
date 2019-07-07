@@ -7,20 +7,6 @@ tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
 }
 
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/"))
-        }
-    }
-    test {
-        java {
-            setSrcDirs(listOf("test/"))
-        }
-    }
-}
-
-
 val mainClassName = "com.jafleck.game.desktop.DesktopLauncher"
 val assetsDir = File("../android/assets")
 
