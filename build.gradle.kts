@@ -120,11 +120,9 @@ project(":core") {
     apply(plugin = "kotlin")
     apply(plugin = "java-library")
 
-    ext {
-        set("texturePackerDirectory", "$projectDir/textures")
-        set("texturePackerOutputDirectory", "$rootDir/android/assets/atlas")
-        set("texturePackerAtlasName", "textures.atlas")
-    }
+    extra["texturePackerDirectory"] = "$projectDir/textures"
+    extra["texturePackerOutputDirectory"] = "$rootDir/android/assets/atlas"
+    extra["texturePackerAtlasName"] = "textures.atlas"
 
     dependencies {
         api("com.badlogicgames.gdx:gdx:${DependencyVersions.gdxVersion}")
@@ -157,17 +155,20 @@ project(":core") {
         useJUnitPlatform()
     }
 
-//    tasks.texturePacker {
-//        if (project.ext.has("texturePackerDirectory")) {
-//            inputs.dir(texturePackerDirectory)
-//            outputs.dir(texturePackerOutputDirectory)
-//            doLast {
-//                logger.info("Calling TexturePacker:")
-//                TexturePacker.process(texturePackerDirectory, texturePackerOutputDirectory, texturePackerAtlasName)
-//            }
-//        }
-//    }
+    task("texturePacker") {
+        inputs.dir(project.extra["texturePackerDirectory"] as String)
+        outputs.dir(project.extra["texturePackerOutputDirectory"] as String)
+        doLast {
+            logger.info("Calling TexturePacker:")
+            com.badlogic.gdx.tools.texturepacker.TexturePacker.process(
+                project.extra["texturePackerDirectory"] as String,
+                project.extra["texturePackerOutputDirectory"] as String,
+                project.extra["texturePackerAtlasName"] as String)
+        }
+    }
 
-//    tasks.classes.dependsOn(tasks.texturePacker)
+    tasks.classes {
+        dependsOn("texturePacker")
+    }
 }
 
