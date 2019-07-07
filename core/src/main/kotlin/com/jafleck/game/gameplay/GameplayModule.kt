@@ -63,14 +63,14 @@ fun createGameplayModule(): Module {
             var systemPriority = 0
             @Suppress("UNUSED_CHANGED_VALUE")
             val systems = listOf(
+                // input handling
+                PlayerMovementInputSystem(systemPriority++, get(), get()),
+                PlayerGadgetActivationSystem(systemPriority++, get(), get()),
+
                 // physics
                 PhysicsSimulationStepSystem(systemPriority++, get()),
                 SyncMovingBodySystem(systemPriority++),
                 SyncRotatingBodySystem(systemPriority++),
-
-                // input handling
-                PlayerMovementInputSystem(systemPriority++, get(), get()),
-                PlayerGadgetActivationSystem(systemPriority++, get(), get()),
 
                 // logic
                 RemoveEntityAfterDurationSystem(systemPriority++),
