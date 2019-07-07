@@ -8,7 +8,7 @@ tasks.withType<JavaCompile> {
 }
 
 val mainClassName = "com.jafleck.game.desktop.DesktopLauncher"
-val assetsDir = File("../android/assets")
+val assetsDir = project(":core").sourceSets["main"].resources.sourceDirectories.singleFile
 
 task<JavaExec>("run") {
     dependsOn(tasks.classes)

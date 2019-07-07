@@ -120,8 +120,8 @@ project(":core") {
     apply(plugin = "kotlin")
     apply(plugin = "java-library")
 
-    extra["texturePackerDirectory"] = "$projectDir/textures"
-    extra["texturePackerOutputDirectory"] = "$rootDir/android/assets/atlas"
+    extra["texturePackerDirectory"] = "$projectDir/src/main/texture-atlas-parts"
+    extra["texturePackerOutputDirectory"] = sourceSets["main"].resources.sourceDirectories.singleFile.path + "/atlas"
     extra["texturePackerAtlasName"] = "textures.atlas"
 
     dependencies {

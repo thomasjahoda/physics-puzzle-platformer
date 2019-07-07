@@ -66,14 +66,32 @@ task("copyAndroidNatives") {
     }
 }
 
-
 tasks.configureEach {
     if (name.contains("package")) {
         dependsOn("copyAndroidNatives")
     }
 }
 
+task<Copy>("copyAssetsFromCore") {
+    from(project(":core").sourceSets["main"].resources.sourceDirectories.singleFile) {
+        exclude("README.md")
+    }
+    into(file("assets"))
+}
+tasks.build {
+    dependsOn("copyAssetsFromCore")
+}
+tasks.named("preBuild") {
+    dependsOn("copyAssetsFromCore")
+}
+tasks.clean {
+    delete(fileTree("assets") {
+        exclude(".gitignore")
+    })
+}
+
 task<Exec>("run") {
+    dependsOn("build")
     // copy of parts from https://android.googlesource.com/platform/tools/build/+/d69964104aed4cfae5052028b5c5e57580441ae8/gradle/src/main/groovy/com/android/build/gradle/internal/Sdk.groovy#findLocation
     var path: String? = null
     val localProperties = project.file("../local.properties")

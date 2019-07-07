@@ -8,7 +8,7 @@ tasks.withType<JavaCompile> {
 }
 
 val mainClassName = "com.jafleck.game.IOSLauncher"
-val assetsDir = File("../android/assets")
+val assetsDir = project(":core").sourceSets["main"].resources.sourceDirectories.singleFile
 tasks.launchIPhoneSimulator {
     dependsOn(tasks.build)
 }
