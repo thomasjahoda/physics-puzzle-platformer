@@ -166,6 +166,9 @@ project(":core") {
                 project.extra["texturePackerAtlasName"] as String)
         }
     }
+    tasks.clean {
+        delete(project.extra["texturePackerOutputDirectory"] as String)
+    }
 
     tasks.classes {
         dependsOn("texturePacker")
