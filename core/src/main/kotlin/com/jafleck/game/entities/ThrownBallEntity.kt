@@ -74,6 +74,7 @@ class ThrownBallEntityCreator(
                 circle(radius = ThrownBallEntity.HALF_SIZE.x) {
                     density = ThrownBallEntity.DENSITY
                     friction = ThrownBallEntity.FRICTION
+                    restitution = 0.5f
                 }
                 linearVelocity.set(velocity)
                 this.position.set(originPosition)
