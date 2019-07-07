@@ -1,2 +1,4 @@
-atlas-tileset.png
-atlas-tileset.tsx
+## Not ignoring tileset files because they are currently only generated on-demand by a task in the desktop module which depends on a graphics environment (uncool)
+## Still, do NOT modify the following files manually:
+# atlas-tileset.png
+# atlas-tileset.tsx
