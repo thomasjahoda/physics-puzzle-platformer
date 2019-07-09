@@ -6,6 +6,20 @@ TODO - the documentation is a work-in-progress
 
 TODO local.properties?
 
+## Developing Maps
+
+Use the 'Tiled' map editor to create and edit maps within `core/src/main/tiledmaps`.
+
+Choose `objecttypes.xml` as object types file using the 'View' > 'Object Types Editor' > 'File' > 'Choose Object Types File'.
+
+Open 'View' > 'Views and Toolbars' > 'Templates'.
+In the 'Templates' view, click the 'Choose Templates Directory' button.
+Choose the `objecttemplates` directory.
+
+Use object templates for common objects.
+You can create custom objects and detach objects from templates if they should be unique or limited to this map.
+
+
 ## Android
 The LibGDX project generation seems to introduce some problems that the IDEs do not correctly initialize some Android configuration.
 If running the project via IntelliJ and the default android run-config does not work, follow these steps:
