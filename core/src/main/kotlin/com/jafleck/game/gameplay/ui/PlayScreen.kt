@@ -69,7 +69,6 @@ class PlayScreen(
         gameViewport.update(width, height, false)
         uiViewport.update(width, height, true)
 
-        gameViewport.camera.update()
         screenToWorldScalingPropagator.scaling = Vector2(gameViewport.camera.combined.scaleX, gameViewport.camera.combined.scaleY)
     }
 

@@ -1,4 +1,4 @@
-package com.jafleck.game.gameplay.systems
+package com.jafleck.game.gameplay.systems.visual
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
@@ -29,7 +29,6 @@ class RenderDrawableRectangleComponentsSystem(
     }
 
     override fun update(deltaSeconds: Float) {
-        camera.update()
         screenToWorldScalingPropagator.scaling = Vector2(camera.combined.scaleX, camera.combined.scaleY)
 
         spriteBatch.projectionMatrix = camera.combined

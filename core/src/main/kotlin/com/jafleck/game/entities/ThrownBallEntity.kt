@@ -7,12 +7,8 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.assets.Assets
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
-import com.jafleck.game.assets.autoScaleByExpectedWorldSize
 import com.jafleck.game.components.*
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
@@ -27,15 +23,12 @@ inline class ThrownBallEntity(val entity: Entity) {
         val HALF_SIZE: Vector2 = SIZE.cpy().scl(0.5f)
         const val DENSITY = 10f
         const val FRICTION = 0.2f
-        val COLOR: Color = Color.RED.cpy().mul(0.4f)
     }
 
     val position
         get() = entity[OriginPositionComponent]
     val size
         get() = entity[RectangleShapeComponent]
-    val drawableVisual
-        get() = entity[DrawableVisualComponent]
     val player
         get() = entity[PlayerComponent]
     val body
@@ -52,13 +45,6 @@ class ThrownBallEntityCreator(
     assetManager: AssetManager,
     screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
 ) {
-    private val platformNinePatch = assetManager.get(Assets.atlas).createPatch("ugly-ball").apply {
-        color = ThrownBallEntity.COLOR
-    }
-    private val drawable: Drawable = NinePatchDrawable(platformNinePatch).apply {
-        autoScaleByExpectedWorldSize(screenToWorldScalingPropagator, ThrownBallEntity.SIZE)
-    }
-
     fun createThrownBall(
         originPosition: Vector2,
         velocity: Vector2
@@ -67,7 +53,10 @@ class ThrownBallEntityCreator(
             add(OriginPositionComponent(originPosition))
             add(CircleShapeComponent(ThrownBallEntity.RADIUS))
             add(RectangleBoundsComponent(ThrownBallEntity.SIZE))
-            add(DrawableVisualComponent(drawable))
+            add(RotationComponent(0f))
+            add(VisualShapeComponent(
+                borderColor = Color.RED.cpy().mul(0.9f), borderThickness = null,
+                fillColor = Color.RED.cpy().mul(0.4f)))
             add(VelocityComponent(velocity))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.DynamicBody

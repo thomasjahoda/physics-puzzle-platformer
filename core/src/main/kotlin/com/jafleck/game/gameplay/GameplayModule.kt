@@ -11,6 +11,8 @@ import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.systems.*
+import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
+import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
 import com.jafleck.game.gameplay.ui.GameCamera
 import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.gameplay.ui.PlayScreen
@@ -63,6 +65,7 @@ val gameplayModule: Module = module {
 
             // rendering
             TrackPlayerWithCameraSystem(systemPriority++, get()),
+            ShapeRenderSystem(systemPriority++, get()),
             RenderDrawableRectangleComponentsSystem(systemPriority++, get(), get(), get())
         )
 

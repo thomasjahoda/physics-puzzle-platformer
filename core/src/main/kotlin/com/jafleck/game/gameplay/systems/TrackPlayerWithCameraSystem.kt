@@ -11,6 +11,7 @@ class TrackPlayerWithCameraSystem(
 
     override fun processPlayer(playerEntity: PlayerEntity) {
         camera.position.set(playerEntity.position.vector.cpy(), camera.position.z)
+        camera.update()
     }
 
 }

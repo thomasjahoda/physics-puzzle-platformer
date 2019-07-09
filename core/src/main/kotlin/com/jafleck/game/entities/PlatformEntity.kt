@@ -10,15 +10,13 @@ import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.assets.Assets
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
-import com.jafleck.game.assets.autoScaleByExpectedWorldSize
-import com.jafleck.game.components.*
+import com.jafleck.game.components.BodyComponent
+import com.jafleck.game.components.OriginPositionComponent
+import com.jafleck.game.components.PlatformComponent
+import com.jafleck.game.components.VisualShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
-import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.maploading.getRectangleWorldCoordinates
 import ktx.box2d.body
@@ -27,7 +25,6 @@ import org.koin.dsl.module
 inline class PlatformEntity(val entity: Entity) {
 
     companion object {
-        val COLOR = Color.PURPLE
         const val FRICTION = 0.2f
     }
 
@@ -35,8 +32,6 @@ inline class PlatformEntity(val entity: Entity) {
         get() = entity[OriginPositionComponent]
     val size
         get() = entity[RectangleShapeComponent]
-    val drawableVisual
-        get() = entity[DrawableVisualComponent]
     val platform
         get() = entity[PlatformComponent]
 }
@@ -47,13 +42,6 @@ class PlatformEntityCreator(
     assetManager: AssetManager,
     screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
 ) {
-    private val platformNinePatch = assetManager.get(Assets.atlas).createPatch("platform-thin-border").apply {
-        color = PlatformEntity.COLOR
-    }
-    private val drawable: Drawable = NinePatchDrawable(platformNinePatch).apply {
-        autoScaleByExpectedWorldSize(screenToWorldScalingPropagator, Vector2(1.5f, 1.5f))
-    }
-
     fun createPlatformEntity(
         rectangle: Rectangle
     ): PlatformEntity {
@@ -61,8 +49,9 @@ class PlatformEntityCreator(
             val originPosition = rectangle.getCenter(Vector2())
             add(OriginPositionComponent(originPosition))
             add(RectangleShapeComponent(rectangle.getSize(Vector2())))
-            add(RectangleBoundsComponent(rectangle.getSize(Vector2())))
-            add(DrawableVisualComponent(drawable))
+            add(VisualShapeComponent(
+                borderColor = Color.PURPLE, borderThickness = null,
+                fillColor = Color.WHITE.cpy().mul(0.9f)))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.StaticBody
                 box(rectangle.width, rectangle.height) {
