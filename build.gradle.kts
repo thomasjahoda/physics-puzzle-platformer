@@ -35,6 +35,7 @@ object DependencyVersions {
     const val koinVersion = "2.0.1"
     const val junitVersion = "5.4.2"
     const val assertJVersion = "3.12.2"
+    const val mockKVersion = "1.9.3"
     const val thirdPartyKotlinXmlBuilder = "1.5.1"
 }
 
@@ -73,6 +74,7 @@ project(":desktop") {
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${DependencyVersions.junitVersion}")
 
         testImplementation("org.assertj:assertj-core:${DependencyVersions.assertJVersion}")
+        testImplementation("io.mockk:mockk:${DependencyVersions.mockKVersion}")
     }
 }
 
@@ -85,7 +87,7 @@ project(":android") {
     dependencies {
         api(project(":core"))
         api("com.badlogicgames.gdx:gdx-backend-android:${DependencyVersions.gdxVersion}")
-        natives ("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-armeabi")
+        natives("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-armeabi")
         natives("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-armeabi-v7a")
         natives("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-arm64-v8a")
         natives("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-x86")
@@ -145,10 +147,15 @@ project(":core") {
         implementation("org.koin:koin-core:${DependencyVersions.koinVersion}")
         testImplementation("org.koin:koin-test:${DependencyVersions.koinVersion}")
 
+        testApi("com.badlogicgames.gdx:gdx-backend-headless:${DependencyVersions.gdxVersion}")
+        testApi("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-desktop")
+        testApi("com.badlogicgames.gdx:gdx-box2d-platform:${DependencyVersions.gdxVersion}:natives-desktop")
+
         testImplementation("org.junit.jupiter:junit-jupiter-api:${DependencyVersions.junitVersion}")
         testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${DependencyVersions.junitVersion}")
 
         testImplementation("org.assertj:assertj-core:${DependencyVersions.assertJVersion}")
+        testImplementation("io.mockk:mockk:${DependencyVersions.mockKVersion}")
     }
 
     tasks.test {

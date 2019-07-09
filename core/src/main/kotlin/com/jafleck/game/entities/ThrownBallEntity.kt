@@ -17,6 +17,7 @@ import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.families.MovingBody
 import ktx.box2d.body
+import org.koin.dsl.module
 
 inline class ThrownBallEntity(val entity: Entity) {
 
@@ -84,4 +85,8 @@ class ThrownBallEntityCreator(
         engine.addEntity(entity)
         return ThrownBallEntity(entity)
     }
+}
+
+val thrownBallModule = module {
+    single { ThrownBallEntityCreator(get(), get(), get(), get()) }
 }

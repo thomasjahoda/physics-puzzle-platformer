@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.maps.MapObject
+import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
@@ -16,7 +18,10 @@ import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.assets.autoScaleByExpectedWorldSize
 import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
+import com.jafleck.game.maploading.MapEntityLoader
+import com.jafleck.game.maploading.getRectangleWorldCoordinates
 import ktx.box2d.body
+import org.koin.dsl.module
 
 inline class PlatformEntity(val entity: Entity) {
 
@@ -70,4 +75,22 @@ class PlatformEntityCreator(
         engine.addEntity(entity)
         return PlatformEntity(entity)
     }
+}
+
+
+class PlatformEntityMapObjectLoader(
+    private val platformEntityCreator: PlatformEntityCreator
+) : MapEntityLoader {
+    override val type: String
+        get() = "Platform"
+
+    override fun loadEntity(mapObject: MapObject) {
+        require(mapObject is RectangleMapObject)
+        platformEntityCreator.createPlatformEntity(getRectangleWorldCoordinates(mapObject))
+    }
+}
+
+val platformModule = module {
+    single { PlatformEntityCreator(get(), get(), get(), get()) }
+    single { PlatformEntityMapObjectLoader(get()) }
 }

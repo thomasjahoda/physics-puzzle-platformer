@@ -7,7 +7,10 @@ import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RectangleSizeComponent
 import com.jafleck.game.entities.ThrownBallEntity
 import com.jafleck.game.entities.ThrownBallEntityCreator
-import ktx.math.*
+import ktx.math.div
+import ktx.math.minus
+import ktx.math.plus
+import ktx.math.times
 
 class BallThrowerGadget(
     private val thrownBallEntityCreator: ThrownBallEntityCreator

@@ -20,3 +20,8 @@ If running the project via IntelliJ and the default android run-config does not 
 The gradle task `android:run` only runs the application but does not build it.
 You can build the application first with `android:build`, but this takes very long.
 Using the IDE (either IntelliJ with Android plugin or Android Studio) is recommended.
+
+
+## Executing tests
+Either execute the tests via gradle (e.g. core:test) 
+or use IntelliJ but change the test runner to "Gradle Test Runner" in the settings.

@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.maps.MapObject
+import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
@@ -15,8 +17,12 @@ import com.jafleck.game.components.*
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.families.MovingBody
 import com.jafleck.game.families.PositionedPlayer
+import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.Gadget
+import com.jafleck.game.maploading.MapEntityLoader
+import com.jafleck.game.maploading.getRectangleWorldCoordinates
 import ktx.box2d.body
+import org.koin.dsl.module
 
 inline class PlayerEntity(val entity: Entity) {
 
@@ -60,10 +66,9 @@ class PlayerEntityCreator(
     private val drawable: Drawable = TextureRegionDrawable(playerTextureRegion).tint(PlayerEntity.COLOR)
 
     fun createPlayerEntity(
-        lowerLeftCornerPosition: Vector2
+        originPosition: Vector2
     ): PlayerEntity {
         val entity = engine.createEntity().apply {
-            val originPosition = lowerLeftCornerPosition.cpy().add(PlayerEntity.HALF_SIZE)
             add(OriginPositionComponent(originPosition))
             add(RectangleSizeComponent(PlayerEntity.SIZE))
             add(DrawableVisualComponent(drawable))
@@ -83,4 +88,21 @@ class PlayerEntityCreator(
         engine.addEntity(entity)
         return PlayerEntity(entity)
     }
+}
+
+class PlayerEntityMapObjectLoader(
+    private val playerEntityCreator: PlayerEntityCreator
+) : MapEntityLoader {
+    override val type: String
+        get() = "PlayerSpawn"
+
+    override fun loadEntity(mapObject: MapObject) {
+        require(mapObject is RectangleMapObject)
+        playerEntityCreator.createPlayerEntity(getRectangleWorldCoordinates(mapObject).getCenter(Vector2()))
+    }
+}
+
+val playerModule = module {
+    single { PlayerEntityCreator(get(), get(), get(BallThrowerGadget::class, null, null), get()) }
+    single { PlayerEntityMapObjectLoader(get()) }
 }

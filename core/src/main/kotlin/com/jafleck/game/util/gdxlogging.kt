@@ -1,7 +1,9 @@
 package com.jafleck.game.util
 
 import com.badlogic.gdx.Application
+import ktx.log.Logger
 import org.koin.core.logger.Level
+import kotlin.reflect.KClass
 
 enum class LoggingLevel {
     ERROR,
@@ -29,3 +31,4 @@ private val koinLoggingLevelByLoggingLevel = mapOf(
 
 fun LoggingLevel.asKoinLoggingLevel() = koinLoggingLevelByLoggingLevel[this]
 
+fun logger(someClass: KClass<out Any>): Logger = Logger(someClass.java.name)
