@@ -167,11 +167,57 @@ project(":core") {
         }
     }
     tasks.clean {
-        delete(project.extra["texturePackerOutputDirectory"] as String)
+        delete(fileTree(project.extra["texturePackerOutputDirectory"] as String) {
+            exclude(".gitignore")
+        })
     }
-
     tasks.classes {
         dependsOn("texturePacker")
     }
-}
 
+
+    fun configureTaskForExportingMaps(task: Task, inputDir: String, outputDir: String) {
+        task.inputs.dir(inputDir)
+        task.outputs.dir(outputDir)
+        task.doLast {
+            logger.debug("Exporting 'Tiled' maps from directory $inputDir to $outputDir")
+            val tmxFiles = project.file(inputDir).listFiles { dir, name -> name.endsWith(".tmx") }
+            @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+            tmxFiles.forEach {
+                logger.info("Exporting ${it.name}")
+                project.exec {
+                    val outputFile = project.file(outputDir).absolutePath + "/" + it.name
+                    commandLine = listOf("tiled", "--export-map", "--detach-templates", it.absolutePath, outputFile)
+                }
+            }
+        }
+    }
+
+    task("exportMaps") {
+        val inputDir = "$projectDir/src/main/tiledmaps"
+        val outputDir = "$projectDir/src/main/resources/maps"
+        configureTaskForExportingMaps(this, inputDir, outputDir)
+    }
+    tasks.clean {
+        delete(fileTree("$projectDir/src/main/resources/maps") {
+            exclude(".gitignore")
+        })
+    }
+    tasks.classes {
+        dependsOn("exportMaps")
+    }
+    
+    task("testExportMaps") {
+        val inputDir = "$projectDir/src/test/tiledmaps"
+        val outputDir = "$projectDir/src/test/resources/maps"
+        configureTaskForExportingMaps(this, inputDir, outputDir)
+    }
+    tasks.clean {
+        delete(fileTree("$projectDir/src/test/resources/maps") {
+            exclude(".gitignore")
+        })
+    }
+    tasks.testClasses {
+        dependsOn("testExportMaps")
+    }
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objecttypes>
+ <objecttype name="Platform" color="#000000">
+  <property name="type" type="string" default="Platform"/>
+ </objecttype>
+ <objecttype name="PlayerSpawn" color="#8f5902">
+  <property name="type" type="string" default="PlayerSpawn"/>
+ </objecttype>
+</objecttypes>
