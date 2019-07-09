@@ -17,6 +17,7 @@ import com.jafleck.game.assets.Assets
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.assets.autoScaleByExpectedWorldSize
 import com.jafleck.game.components.*
+import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.maploading.getRectangleWorldCoordinates
@@ -30,12 +31,10 @@ inline class PlatformEntity(val entity: Entity) {
         const val FRICTION = 0.2f
     }
 
-    fun asDrawableRectangle() = DrawableRectangle(entity)
-
     val position
         get() = entity[OriginPositionComponent]
     val size
-        get() = entity[RectangleSizeComponent]
+        get() = entity[RectangleShapeComponent]
     val drawableVisual
         get() = entity[DrawableVisualComponent]
     val platform
@@ -61,7 +60,8 @@ class PlatformEntityCreator(
         val entity = engine.createEntity().apply {
             val originPosition = rectangle.getCenter(Vector2())
             add(OriginPositionComponent(originPosition))
-            add(RectangleSizeComponent(rectangle.getSize(Vector2())))
+            add(RectangleShapeComponent(rectangle.getSize(Vector2())))
+            add(RectangleBoundsComponent(rectangle.getSize(Vector2())))
             add(DrawableVisualComponent(drawable))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.StaticBody

@@ -14,9 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.assets.Assets
 import com.jafleck.game.components.*
+import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.families.MovingBody
-import com.jafleck.game.families.PositionedPlayer
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.Gadget
 import com.jafleck.game.maploading.MapEntityLoader
@@ -40,12 +40,11 @@ inline class PlayerEntity(val entity: Entity) {
 
     fun asDrawableRectangle() = DrawableRectangle(entity)
     fun asMovingBody() = MovingBody(entity)
-    fun asPositionedPlayer() = PositionedPlayer(entity)
 
     val position
         get() = entity[OriginPositionComponent]
     val size
-        get() = entity[RectangleSizeComponent]
+        get() = entity[RectangleShapeComponent]
     val drawableVisual
         get() = entity[DrawableVisualComponent]
     val player
@@ -70,7 +69,8 @@ class PlayerEntityCreator(
     ): PlayerEntity {
         val entity = engine.createEntity().apply {
             add(OriginPositionComponent(originPosition))
-            add(RectangleSizeComponent(PlayerEntity.SIZE))
+            add(RectangleShapeComponent(PlayerEntity.SIZE))
+            add(RectangleBoundsComponent(PlayerEntity.SIZE))
             add(DrawableVisualComponent(drawable))
             add(VelocityComponent(0f, 0f))
             add(RotationComponent(0f))

@@ -14,6 +14,7 @@ import com.jafleck.game.assets.Assets
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.assets.autoScaleByExpectedWorldSize
 import com.jafleck.game.components.*
+import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.families.DrawableRectangle
 import com.jafleck.game.families.MovingBody
 import ktx.box2d.body
@@ -29,13 +30,10 @@ inline class ThrownBallEntity(val entity: Entity) {
         val COLOR: Color = Color.RED.cpy().mul(0.4f)
     }
 
-    fun asDrawableRectangle() = DrawableRectangle(entity)
-    fun asMovingBody() = MovingBody(entity)
-
     val position
         get() = entity[OriginPositionComponent]
     val size
-        get() = entity[RectangleSizeComponent]
+        get() = entity[RectangleShapeComponent]
     val drawableVisual
         get() = entity[DrawableVisualComponent]
     val player
@@ -67,7 +65,8 @@ class ThrownBallEntityCreator(
     ): ThrownBallEntity {
         val entity = engine.createEntity().apply {
             add(OriginPositionComponent(originPosition))
-            add(RectangleSizeComponent(ThrownBallEntity.SIZE))
+            add(RectangleShapeComponent(ThrownBallEntity.SIZE))
+            add(RectangleBoundsComponent(ThrownBallEntity.SIZE))
             add(DrawableVisualComponent(drawable))
             add(VelocityComponent(velocity))
             add(BodyComponent(world.body {

@@ -1,12 +1,12 @@
-package com.jafleck.game.components
+package com.jafleck.game.components.shape
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class RectangleSizeComponent(
+class RectangleShapeComponent(
     val vector: Vector2
-) : Component {
+) : Component, ShapeComponent {
     constructor(width: Float, height: Float) : this(Vector2(width, height))
 
     var width
@@ -20,5 +20,5 @@ class RectangleSizeComponent(
             vector.y = value
         }
 
-    companion object : ComponentMapperAccessor<RectangleSizeComponent>(RectangleSizeComponent::class)
+    companion object : ComponentMapperAccessor<RectangleShapeComponent>(RectangleShapeComponent::class)
 }
