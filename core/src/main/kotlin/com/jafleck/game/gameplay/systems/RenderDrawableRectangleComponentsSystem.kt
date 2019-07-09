@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.utils.TransformDrawable
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.families.DrawableRectangle
-import com.jafleck.game.util.GameCamera
+import com.jafleck.game.gameplay.ui.GameCamera
 
 
 class RenderDrawableRectangleComponentsSystem(

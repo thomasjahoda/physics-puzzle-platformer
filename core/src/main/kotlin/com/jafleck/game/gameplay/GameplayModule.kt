@@ -7,13 +7,15 @@ import com.badlogic.gdx.physics.box2d.Box2D
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.game.assets.GdxHoloSkin
-import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.systems.*
+import com.jafleck.game.gameplay.ui.GameCamera
+import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.gameplay.ui.PlayScreen
-import com.jafleck.game.util.*
+import com.jafleck.game.gameplay.ui.UiCamera
+import com.jafleck.game.gameplay.ui.UiViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import com.jafleck.game.util.listeners.EntityFamilyListener
@@ -84,6 +86,7 @@ val gameplayModule: Module = module {
         }
         logicLoader
     }
+    // physics
     single {
         Box2D.init()
         createWorld(gravity = earthGravity)

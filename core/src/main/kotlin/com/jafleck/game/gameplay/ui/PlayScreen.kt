@@ -9,10 +9,6 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.libgdxktx.clearScreen
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
-import com.jafleck.game.util.GameCamera
-import com.jafleck.game.util.GameViewport
-import com.jafleck.game.util.UiCamera
-import com.jafleck.game.util.UiViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import ktx.app.KtxScreen

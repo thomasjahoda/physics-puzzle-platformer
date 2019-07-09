@@ -1,4 +1,4 @@
-package com.jafleck.game.util
+package com.jafleck.game.gameplay.ui
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.utils.viewport.ExtendViewport

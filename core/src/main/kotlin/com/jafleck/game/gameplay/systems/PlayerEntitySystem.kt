@@ -1,4 +1,4 @@
-package com.jafleck.game.util.systems
+package com.jafleck.game.gameplay.systems
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity

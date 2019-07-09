@@ -3,7 +3,6 @@ package com.jafleck.game.gameplay.systems
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.components.PlayerMovementState
 import com.jafleck.game.entities.PlayerEntity
-import com.jafleck.game.util.systems.PlayerEntitySystem
 
 
 class PlayerMovementSystem(

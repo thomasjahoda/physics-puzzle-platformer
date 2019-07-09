@@ -6,9 +6,8 @@ import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.entities.PlayerEntity
 import com.jafleck.game.gadgets.MouseActivatedGadget
-import com.jafleck.game.util.GameViewport
+import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
-import com.jafleck.game.util.systems.PlayerEntitySystem
 
 
 class PlayerGadgetActivationSystem(

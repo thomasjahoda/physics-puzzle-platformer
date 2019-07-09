@@ -1,8 +1,7 @@
 package com.jafleck.game.gameplay.systems
 
 import com.jafleck.game.entities.PlayerEntity
-import com.jafleck.game.util.GameCamera
-import com.jafleck.game.util.systems.PlayerEntitySystem
+import com.jafleck.game.gameplay.ui.GameCamera
 
 
 class TrackPlayerWithCameraSystem(
