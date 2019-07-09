@@ -3,6 +3,7 @@ package com.jafleck.game
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.jafleck.game.assets.GdxHoloSkin
+import com.jafleck.game.assets.assetsModule
 import com.jafleck.game.config.LoggingConfig
 import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.EngineLogicLoader
@@ -33,7 +34,9 @@ class GdxApplication : KtxGame<Screen>() {
                 + filesModule
                 + entityModules
                 + mapLoadingModule
-                + gameplayModule)
+                + assetsModule
+                + gameplayModule
+            )
         }
 
         koinApplication.koin.get<GdxHoloSkin>().setAsDefault()

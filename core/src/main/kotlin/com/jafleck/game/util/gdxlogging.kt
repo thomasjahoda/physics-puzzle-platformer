@@ -32,3 +32,5 @@ private val koinLoggingLevelByLoggingLevel = mapOf(
 fun LoggingLevel.asKoinLoggingLevel() = koinLoggingLevelByLoggingLevel[this]
 
 fun logger(someClass: KClass<out Any>): Logger = Logger(someClass.java.name)
+
+fun logger(name: String): Logger = Logger(name)
