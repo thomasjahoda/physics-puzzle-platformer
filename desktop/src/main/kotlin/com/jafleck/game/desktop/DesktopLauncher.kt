@@ -10,6 +10,7 @@ import com.jafleck.game.GdxApplication
 
 fun main(args: Array<String>) {
     val config = LwjglApplicationConfiguration()
+    config.samples = 3
     LwjglApplication(GdxApplication(), config)
 }
 
