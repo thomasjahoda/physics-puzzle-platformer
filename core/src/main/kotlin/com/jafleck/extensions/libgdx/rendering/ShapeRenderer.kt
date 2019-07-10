@@ -2,15 +2,21 @@ package com.jafleck.extensions.libgdx.rendering
 
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
+import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import kotlin.math.max
 
 
-fun ShapeRenderer.drawRectanglePolygon(rectanglePolygon: Polygon) {
+fun ShapeRenderer.fillRectanglePolygon(rectanglePolygon: RectanglePolygon) {
     val transformedVertices = rectanglePolygon.transformedVertices
-    triangle(transformedVertices[0], transformedVertices[1], transformedVertices[2], transformedVertices[3], transformedVertices[4], transformedVertices[5])
-    triangle(transformedVertices[0], transformedVertices[1], transformedVertices[4], transformedVertices[5], transformedVertices[6], transformedVertices[7])
+    triangle(
+        transformedVertices.bottomLeftX, transformedVertices.bottomLeftY,
+        transformedVertices.topLeftX, transformedVertices.topLeftY,
+        transformedVertices.topRightX, transformedVertices.topRightY)
+    triangle(
+        transformedVertices.bottomLeftX, transformedVertices.bottomLeftY,
+        transformedVertices.topRightX, transformedVertices.topRightY,
+        transformedVertices.bottomRightX, transformedVertices.bottomRightY)
 }
 
 fun ShapeRenderer.box(originPosition: Vector2, rectangleShape: Vector2) {

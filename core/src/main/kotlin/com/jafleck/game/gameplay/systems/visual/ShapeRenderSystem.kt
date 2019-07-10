@@ -5,11 +5,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.Polygon
-import com.jafleck.extensions.libgdx.math.setRectangleShapeAround00
+import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
-import com.jafleck.extensions.libgdx.rendering.drawRectanglePolygon
+import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
 import com.jafleck.game.families.VisualShape
 import com.jafleck.game.gameplay.ui.GameCamera
 
@@ -23,7 +22,7 @@ class ShapeRenderSystem(
         setAutoShapeType(false)
     }
     private lateinit var entities: ImmutableArray<Entity>
-    private val rectTempPolygon = Polygon(FloatArray(4 * 2))
+    private val rectTempPolygon = RectanglePolygon.create()
 
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(VisualShape.family)
@@ -83,23 +82,23 @@ class ShapeRenderSystem(
 
                         // first fill everything with border color
                         rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
-                        rectTempPolygon.rotation = rotationDegrees
-                        rectTempPolygon.setPosition(position.originX, position.originY)
+                        rectTempPolygon.polygon.rotation = rotationDegrees
+                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
                         sr.color = renderedShape.borderColor
-                        sr.drawRectanglePolygon(rectTempPolygon)
+                        sr.fillRectanglePolygon(rectTempPolygon)
 
                         // then fill inner rectangle (where border is excluded) with fill color
                         rectTempPolygon.setRectangleShapeAround00(rectangleShape.width - 2 * borderThickness, rectangleShape.height - 2 * borderThickness)
-                        rectTempPolygon.rotation = rotationDegrees
-                        rectTempPolygon.setPosition(position.originX, position.originY)
+                        rectTempPolygon.polygon.rotation = rotationDegrees
+                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
                         sr.color = renderedShape.fillColor
-                        sr.drawRectanglePolygon(rectTempPolygon)
+                        sr.fillRectanglePolygon(rectTempPolygon)
                     } else if (renderedShape.fillColor != null) {
                         rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
-                        rectTempPolygon.rotation = rotationDegrees
-                        rectTempPolygon.setPosition(position.originX, position.originY)
+                        rectTempPolygon.polygon.rotation = rotationDegrees
+                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
                         sr.color = renderedShape.fillColor
-                        sr.drawRectanglePolygon(rectTempPolygon)
+                        sr.fillRectanglePolygon(rectTempPolygon)
                     }
                 }
             }
