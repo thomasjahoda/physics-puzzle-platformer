@@ -208,10 +208,11 @@ project(":core") {
             @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
             tmxFiles.forEach {
                 logger.info("Exporting ${it.name}")
-                project.exec {
+                val result = project.exec {
                     val outputFile = project.file(outputDir).absolutePath + "/" + it.name
                     commandLine = listOf(tiledCli, "--export-map", "--detach-templates", it.absolutePath, outputFile)
                 }
+                result.assertNormalExitValue()
             }
         }
     }
@@ -226,7 +227,7 @@ project(":core") {
             exclude(".gitignore")
         })
     }
-    tasks.classes {
+    tasks.processResources {
         dependsOn("exportMaps")
     }
     
@@ -240,7 +241,7 @@ project(":core") {
             exclude(".gitignore")
         })
     }
-    tasks.testClasses {
+    tasks.processTestResources {
         dependsOn("testExportMaps")
     }
 }
