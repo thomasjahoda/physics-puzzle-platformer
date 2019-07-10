@@ -18,6 +18,10 @@ operator fun <T : Component> Entity.contains(componentMapperAccessor: ComponentM
     return componentMapperAccessor.isIn(this)
 }
 
+fun <T : Component> Entity.has(componentMapperAccessor: ComponentMapperAccessor<T>): Boolean {
+    return componentMapperAccessor.isIn(this)
+}
+
 operator fun <T : Component> Entity.get(componentMapperAccessor: ComponentMapperAccessor<T>): T {
     return componentMapperAccessor.getFrom(this)
 }

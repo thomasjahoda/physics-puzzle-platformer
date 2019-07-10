@@ -7,6 +7,7 @@
           <entry key="GDX_LOGGING_LEVEL" value="none" />
           <entry key="KOIN_LOGGING_LEVEL" value="INFO" />
           <entry key="PHYSICS_DEBUG_RENDERING" value="true" />
+          <entry key="SHOW_CURSOR_WORLD_POSITION" value="true" />
         </map>
       </option>
       <option name="executionName" />

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.libgdxktx.clearScreen
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
+import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import ktx.app.KtxScreen
@@ -27,17 +28,23 @@ class PlayScreen(
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
     private val gameInputMultiplexer: GameInputMultiplexer,
     private val uiInputMultiplexer: UiInputMultiplexer,
-    private val box2DDebugRenderer: Box2DDebugRenderer?
+    private val box2DDebugRenderer: Box2DDebugRenderer?,
+    private val cursorDebugSystem: CursorDebugSystem?
 ) : KtxScreen {
+
+    private val rootTable = table {
+        if (cursorDebugSystem != null) {
+            add(label(" //  "))
+            add(cursorDebugSystem.worldCoordsOfCursorLabel)
+        }
+//        setFillParent(true)
+        pack()
+    }
 
     init {
         stage.apply {
             // add UI here when necessary
-            addActor(table {
-                label("some UI text")
-//                setFillParent(true)
-                pack()
-            })
+            addActor(rootTable)
         }
         uiInputMultiplexer.addProcessor(stage)
         uiInputMultiplexer.addProcessor(gameInputMultiplexer)
@@ -52,16 +59,17 @@ class PlayScreen(
     }
 
     private fun updateAndRender(deltaSeconds: Float) {
-        clearScreenAndRenderUi()
+        clearScreen(Color.WHITE)
 
         gameViewport.apply()
         engine.update(deltaSeconds)
         box2DDebugRenderer?.render(world, gameCamera.combined)
+        renderUi()
     }
 
-    private fun clearScreenAndRenderUi() {
+    private fun renderUi() {
         uiViewport.apply()
-        clearScreen(Color.WHITE)
+        rootTable.pack()
         stage.draw()
     }
 

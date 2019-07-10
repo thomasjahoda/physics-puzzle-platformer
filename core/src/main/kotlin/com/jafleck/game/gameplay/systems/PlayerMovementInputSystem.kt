@@ -11,6 +11,7 @@ import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.GestureAdapterInterface
 import com.jafleck.game.util.input.InputProcessorAdapter
+import com.jafleck.game.util.logger
 
 
 class PlayerMovementInputSystem(
@@ -19,7 +20,7 @@ class PlayerMovementInputSystem(
     private val gameInputMultiplexer: GameInputMultiplexer
 ) : PlayerEntitySystem(priority) {
 
-    private val logger = ktx.log.logger<PlayerMovementInputSystem>()
+    private val logger = logger(this::class)
 
     private val gestureListener = GestureListener()
     private val basicGameGestureDetector = GestureDetector(

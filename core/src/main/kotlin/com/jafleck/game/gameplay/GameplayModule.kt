@@ -6,18 +6,16 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Box2D
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.systems.*
+import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
-import com.jafleck.game.gameplay.ui.GameCamera
-import com.jafleck.game.gameplay.ui.GameViewport
-import com.jafleck.game.gameplay.ui.PlayScreen
-import com.jafleck.game.gameplay.ui.UiCamera
-import com.jafleck.game.gameplay.ui.UiViewport
+import com.jafleck.game.gameplay.ui.*
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import com.jafleck.game.util.listeners.EntityFamilyListener
@@ -41,15 +39,20 @@ val gameplayModule: Module = module {
     single { UiInputMultiplexer() }
     single { GameInputMultiplexer() }
     single { GdxHoloSkin(get()) }
-    single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull()) }
+    single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull(), getOrNull()) }
     // gadgets
     single { BallThrowerGadget(get()) }
     // entity component system
     single { Engine() }
+    if (PhysicsConfiguration.showCursorWorldPosition) {
+        single {
+            CursorDebugSystem(get(), get())
+        }
+    }
     single {
         var systemPriority = 0
         @Suppress("UNUSED_CHANGED_VALUE")
-        val systems = listOf(
+        val systems = mutableListOf(
             // input handling
             PlayerMovementInputSystem(systemPriority++, get(), get()),
             PlayerGadgetActivationSystem(systemPriority++, get(), get()),
@@ -67,7 +70,12 @@ val gameplayModule: Module = module {
             TrackPlayerWithCameraSystem(systemPriority++, get()),
             ShapeRenderSystem(systemPriority++, get()),
             RenderDrawableRectangleComponentsSystem(systemPriority++, get(), get(), get())
-        )
+        ).apply {
+            withItIfNotNull(this@single.getOrNull<CursorDebugSystem>()) {
+                it.priority = systemPriority++
+                add(it)
+            }
+        }
 
         val standaloneEntityListeners = listOf<EntityListener>(
             SyncRemovedBodiesToWorldEntityListener(get())

@@ -44,7 +44,9 @@ class GdxApplication : KtxGame<Screen>() {
         loadSystems(koinApplication)
 
         val mapLoader = koinApplication.koin.get<MapLoader>()
-        mapLoader.loadMap("test1.tmx")
+        val mapName = "test1.tmx"
+//        val mapName = "single_platform.tmx"
+        mapLoader.loadMap(mapName)
 
         val screen = koinApplication.koin.get<PlayScreen>()
         addScreen(screen)

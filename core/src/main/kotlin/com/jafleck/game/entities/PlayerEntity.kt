@@ -94,9 +94,9 @@ class PlayerEntityMapObjectLoader(
     override val type: String
         get() = "PlayerSpawn"
 
-    override fun loadEntity(mapObject: MapObject) {
+    override fun loadEntity(mapObject: MapObject): Entity {
         require(mapObject is RectangleMapObject)
-        playerEntityCreator.createPlayerEntity(getRectangleWorldCoordinates(mapObject).getCenter(Vector2()))
+        return playerEntityCreator.createPlayerEntity(getRectangleWorldCoordinates(mapObject).getCenter(Vector2())).entity
     }
 }
 

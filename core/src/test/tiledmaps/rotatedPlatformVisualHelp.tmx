@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="37">
+ <objectgroup id="2" name="Entities">
+  <object id="8" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Actual rectangle" x="320" y="512" width="128" height="128" rotation="-45"/>
+  <object id="12" name="Actual origin position" x="411" y="512">
+   <point/>
+  </object>
+  <object id="15" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" type="" x="320" y="512" width="128" height="128" rotation="0"/>
+  <object id="16" x="304" y="688" width="176" height="88">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">The map rotation values are rotating around the top-left corner, they need to be calculated with (360-value) because we need the rotation around the bottom-left corner.</text>
+  </object>
+  <object id="21" x="128" y="536" width="176" height="24">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">Tiled saves the coords of the top-left position</text>
+  </object>
+  <object id="22" x="128" y="568" width="176" height="24">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">LibGDX converts position from top-left to bottom-left</text>
+  </object>
+  <object id="23" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Actual rectangle" x="800" y="512" width="128" height="128" rotation="-20"/>
+  <object id="25" name="Actual origin position" x="880" y="552">
+   <point/>
+  </object>
+  <object id="26" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" type="" x="800" y="512" width="128" height="128" rotation="0"/>
+  <object id="31" x="632" y="504" width="144" height="24">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">Another example seen here:</text>
+  </object>
+  <object id="32" x="278" y="658">
+   <polygon points="0,0 24,-8 16,-16 40,-16 40,8 32,0 8,16"/>
+  </object>
+  <object id="33" x="160" y="664" width="128" height="16">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">LibGDX rectangle position</text>
+  </object>
+  <object id="34" x="758" y="658">
+   <polygon points="0,0 24,-8 16,-16 40,-16 40,8 32,0 8,16"/>
+  </object>
+  <object id="35" x="640" y="662" width="128" height="16">
+   <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">LibGDX rectangle position</text>
+  </object>
+ </objectgroup>
+</map>
