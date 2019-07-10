@@ -8,6 +8,8 @@ TODO local.properties?
 
 ## Developing Maps
 
+Define location of .exe in local.properties
+
 Use the 'Tiled' map editor to create and edit maps within `core/src/main/tiledmaps`.
 
 Choose `objecttypes.xml` as object types file using the 'View' > 'Object Types Editor' > 'File' > 'Choose Object Types File'.

@@ -1,3 +1,5 @@
+import java.util.*
+
 plugins {
     `java-library`
     kotlin("jvm") version "1.3.41"
@@ -188,13 +190,27 @@ project(":core") {
         task.outputs.dir(outputDir)
         task.doLast {
             logger.debug("Exporting 'Tiled' maps from directory $inputDir to $outputDir")
+            val localProperties = project.file("../local.properties")
+            var tiledCli: String? = null
+            if (localProperties.exists()) {
+                val properties = Properties()
+                properties.load(localProperties.inputStream())
+                val tiledCliFromProperty = properties.getProperty("tiled.cli")
+                if (tiledCliFromProperty != null) {
+                    tiledCli = tiledCliFromProperty
+                }
+            }
+            if (tiledCli == null) {
+                tiledCli = "tiled"
+            }
+
             val tmxFiles = project.file(inputDir).listFiles { dir, name -> name.endsWith(".tmx") }
             @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
             tmxFiles.forEach {
                 logger.info("Exporting ${it.name}")
                 project.exec {
                     val outputFile = project.file(outputDir).absolutePath + "/" + it.name
-                    commandLine = listOf("tiled", "--export-map", "--detach-templates", it.absolutePath, outputFile)
+                    commandLine = listOf(tiledCli, "--export-map", "--detach-templates", it.absolutePath, outputFile)
                 }
             }
         }
