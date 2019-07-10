@@ -58,12 +58,8 @@ inline class PlayerEntity(val entity: Entity) {
 class PlayerEntityCreator(
     private val engine: Engine,
     private val world: World,
-    private val initialGadget: Gadget,
-    assetManager: AssetManager
+    private val initialGadget: Gadget
 ) {
-    private val playerTextureRegion = assetManager.get(Assets.atlas).findRegion("player")
-    private val drawable: Drawable = TextureRegionDrawable(playerTextureRegion).tint(PlayerEntity.COLOR)
-
     fun createPlayerEntity(
         originPosition: Vector2
     ): PlayerEntity {
@@ -71,9 +67,11 @@ class PlayerEntityCreator(
             add(OriginPositionComponent(originPosition))
             add(RectangleShapeComponent(PlayerEntity.SIZE))
             add(RectangleBoundsComponent(PlayerEntity.SIZE))
-            add(DrawableVisualComponent(drawable))
             add(VelocityComponent(0f, 0f))
             add(RotationComponent(0f))
+            add(VisualShapeComponent(
+                borderColor = Color.BLACK, borderThickness = PlayerEntity.HALF_SIZE.x * 0.1f,
+                fillColor = Color.FIREBRICK.cpy().mul(0.9f)))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.DynamicBody
                 box(PlayerEntity.SIZE.x, PlayerEntity.SIZE.y) {
@@ -103,6 +101,6 @@ class PlayerEntityMapObjectLoader(
 }
 
 val playerModule = module {
-    single { PlayerEntityCreator(get(), get(), get(BallThrowerGadget::class, null, null), get()) }
+    single { PlayerEntityCreator(get(), get(), get(BallThrowerGadget::class, null, null)) }
     single { PlayerEntityMapObjectLoader(get()) }
 }

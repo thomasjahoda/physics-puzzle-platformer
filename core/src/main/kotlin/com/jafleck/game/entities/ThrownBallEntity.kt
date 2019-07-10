@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
@@ -41,9 +42,7 @@ inline class ThrownBallEntity(val entity: Entity) {
 
 class ThrownBallEntityCreator(
     private val engine: Engine,
-    private val world: World,
-    assetManager: AssetManager,
-    screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
+    private val world: World
 ) {
     fun createThrownBall(
         originPosition: Vector2,
@@ -55,7 +54,7 @@ class ThrownBallEntityCreator(
             add(RectangleBoundsComponent(ThrownBallEntity.SIZE))
             add(RotationComponent(0f))
             add(VisualShapeComponent(
-                borderColor = Color.RED.cpy().mul(0.9f), borderThickness = null,
+                borderColor = Color.RED.cpy().mul(0.9f), borderThickness = ThrownBallEntity.RADIUS / 3,
                 fillColor = Color.RED.cpy().mul(0.4f)))
             add(VelocityComponent(velocity))
             add(BodyComponent(world.body {
@@ -76,5 +75,5 @@ class ThrownBallEntityCreator(
 }
 
 val thrownBallModule = module {
-    single { ThrownBallEntityCreator(get(), get(), get(), get()) }
+    single { ThrownBallEntityCreator(get(), get()) }
 }

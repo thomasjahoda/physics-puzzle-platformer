@@ -38,9 +38,7 @@ inline class PlatformEntity(val entity: Entity) {
 
 class PlatformEntityCreator(
     private val engine: Engine,
-    private val world: World,
-    assetManager: AssetManager,
-    screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
+    private val world: World
 ) {
     fun createPlatformEntity(
         rectangle: Rectangle
@@ -50,7 +48,7 @@ class PlatformEntityCreator(
             add(OriginPositionComponent(originPosition))
             add(RectangleShapeComponent(rectangle.getSize(Vector2())))
             add(VisualShapeComponent(
-                borderColor = Color.PURPLE, borderThickness = null,
+                borderColor = Color.PURPLE, borderThickness = 0.1f,
                 fillColor = Color.WHITE.cpy().mul(0.9f)))
             add(BodyComponent(world.body {
                 type = BodyDef.BodyType.StaticBody
@@ -80,6 +78,6 @@ class PlatformEntityMapObjectLoader(
 }
 
 val platformModule = module {
-    single { PlatformEntityCreator(get(), get(), get(), get()) }
+    single { PlatformEntityCreator(get(), get()) }
     single { PlatformEntityMapObjectLoader(get()) }
 }
