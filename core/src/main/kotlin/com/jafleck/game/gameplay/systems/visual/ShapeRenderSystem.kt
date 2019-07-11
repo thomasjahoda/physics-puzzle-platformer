@@ -42,7 +42,6 @@ class ShapeRenderSystem(
             val borderThickness = renderedShape.borderThickness
             val rotationDegrees = entity.rotation?.degrees ?: 0f
 
-            println(position.vector)
             val circleShape = entity.circleShape
             if (circleShape != null) {
                 if (borderThickness != null) {
