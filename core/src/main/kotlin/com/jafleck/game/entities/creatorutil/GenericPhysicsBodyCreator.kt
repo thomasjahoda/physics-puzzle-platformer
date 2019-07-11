@@ -9,6 +9,7 @@ import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.BodyComponent
 import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RotationComponent
+import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import ktx.box2d.BodyDefinition
@@ -36,6 +37,7 @@ class GenericPhysicsBodyCreator(
             val physicsEntity = GenericPhysicsEntity(entity)
             setCommonProperties(physicsEntity)
             determineShape(physicsEntity, fixtureBlock)
+            setVelocity(physicsEntity)
         }))
     }
 
@@ -46,6 +48,7 @@ class GenericPhysicsBodyCreator(
             val physicsEntity = GenericPhysicsEntity(entity)
             setCommonProperties(physicsEntity)
             determineShape(physicsEntity, fixtureBlock)
+            setVelocity(physicsEntity)
         }))
     }
 
@@ -86,12 +89,20 @@ class GenericPhysicsBodyCreator(
             angle = it.radians
         }
     }
+
+    private fun BodyDefinition.setVelocity(physicsEntity: GenericPhysicsEntity) {
+        withItIfNotNull(physicsEntity.velocity) {
+            linearVelocity.set(it.vector)
+        }
+    }
 }
 
 inline class GenericPhysicsEntity(val entity: Entity) {
 
     val position
         get() = entity[OriginPositionComponent]
+    val velocity
+        get() = entity.getOrNull(VelocityComponent)
     val rotation
         get() = entity.getOrNull(RotationComponent)
     val rectangleShape

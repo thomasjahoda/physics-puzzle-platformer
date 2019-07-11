@@ -2,18 +2,13 @@ package com.jafleck.game.entities
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.World
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.components.*
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
-import ktx.box2d.body
+import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import org.koin.dsl.module
 
 inline class ThrownBallEntity(val entity: Entity) {
@@ -42,7 +37,7 @@ inline class ThrownBallEntity(val entity: Entity) {
 
 class ThrownBallEntityCreator(
     private val engine: Engine,
-    private val world: World
+    private val genericPhysicsBodyCreator: GenericPhysicsBodyCreator
 ) {
     fun createThrownBall(
         originPosition: Vector2,
@@ -57,16 +52,11 @@ class ThrownBallEntityCreator(
                 borderColor = Color.RED.cpy().mul(0.9f), borderThickness = ThrownBallEntity.RADIUS / 3,
                 fillColor = Color.RED.cpy().mul(0.4f)))
             add(VelocityComponent(velocity))
-            add(BodyComponent(world.body {
-                type = BodyDef.BodyType.DynamicBody
-                circle(radius = ThrownBallEntity.RADIUS) {
-                    density = ThrownBallEntity.DENSITY
-                    friction = ThrownBallEntity.FRICTION
-                    restitution = 0.5f
-                }
-                linearVelocity.set(velocity)
-                this.position.set(originPosition)
-            }))
+            genericPhysicsBodyCreator.createDynamicBody(this) {
+                density = ThrownBallEntity.DENSITY
+                friction = ThrownBallEntity.FRICTION
+                restitution = 0.5f
+            }
             add(ThrownBallComponent())
         }
         engine.addEntity(entity)
