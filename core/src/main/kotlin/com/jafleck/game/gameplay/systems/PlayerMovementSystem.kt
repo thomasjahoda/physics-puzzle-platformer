@@ -5,9 +5,7 @@ import com.jafleck.game.components.PlayerMovementState
 import com.jafleck.game.entities.PlayerEntity
 
 
-class PlayerMovementSystem(
-    priority: Int
-) : PlayerEntitySystem(priority) {
+class PlayerMovementSystem : PlayerEntitySystem() {
 
     private val acceleration = 0.25f
 

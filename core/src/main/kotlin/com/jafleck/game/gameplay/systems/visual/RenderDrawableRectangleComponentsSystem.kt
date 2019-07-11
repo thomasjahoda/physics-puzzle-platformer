@@ -13,11 +13,10 @@ import com.jafleck.game.gameplay.ui.GameCamera
 
 
 class RenderDrawableRectangleComponentsSystem(
-    priority: Int,
     private val spriteBatch: SpriteBatch,
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
     private val camera: GameCamera
-) : EntitySystem(priority) {
+) : EntitySystem() {
 
     private lateinit var entities: ImmutableArray<Entity>
 

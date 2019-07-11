@@ -5,9 +5,8 @@ import com.badlogic.gdx.physics.box2d.World
 
 
 class PhysicsSimulationStepSystem(
-    priority: Int,
     private val world: World
-) : EntitySystem(priority) {
+) : EntitySystem() {
 
     override fun update(deltaSeconds: Float) {
         world.step(deltaSeconds, 6, 2)

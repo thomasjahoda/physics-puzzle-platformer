@@ -88,5 +88,5 @@ class PlayerEntityCreator(
 }
 
 val playerModule = module {
-    single { PlayerEntityCreator(get(), get(), get(), get(), get(BallThrowerGadget::class, null, null)) }
+    single { PlayerEntityCreator(get(), get(), get(), get(), get<BallThrowerGadget>()) }
 }

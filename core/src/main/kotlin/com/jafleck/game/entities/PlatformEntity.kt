@@ -47,7 +47,9 @@ class PlatformEntityCreator(
     override fun loadEntity(mapObject: MapObject): Entity {
         return engine.createEntity().apply {
             loadFrom(mapObject, ENTITY_CONFIG, mapObjectFormExtractor)
-            genericPhysicsBodyCreator.createStaticBody(this)
+            genericPhysicsBodyCreator.createStaticBody(this) {
+                friction = PlayerEntity.FRICTION
+            }
             add(VisualShapeComponent(
                 borderColor = Color.PURPLE, borderThickness = 0.1f,
                 fillColor = Color.WHITE.cpy().mul(0.9f)))

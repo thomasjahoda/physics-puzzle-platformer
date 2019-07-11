@@ -1,4 +1,4 @@
-package com.jafleck.game.gameplay.systems
+package com.jafleck.game.gameplay.systems.input
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
@@ -6,21 +6,23 @@ import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.entities.PlayerEntity
 import com.jafleck.game.gadgets.MouseActivatedGadget
+import com.jafleck.game.gameplay.systems.PlayerEntitySystem
 import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
+import com.jafleck.game.util.logger
 
 
 class PlayerGadgetActivationSystem(
-    priority: Int,
     private val gameViewport: GameViewport,
     private val gameInputMultiplexer: GameInputMultiplexer
-) : PlayerEntitySystem(priority) {
+) : PlayerEntitySystem() {
 
     private val basicGameGestureDetector = GestureDetector(GestureListener())
     private val clickedWorldPositions = arrayListOf<Vector2>()
 
-    override fun addedToEngine(engine: Engine) {
-        super.addedToEngine(engine)
+    private val logger = logger(this::class)
+
+    override fun additionalAddedToEngine(engine: Engine) {
         gameInputMultiplexer.addProcessor(basicGameGestureDetector)
     }
 
@@ -46,6 +48,7 @@ class PlayerGadgetActivationSystem(
         clickedWorldPositions.forEach { targetPosition ->
             val gadget = playerEntity.selectedGadget.value
             if (gadget is MouseActivatedGadget) {
+                logger.debug { "Activating gadget at world position $targetPosition" }
                 gadget.activate(playerEntity.entity, targetPosition)
             }
         }

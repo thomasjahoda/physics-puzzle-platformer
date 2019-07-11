@@ -5,9 +5,8 @@ import com.jafleck.game.gameplay.ui.GameCamera
 
 
 class TrackPlayerWithCameraSystem(
-    priority: Int,
     private val camera: GameCamera
-) : PlayerEntitySystem(priority) {
+) : PlayerEntitySystem() {
 
     override fun processPlayer(playerEntity: PlayerEntity) {
         camera.position.set(playerEntity.position.vector, camera.position.z)

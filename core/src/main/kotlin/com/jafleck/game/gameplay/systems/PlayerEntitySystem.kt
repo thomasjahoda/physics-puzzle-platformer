@@ -7,18 +7,20 @@ import com.badlogic.ashley.utils.ImmutableArray
 import com.jafleck.game.entities.PlayerEntity
 import com.jafleck.game.families.PositionedPlayer
 
-abstract class PlayerEntitySystem(
-    priority: Int
-) : EntitySystem(priority) {
+abstract class PlayerEntitySystem : EntitySystem() {
 
     private lateinit var entities: ImmutableArray<Entity>
 
-    override fun addedToEngine(engine: Engine) {
+    final override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(PositionedPlayer.family)
+        additionalAddedToEngine(engine)
         process()
     }
 
-    override fun update(deltaSeconds: Float) {
+    protected open fun additionalAddedToEngine(engine: Engine) {
+    }
+
+    final override fun update(deltaSeconds: Float) {
         process()
     }
 

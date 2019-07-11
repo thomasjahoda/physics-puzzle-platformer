@@ -10,6 +10,7 @@ import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.ThrownBallEntity
 import com.jafleck.game.entities.ThrownBallEntityCreator
 import com.jafleck.game.families.ShapedEntity
+import com.jafleck.game.util.logger
 import ktx.math.div
 import ktx.math.minus
 import ktx.math.plus
@@ -22,6 +23,8 @@ class BallThrowerGadget(
     private val throwSpeed = 20f
     private val secondsAlive = 10f
 
+    private val logger = logger(this::class)
+
     override fun activate(handler: Entity, targetPosition: Vector2) {
         val shapedEntity = ShapedEntity(handler)
         val entityRectangleSize = shapedEntity.shape.getRectangleAroundShape(Vector2())
@@ -31,6 +34,7 @@ class BallThrowerGadget(
         val velocity = throwDirection * throwSpeed
         val spawnPosition = entityPosition + throwDirection * (entityRectangleSize / 2 + ThrownBallEntity.HALF_SIZE)
 
+        logger.debug { "Spawning ball at $spawnPosition with velocity $velocity" }
         thrownBallEntityCreator.createThrownBall(spawnPosition, velocity).apply {
             addLimitedDuration(secondsAlive)
         }

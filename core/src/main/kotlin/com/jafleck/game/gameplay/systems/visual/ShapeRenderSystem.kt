@@ -14,9 +14,8 @@ import com.jafleck.game.gameplay.ui.GameCamera
 
 
 class ShapeRenderSystem(
-    priority: Int,
     private val camera: GameCamera
-) : EntitySystem(priority) {
+) : EntitySystem() {
 
     private val sr = ShapeRenderer().apply {
         setAutoShapeType(false)

@@ -19,13 +19,13 @@ class GenericPhysicsBodyCreator(
     private val world: World
 ) {
 
-    fun createStaticBody(entity: Entity) {
+    fun createStaticBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
         entity.add(BodyComponent(world.body {
             type = BodyDef.BodyType.StaticBody
 
             val physicsEntity = GenericPhysicsEntity(entity)
             setCommonProperties(physicsEntity)
-            determineShape(physicsEntity) {}
+            determineShape(physicsEntity, fixtureBlock)
         }))
     }
 

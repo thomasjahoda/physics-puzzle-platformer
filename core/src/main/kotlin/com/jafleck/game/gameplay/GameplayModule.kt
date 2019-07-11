@@ -2,6 +2,7 @@ package com.jafleck.game.gameplay
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntityListener
+import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.physics.box2d.Box2D
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
@@ -11,8 +12,17 @@ import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
-import com.jafleck.game.gameplay.systems.*
+import com.jafleck.game.gameplay.systems.PhysicsSimulationStepSystem
+import com.jafleck.game.gameplay.systems.PlayerMovementSystem
+import com.jafleck.game.gameplay.systems.RemoveEntityAfterDurationSystem
+import com.jafleck.game.gameplay.systems.TrackPlayerWithCameraSystem
 import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
+import com.jafleck.game.gameplay.systems.debug.PlayerManualTeleportDebugSystem
+import com.jafleck.game.gameplay.systems.input.CurrentCursorPositionInputSystem
+import com.jafleck.game.gameplay.systems.input.PlayerGadgetActivationSystem
+import com.jafleck.game.gameplay.systems.input.PlayerMovementInputSystem
+import com.jafleck.game.gameplay.systems.physicssync.SyncMovingBodySystem
+import com.jafleck.game.gameplay.systems.physicssync.SyncRotatingBodySystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
 import com.jafleck.game.gameplay.ui.*
@@ -34,7 +44,7 @@ val gameplayModule: Module = module {
     single { GameViewport(10f, 10f, get()) }
     single { UiCamera() }
     single { UiViewport(get()) }
-    single { Stage(get(UiViewport::class, null, null)) }
+    single { Stage(get<UiViewport>()) }
     single { SpriteBatch() }
     single { UiInputMultiplexer() }
     single { GameInputMultiplexer() }
@@ -44,38 +54,42 @@ val gameplayModule: Module = module {
     single { BallThrowerGadget(get()) }
     // entity component system
     single { Engine() }
+    single { CurrentCursorPositionInputSystem(get(), get()) }
     if (PhysicsConfiguration.showCursorWorldPosition) {
-        single {
-            CursorDebugSystem(get(), get(), get())
-        }
+        single { CursorDebugSystem(get(), get(), get()) }
+        single { PlayerManualTeleportDebugSystem(get(), get()) }
     }
     single {
-        var systemPriority = 0
-        @Suppress("UNUSED_CHANGED_VALUE")
-        val systems = mutableListOf(
+        val systems = mutableListOf<EntitySystem>()
+        systems.add(get<CurrentCursorPositionInputSystem>())
+        systems.addAll(listOf(
             // input handling
-            PlayerMovementInputSystem(systemPriority++, get(), get()),
-            PlayerGadgetActivationSystem(systemPriority++, get(), get()),
+            PlayerMovementInputSystem(get(), get()),
+            PlayerGadgetActivationSystem(get(), get()),
 
             // physics
-            PhysicsSimulationStepSystem(systemPriority++, get()),
-            SyncMovingBodySystem(systemPriority++),
-            SyncRotatingBodySystem(systemPriority++),
+            PhysicsSimulationStepSystem(get()),
+            SyncMovingBodySystem(),
+            SyncRotatingBodySystem(),
 
             //  logic
-            RemoveEntityAfterDurationSystem(systemPriority++),
-            PlayerMovementSystem(systemPriority++),
+            RemoveEntityAfterDurationSystem(),
+            PlayerMovementSystem(),
 
             // rendering
-            TrackPlayerWithCameraSystem(systemPriority++, get()),
-            ShapeRenderSystem(systemPriority++, get()),
-            RenderDrawableRectangleComponentsSystem(systemPriority++, get(), get(), get())
-        ).apply {
-            withItIfNotNull(this@single.getOrNull<CursorDebugSystem>()) {
-                it.priority = systemPriority++
-                add(it)
-            }
+            TrackPlayerWithCameraSystem(get()),
+            ShapeRenderSystem(get()),
+            RenderDrawableRectangleComponentsSystem(get(), get(), get())
+        ))
+
+        withItIfNotNull(this@single.getOrNull<CursorDebugSystem>()) {
+            systems.add(it)
         }
+        withItIfNotNull(this@single.getOrNull<PlayerManualTeleportDebugSystem>()) {
+            systems.add(it)
+        }
+
+        systems.forEachIndexed { index, entitySystem -> entitySystem.priority = index }
 
         val standaloneEntityListeners = listOf<EntityListener>(
             SyncRemovedBodiesToWorldEntityListener(get())

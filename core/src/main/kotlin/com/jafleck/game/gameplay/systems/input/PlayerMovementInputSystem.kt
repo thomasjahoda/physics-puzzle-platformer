@@ -1,4 +1,4 @@
-package com.jafleck.game.gameplay.systems
+package com.jafleck.game.gameplay.systems.input
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
@@ -7,6 +7,7 @@ import com.badlogic.gdx.input.GestureDetector
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.game.components.PlayerMovementState
 import com.jafleck.game.entities.PlayerEntity
+import com.jafleck.game.gameplay.systems.PlayerEntitySystem
 import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.GestureAdapterInterface
@@ -15,10 +16,9 @@ import com.jafleck.game.util.logger
 
 
 class PlayerMovementInputSystem(
-    priority: Int,
     private val gameViewport: GameViewport,
     private val gameInputMultiplexer: GameInputMultiplexer
-) : PlayerEntitySystem(priority) {
+) : PlayerEntitySystem() {
 
     private val logger = logger(this::class)
 
@@ -33,8 +33,7 @@ class PlayerMovementInputSystem(
     private val lastKnownPlayerPosition = Vector2()
     private var currentMovementState = PlayerMovementState.NONE
 
-    override fun addedToEngine(engine: Engine) {
-        super.addedToEngine(engine)
+    override fun additionalAddedToEngine(engine: Engine) {
         gameInputMultiplexer.addProcessor(basicGameGestureDetector)
         gameInputMultiplexer.addProcessor(gestureListener)
     }

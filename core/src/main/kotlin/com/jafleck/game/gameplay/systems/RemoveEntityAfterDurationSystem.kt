@@ -8,10 +8,9 @@ import ktx.ashley.allOf
 
 
 class RemoveEntityAfterDurationSystem(
-    priority: Int
 ) : IteratingSystem(allOf(
     RemoveAfterDurationComponent::class
-).get(), priority) {
+).get()) {
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val component = entity[RemoveAfterDurationComponent]
