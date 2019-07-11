@@ -64,17 +64,18 @@ class MapObjectFormExtractor {
 
     private fun extractCircleShapeAndPosition(mapObject: CircleMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val circle = mapObject.circle
-        require(rotationDegrees == 0f) { "Rotated circles are not supported (${mapObject.id})"}
+        require(rotationDegrees == 0f) { "Rotated circles are not supported (${mapObject.id})" }
         components.add(CircleShapeComponent(circle.radius))
         components.add(OriginPositionComponent(Vector2(circle.x, circle.y).scaleFromMapToWorld()))
     }
 
     private fun extractEllipseShapeAndPosition(mapObject: EllipseMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val ellipse = mapObject.ellipse
-        require(rotationDegrees == 0f) { "Rotated ellipses are not supported yet (${mapObject.id})"} // TODO support rotated ellipses
+        require(rotationDegrees == 0f) { "Rotated ellipses are not supported yet (${mapObject.id})" } // TODO support rotated ellipses
         require(ellipse.width == ellipse.height) { "Only circle-formed ellipses supported currently" }
-        components.add(CircleShapeComponent((ellipse.width / 2).scaleFromMapToWorld()))
-        components.add(OriginPositionComponent(Vector2(ellipse.x, ellipse.y).scaleFromMapToWorld()))
+        val mapRadius = ellipse.width / 2
+        components.add(CircleShapeComponent(mapRadius.scaleFromMapToWorld()))
+        components.add(OriginPositionComponent(Vector2(ellipse.x + mapRadius, ellipse.y + mapRadius).scaleFromMapToWorld()))
     }
 
     private fun extractVelocity(mapObject: MapObject, moves: Boolean, components: ArrayList<Component>) {

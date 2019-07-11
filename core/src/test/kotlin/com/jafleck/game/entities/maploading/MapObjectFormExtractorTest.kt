@@ -99,7 +99,8 @@ internal class MapObjectFormExtractorTest {
         entity.loadFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
-        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(10f, 20f)) // libgdx has already converted to origin position
+        // libgdx has in fact NOT already converted to an origin position
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(10f + 4f / 2, 20f + 4f / 2))
         Assertions.assertThat(entity[CircleShapeComponent].radius).isEqualTo(4f / 2)
         Assertions.assertThat(entity[VelocityComponent].vector).isEqualTo(Vector2(0f, 0f))
         Assertions.assertThat(entity.components.size()).isEqualTo(4)
