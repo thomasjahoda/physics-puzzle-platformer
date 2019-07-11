@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class DrawableVisualComponent(
+data class DrawableVisualComponent(
     val drawable: Drawable
 ) : Component {
 

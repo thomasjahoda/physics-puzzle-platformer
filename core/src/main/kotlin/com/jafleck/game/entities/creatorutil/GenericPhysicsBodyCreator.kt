@@ -24,12 +24,9 @@ class GenericPhysicsBodyCreator(
 
             val physicsEntity = GenericPhysicsEntity(entity)
             determineShape(physicsEntity)
-
-            position.set(physicsEntity.position.vector)
-
-            withItIfNotNull(physicsEntity.rotation) {
-                angle = it.radians
-            }
+            storeUserData(physicsEntity)
+            setPosition(physicsEntity.position)
+            setRotation(physicsEntity)
         }))
     }
 
@@ -48,6 +45,20 @@ class GenericPhysicsBodyCreator(
             } -> {
             }
             else -> error("unknown shape")
+        }
+    }
+
+    private fun BodyDefinition.storeUserData(physicsEntity: GenericPhysicsEntity) {
+        userData = physicsEntity.entity
+    }
+
+    private fun BodyDefinition.setPosition(originPositionComponent: OriginPositionComponent) {
+        position.set(originPositionComponent.vector)
+    }
+
+    private fun BodyDefinition.setRotation(physicsEntity: GenericPhysicsEntity) {
+        withItIfNotNull(physicsEntity.rotation) {
+            angle = it.radians
         }
     }
 }

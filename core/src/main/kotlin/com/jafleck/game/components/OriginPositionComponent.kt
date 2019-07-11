@@ -7,7 +7,7 @@ import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 /**
  * Origin (center) position of entity in the world.
  */
-class OriginPositionComponent(
+data class OriginPositionComponent(
     val vector: Vector2
 ) : Component {
     constructor(x: Float, y: Float) : this(Vector2(x, y))

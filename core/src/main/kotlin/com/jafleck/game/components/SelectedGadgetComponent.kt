@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 import com.jafleck.game.gadgets.Gadget
 
-class SelectedGadgetComponent(
+data class SelectedGadgetComponent(
     var value: Gadget
 ) : Component {
 

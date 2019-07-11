@@ -10,7 +10,7 @@ import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
  * This component should only be added to entities with a fixed or semi-fixed rectangular size.
  * It is not necessary on all entities, it should only be added if it is necessary in combination with some system/component that needs this info.
  */
-class RectangleBoundsComponent(
+data class RectangleBoundsComponent(
     val vector: Vector2
 ) : Component {
     constructor(width: Float, height: Float) : this(Vector2(width, height))

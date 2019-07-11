@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.graphics.Color
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class VisualShapeComponent(
+data class VisualShapeComponent(
     var borderColor: Color?,
     var borderThickness: Float?,
     var fillColor: Color?

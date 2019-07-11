@@ -30,14 +30,14 @@ class MapObjectFormExtractor {
         val components = ArrayList<Component>(3)
 
         val rotationDegrees = extractRotation(mapObject, config.rotates, components)
-        extractAnyShape(mapObject, rotationDegrees, components)
+        extractAnyShapeAndPosition(mapObject, rotationDegrees, components)
         extractVelocity(mapObject, config.moves, components)
         if (config.trackMapObject) components.add(MapObjectComponent(mapObject))
 
         return components
     }
 
-    private fun extractAnyShape(mapObject: MapObject, rotationDegrees: Float, components: ArrayList<Component>) {
+    private fun extractAnyShapeAndPosition(mapObject: MapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         when (mapObject) {
             is RectangleMapObject -> extractRectangleShapeAndPosition(mapObject, rotationDegrees, components)
             is CircleMapObject -> extractCircleShapeAndPosition(mapObject, rotationDegrees, components)

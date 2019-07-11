@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.MathUtils
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class RotationComponent(
+data class RotationComponent(
     var radians: Float
 ) : Component {
 

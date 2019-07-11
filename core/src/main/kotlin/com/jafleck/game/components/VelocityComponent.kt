@@ -9,7 +9,7 @@ import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
  * Entities with this component shall only be either dynamic or kinematic.
  * Entities without this component shall only be static bodies.
  */
-class VelocityComponent(
+data class VelocityComponent(
     val vector: Vector2
 ) : Component {
     constructor(x: Float, y: Float) : this(Vector2(x, y))

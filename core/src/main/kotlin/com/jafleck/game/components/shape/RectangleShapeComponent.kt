@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
-class RectangleShapeComponent(
+data class RectangleShapeComponent(
     val vector: Vector2
 ) : Component, ShapeComponent {
     constructor(width: Float, height: Float) : this(Vector2(width, height))

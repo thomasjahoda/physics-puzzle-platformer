@@ -34,7 +34,7 @@ class PlayScreen(
 
     private val rootTable = table {
         if (cursorDebugSystem != null) {
-            add(label(" //  "))
+            add(label("  "))
             add(cursorDebugSystem.worldCoordsOfCursorLabel)
         }
 //        setFillParent(true)

@@ -46,7 +46,7 @@ val gameplayModule: Module = module {
     single { Engine() }
     if (PhysicsConfiguration.showCursorWorldPosition) {
         single {
-            CursorDebugSystem(get(), get())
+            CursorDebugSystem(get(), get(), get())
         }
     }
     single {
