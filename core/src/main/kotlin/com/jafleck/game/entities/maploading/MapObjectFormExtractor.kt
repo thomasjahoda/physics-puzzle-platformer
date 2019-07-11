@@ -17,7 +17,7 @@ import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.maploading.scaleFromMapToWorld
-import com.jafleck.game.util.libgdx.map.velocity
+import com.jafleck.game.util.libgdx.map.initialVelocity
 import com.jafleck.game.util.logger
 
 class MapObjectFormExtractor {
@@ -81,7 +81,7 @@ class MapObjectFormExtractor {
         if (!moves) {
             require(mapObject.properties["velocity"] == null) { "Object with name ${mapObject.name} has velocity but velocity is not supported for this type because moves==false" }
         } else {
-            val velocity = mapObject.velocity ?: Vector2(0f, 0f)
+            val velocity = mapObject.initialVelocity ?: Vector2(0f, 0f)
             components.add(VelocityComponent(velocity))
         }
     }

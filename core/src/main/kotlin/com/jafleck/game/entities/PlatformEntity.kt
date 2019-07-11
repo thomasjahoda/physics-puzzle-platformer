@@ -10,9 +10,7 @@ import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.PlatformComponent
 import com.jafleck.game.components.VisualShapeComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
-import com.jafleck.game.entities.maploading.MapObjectFormExtractor
-import com.jafleck.game.entities.maploading.GenericEntityConfig
-import com.jafleck.game.entities.maploading.loadFrom
+import com.jafleck.game.entities.maploading.*
 import com.jafleck.game.maploading.MapEntityLoader
 import org.koin.dsl.module
 
@@ -32,8 +30,9 @@ class PlatformEntityCreator(
     private val engine: Engine,
     private val world: World,
     private val mapObjectFormExtractor: MapObjectFormExtractor,
-    private val genericPhysicsBodyCreator: GenericPhysicsBodyCreator
-): MapEntityLoader {
+    private val genericPhysicsBodyCreator: GenericPhysicsBodyCreator,
+    private val customizeVisualShapeLoader: CustomizeVisualShapeLoader
+) : MapEntityLoader {
     companion object {
         private val ENTITY_CONFIG = GenericEntityConfig(
             rotates = true,
@@ -52,7 +51,8 @@ class PlatformEntityCreator(
             }
             add(VisualShapeComponent(
                 borderColor = Color.PURPLE, borderThickness = 0.1f,
-                fillColor = Color.WHITE.cpy().mul(0.9f)))
+                fillColor = Color.WHITE.cpy().mul(0.9f))
+                .customizeBy(mapObject, customizeVisualShapeLoader))
             add(PlatformComponent())
             engine.addEntity(this)
         }
@@ -61,5 +61,5 @@ class PlatformEntityCreator(
 }
 
 val platformModule = module {
-    single { PlatformEntityCreator(get(), get(), get(), get()) }
+    single { PlatformEntityCreator(get(), get(), get(), get(), get()) }
 }

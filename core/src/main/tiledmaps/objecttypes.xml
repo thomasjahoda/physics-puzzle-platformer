@@ -2,9 +2,15 @@
 <objecttypes>
  <objecttype name="Platform" color="#000000">
   <property name="type" type="string" default="Platform"/>
+  <property name="vis_customBorderColor" type="color"/>
+  <property name="vis_customBorderThickness" type="float" default="-1"/>
+  <property name="vis_customFillColor" type="color"/>
  </objecttype>
  <objecttype name="Player" color="#8f5902">
+  <property name="physics_initialVelocity" type="string"/>
   <property name="type" type="string" default="Player"/>
-  <property name="velocity" type="string"/>
+  <property name="vis_customBorderColor" type="color"/>
+  <property name="vis_customBorderThickness" type="float" default="-1"/>
+  <property name="vis_customFillColor" type="color"/>
  </objecttype>
 </objecttypes>
