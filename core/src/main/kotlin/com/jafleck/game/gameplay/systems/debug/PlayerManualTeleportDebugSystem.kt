@@ -3,14 +3,10 @@ package com.jafleck.game.gameplay.systems.debug
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputAdapter
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.World
 import com.jafleck.game.entities.PlayerEntity
 import com.jafleck.game.gameplay.systems.PlayerEntitySystem
 import com.jafleck.game.gameplay.systems.input.CurrentCursorPositionInputSystem
-import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
-import com.jafleck.game.util.logger
 
 
 class PlayerManualTeleportDebugSystem(

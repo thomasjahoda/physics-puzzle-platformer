@@ -4,4 +4,6 @@ import org.koin.dsl.module
 
 val entityCreatorUtilModule = module {
     single { GenericPhysicsBodyCreator(get()) }
+    single { VisualShapeCreator() }
+    single { GenericPhysicsBodyCustomizer() }
 }

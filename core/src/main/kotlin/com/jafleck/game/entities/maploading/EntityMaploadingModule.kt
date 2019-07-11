@@ -4,5 +4,5 @@ import org.koin.dsl.module
 
 val entityMaploadingModule = module {
     single { MapObjectFormExtractor() }
-    single { CustomizeVisualShapeLoader() }
+    single { GenericEntityCustomizationLoader() }
 }

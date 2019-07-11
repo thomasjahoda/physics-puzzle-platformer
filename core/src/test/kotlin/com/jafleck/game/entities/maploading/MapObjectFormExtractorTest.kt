@@ -11,6 +11,7 @@ import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromWorldToMap
 import com.jafleck.testutil.HeadlessLibgdxExtension
 import org.assertj.core.api.Assertions
@@ -41,7 +42,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadFrom(mapObject, ALL_OPTIONS, uut)
+        entity.loadGeneralComponentsFrom(mapObject, ALL_OPTIONS, GenericEntityCustomization(), uut)
 
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(10f + (4f / 2), 20f + (2f / 2)))
         Assertions.assertThat(entity[RectangleShapeComponent].vector).isEqualTo(Vector2(4f, 2f))
@@ -59,7 +60,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
 
         // related map is saved in rotatedPlatformVisualHelp.tmx with a lot of documentation if you need help to cross-check values.
         // Important: Tiled saves rectangles position from the top-left position but the LibGDX loader already converts this to bottom-left
@@ -78,7 +79,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
 
         // related map is saved in rotatedPlatformVisualHelp.tmx with a lot of documentation if you need help to cross-check values.
         // Important: Tiled saves rectangles position from the top-left position but the LibGDX loader already converts this to bottom-left
@@ -96,7 +97,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         // libgdx has in fact NOT already converted to an origin position

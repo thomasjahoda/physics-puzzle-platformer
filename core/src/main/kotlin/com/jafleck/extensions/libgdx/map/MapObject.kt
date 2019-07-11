@@ -3,7 +3,7 @@ package com.jafleck.extensions.libgdx.map
 import com.badlogic.gdx.maps.MapObject
 
 val MapObject.id
-    get() = properties["id"] as Integer
+    get() = properties["id"] as Int
 
 val MapObject.rotationDegrees: Float?
     get() {

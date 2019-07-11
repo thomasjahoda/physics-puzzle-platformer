@@ -11,7 +11,7 @@ data class VisualShapeComponent(
 ) : Component {
 
     init {
-        if (borderThickness == null) {
+        if (borderThickness != null) {
             require(borderColor != null) { "Border color must be set if thickness is set" }
         }
     }

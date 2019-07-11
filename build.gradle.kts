@@ -210,7 +210,7 @@ project(":core") {
                 logger.info("Exporting ${it.name}")
                 val result = project.exec {
                     val outputFile = project.file(outputDir).absolutePath + "/" + it.name
-                    commandLine = listOf(tiledCli, "--export-map", "--detach-templates", it.absolutePath, outputFile)
+                    commandLine = listOf(tiledCli, "--export-map", "--detach-templates", "--resolve-types-and-properties", it.absolutePath, outputFile)
                 }
                 result.assertNormalExitValue()
             }

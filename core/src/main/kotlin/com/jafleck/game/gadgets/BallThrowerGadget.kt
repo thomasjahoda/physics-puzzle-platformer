@@ -3,10 +3,7 @@ package com.jafleck.game.gadgets
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.extensions.libgdxktx.ashley.has
 import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.shape.CircleShapeComponent
-import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.ThrownBallEntity
 import com.jafleck.game.entities.ThrownBallEntityCreator
 import com.jafleck.game.families.ShapedEntity

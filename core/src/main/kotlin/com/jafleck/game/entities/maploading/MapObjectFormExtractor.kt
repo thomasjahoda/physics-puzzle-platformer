@@ -16,22 +16,19 @@ import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromMapToWorld
-import com.jafleck.game.util.libgdx.map.initialVelocity
-import com.jafleck.game.util.logger
 
 class MapObjectFormExtractor {
 
-    private val logger = logger(this::class)
-
     fun extractShapeAndPositionComponents(mapObject: MapObject,
-                                          config: GenericEntityConfig): List<Component> {
-        logger.debug { "Parsing map object ${mapObject.id}" }
+                                          config: GenericEntityConfig,
+                                          customization: GenericEntityCustomization): List<Component> {
         val components = ArrayList<Component>(3)
 
         val rotationDegrees = extractRotation(mapObject, config.rotates, components)
         extractAnyShapeAndPosition(mapObject, rotationDegrees, components)
-        extractVelocity(mapObject, config.moves, components)
+        extractInitialVelocity(mapObject, customization, config.moves, components)
         if (config.trackMapObject) components.add(MapObjectComponent(mapObject))
 
         return components
@@ -42,7 +39,7 @@ class MapObjectFormExtractor {
             is RectangleMapObject -> extractRectangleShapeAndPosition(mapObject, rotationDegrees, components)
             is CircleMapObject -> extractCircleShapeAndPosition(mapObject, rotationDegrees, components)
             is EllipseMapObject -> extractEllipseShapeAndPosition(mapObject, rotationDegrees, components)
-            else -> error("Unknown shape of object ${mapObject.properties["id"]}: ${mapObject.javaClass}")
+            else -> error("Unknown shape of object ${mapObject.id}: ${mapObject.javaClass}")
         }
     }
 
@@ -78,11 +75,11 @@ class MapObjectFormExtractor {
         components.add(OriginPositionComponent(Vector2(ellipse.x + mapRadius, ellipse.y + mapRadius).scaleFromMapToWorld()))
     }
 
-    private fun extractVelocity(mapObject: MapObject, moves: Boolean, components: ArrayList<Component>) {
+    private fun extractInitialVelocity(mapObject: MapObject, customization: GenericEntityCustomization, moves: Boolean, components: ArrayList<Component>) {
         if (!moves) {
-            require(mapObject.properties["velocity"] == null) { "Object with name ${mapObject.name} has velocity but velocity is not supported for this type because moves==false" }
+            require(customization.initialVelocity == null) { "Object with name ${mapObject.name} has initial velocity but it is not supported for this type because moves==false" }
         } else {
-            val velocity = mapObject.initialVelocity ?: Vector2(0f, 0f)
+            val velocity = customization.initialVelocity ?: Vector2(0f, 0f)
             components.add(VelocityComponent(velocity))
         }
     }
@@ -109,15 +106,20 @@ class GenericEntityConfig(
     val rotates: Boolean,
     val moves: Boolean,
     val trackMapObject: Boolean = true
-    // TODO generate VisualShapeComponent automatically
-//    val renderShape: Boolean = true,
-//    val defaultFillColor: Color? = null,
-//    val defaultFill: Color? = null,
 )
 
-fun Entity.loadFrom(mapObject: MapObject,
-                    config: GenericEntityConfig,
-                    mapObjectFormExtractor: MapObjectFormExtractor) {
-    mapObjectFormExtractor.extractShapeAndPositionComponents(mapObject, config)
-        .forEach { this@loadFrom.add(it) }
+/**
+ * Loads:
+ * - position
+ * - shape
+ * - rotation
+ * - velocity
+ * - component for linking map object
+ */
+fun Entity.loadGeneralComponentsFrom(mapObject: MapObject,
+                                     config: GenericEntityConfig,
+                                     customization: GenericEntityCustomization,
+                                     mapObjectFormExtractor: MapObjectFormExtractor) {
+    mapObjectFormExtractor.extractShapeAndPositionComponents(mapObject, config, customization)
+        .forEach { this@loadGeneralComponentsFrom.add(it) }
 }

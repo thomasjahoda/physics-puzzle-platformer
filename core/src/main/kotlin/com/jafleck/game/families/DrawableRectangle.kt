@@ -7,7 +7,6 @@ import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.DrawableVisualComponent
 import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RectangleBoundsComponent
-import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.RotationComponent
 import ktx.ashley.allOf
 

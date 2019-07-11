@@ -4,35 +4,33 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
-import com.badlogic.gdx.physics.box2d.World
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.*
-import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.components.BodyComponent
+import com.jafleck.game.components.OriginPositionComponent
+import com.jafleck.game.components.PlayerComponent
+import com.jafleck.game.components.SelectedGadgetComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
-import com.jafleck.game.entities.maploading.*
-import com.jafleck.game.families.DrawableRectangle
-import com.jafleck.game.families.MovingBody
+import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
+import com.jafleck.game.entities.creatorutil.VisualShapeCreator
+import com.jafleck.game.entities.creatorutil.apply
+import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.maploading.GenericEntityConfig
+import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
+import com.jafleck.game.entities.maploading.MapObjectFormExtractor
+import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
+import com.jafleck.game.entities.presets.Preset
+import com.jafleck.game.entities.presets.asMap
+import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.Gadget
 import com.jafleck.game.maploading.MapEntityLoader
+import com.jafleck.game.util.libgdx.map.preset
 import org.koin.dsl.module
 
 inline class PlayerEntity(val entity: Entity) {
 
-    companion object {
-        const val DENSITY = 2f
-        const val FRICTION = 0.2f
-    }
-
-    fun asDrawableRectangle() = DrawableRectangle(entity)
-    fun asMovingBody() = MovingBody(entity)
-
     val position
         get() = entity[OriginPositionComponent]
-    val size
-        get() = entity[RectangleShapeComponent]
-    val drawableVisual
-        get() = entity[DrawableVisualComponent]
     val player
         get() = entity[PlayerComponent]
     val body
@@ -43,9 +41,11 @@ inline class PlayerEntity(val entity: Entity) {
 
 class PlayerEntityCreator(
     private val engine: Engine,
+    private val genericEntityCustomizationLoader: GenericEntityCustomizationLoader,
     private val mapObjectFormExtractor: MapObjectFormExtractor,
     private val genericPhysicsBodyCreator: GenericPhysicsBodyCreator,
-    private val customizeVisualShapeLoader: CustomizeVisualShapeLoader,
+    private val visualShapeCreator: VisualShapeCreator,
+    private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer,
     private val initialGadget: Gadget
 ) : MapEntityLoader {
     companion object {
@@ -59,16 +59,14 @@ class PlayerEntityCreator(
         get() = "Player"
 
     override fun loadEntity(mapObject: MapObject): Entity {
+        val preset = playerPresets.getPresetOrDefault(mapObject.preset)
+        val genericCustomization = preset.genericCustomization.combine(genericEntityCustomizationLoader.load(mapObject))
         return engine.createEntity().apply {
-            loadFrom(mapObject, ENTITY_CONFIG, mapObjectFormExtractor)
+            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createDynamicBody(this) {
-                density = PlayerEntity.DENSITY
-                friction = PlayerEntity.FRICTION
+                apply(genericCustomization, genericPhysicsBodyCustomizer)
             }
-            add(VisualShapeComponent(
-                borderColor = Color.BLACK, borderThickness = 0.04f,
-                fillColor = Color.FIREBRICK.cpy().mul(0.9f))
-                .customizeBy(mapObject, customizeVisualShapeLoader))
+            add(visualShapeCreator.createVisualShape(genericCustomization))
             add(PlayerComponent())
             add(SelectedGadgetComponent(initialGadget))
             engine.addEntity(this)
@@ -77,6 +75,16 @@ class PlayerEntityCreator(
 
 }
 
+
+val playerPresets = listOf(
+    Preset(genericCustomization = GenericEntityCustomization(
+        borderColor = Color.BLACK, borderThickness = 0.04f,
+        fillColor = Color.FIREBRICK.cpy().mul(0.9f),
+        density = 2f,
+        friction = 0.2f
+    ))
+).asMap()
+
 val playerModule = module {
-    single { PlayerEntityCreator(get(), get(), get(), get(), get<BallThrowerGadget>()) }
+    single { PlayerEntityCreator(get(), get(), get(), get(), get(), get(), get<BallThrowerGadget>()) }
 }

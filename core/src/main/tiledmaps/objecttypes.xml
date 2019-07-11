@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
  <objecttype name="Platform" color="#000000">
-  <property name="type" type="string" default="Platform"/>
+  <property name="entityType" type="string" default="Platform"/>
+ </objecttype>
+ <objecttype name="Platform_custom" color="#2e3436">
+  <property name="entityType" type="string" default="Platform"/>
+  <property name="physics_customFriction" type="float" default="-1"/>
+  <property name="physics_customRestitution" type="float" default="-1"/>
   <property name="vis_customBorderColor" type="color"/>
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
  </objecttype>
- <objecttype name="Player" color="#8f5902">
+ <objecttype name="Platform_Trampoline" color="#c4a000">
+  <property name="entityType" type="string" default="Platform"/>
+  <property name="preset" type="string" default="Trampoline"/>
+ </objecttype>
+ <objecttype name="Player" color="#a40000">
+  <property name="entityType" type="string" default="Player"/>
+ </objecttype>
+ <objecttype name="Player_custom" color="#cc0000">
+  <property name="entityType" type="string" default="Player"/>
+  <property name="physics_customAngularDamping" type="float" default="-1"/>
+  <property name="physics_customDensity" type="float" default="-1"/>
+  <property name="physics_customFriction" type="float" default="-1"/>
+  <property name="physics_customGravityScale" type="float" default="-1"/>
+  <property name="physics_customLinearDamping" type="float" default="-1"/>
+  <property name="physics_customRestitution" type="float" default="-1"/>
+  <property name="physics_customFixedRotation" type="string"/>
   <property name="physics_initialVelocity" type="string"/>
-  <property name="type" type="string" default="Player"/>
   <property name="vis_customBorderColor" type="color"/>
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>

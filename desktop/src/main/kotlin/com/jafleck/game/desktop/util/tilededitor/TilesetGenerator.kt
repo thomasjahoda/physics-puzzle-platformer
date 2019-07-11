@@ -103,7 +103,7 @@ class TerrainGenerator {
                 TerrainTileCategory.values().forEach { addTileNode(it) }
             }
 
-            // TODO add sprites other than nine-patches
+            // currently unsupported: sprites other than nine-patches
 
             spriteBatch.end()
             writeCurrentFrameBufferToFileAsPng(targetPngImageFile, totalImageWidth, totalImageHeight)

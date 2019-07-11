@@ -2,16 +2,11 @@ package com.jafleck.game.gameplay.systems.input
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.gdx.Input
 import com.badlogic.gdx.InputAdapter
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.scenes.scene2d.ui.Label
-import com.jafleck.extensions.kotlin.round
 import com.jafleck.game.gameplay.ui.GameViewport
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.logger
-import ktx.box2d.Query
-import ktx.scene2d.Scene2DSkin
 
 
 class CurrentCursorPositionInputSystem(

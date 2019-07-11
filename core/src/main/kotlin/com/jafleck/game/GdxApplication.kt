@@ -44,8 +44,9 @@ class GdxApplication : KtxGame<Screen>() {
         loadSystems(koinApplication)
 
         val mapLoader = koinApplication.koin.get<MapLoader>()
-        val mapName = "test1.tmx"
-//        val mapName = "custom_entity_colors_and_velocity.tmx"
+//        val mapName = "test1.tmx"
+//        val mapName = "customized_values_sandbox.tmx"
+        val mapName = "trampoline_preset_test.tmx"
 //        val mapName = "single_platform.tmx"
         mapLoader.loadMap(mapName)
 
