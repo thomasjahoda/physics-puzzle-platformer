@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="22">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="24">
  <objectgroup id="2" name="Entities">
   <object id="1" template="objecttemplates/platform_horizontal.tx" x="16" y="72" width="448" height="32" rotation="35.0447"/>
   <object id="4" template="objecttemplates/platform_horizontal.tx" x="96" y="352" width="448" height="32"/>
@@ -12,15 +12,11 @@
   <object id="13" type="Platform" x="232" y="288" width="20" height="20">
    <ellipse/>
   </object>
-  <object id="14" template="objecttemplates/player_spawn.tx" x="96" y="80">
-   <properties>
-    <property name="velocity" value="-10,20"/>
-   </properties>
-  </object>
   <object id="18" type="Platform" x="-10" y="-10" width="20" height="20">
    <ellipse/>
   </object>
   <object id="19" template="objecttemplates/platform_horizontal.tx" x="0" y="-32" width="104" height="32" rotation="0"/>
   <object id="21" template="objecttemplates/platform_horizontal.tx" x="40" y="104"/>
+  <object id="22" template="objecttemplates/player_circle.tx" x="160" y="64"/>
  </objectgroup>
 </map>

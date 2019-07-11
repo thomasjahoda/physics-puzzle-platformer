@@ -12,7 +12,7 @@
   <object id="13" type="Platform" x="232" y="288" width="20" height="20">
    <ellipse/>
   </object>
-  <object id="14" template="objecttemplates/player_spawn.tx" x="456" y="288">
+  <object id="14" template="objecttemplates/player_rectangle.tx" x="456" y="288">
    <properties>
     <property name="velocity" value="-10,20"/>
    </properties>

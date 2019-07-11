@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
- <object type="PlayerSpawn">
-  <point/>
+ <object type="Player" width="32" height="32">
+  <ellipse/>
  </object>
 </template>

@@ -14,11 +14,16 @@ data class RectangleShapeComponent(
         set(value) {
             vector.x = value
         }
+
     var height
         get() = vector.y
         set(value) {
             vector.y = value
         }
+
+    override fun getRectangleAroundShape(target: Vector2): Vector2 {
+        return target.set(vector)
+    }
 
     companion object : ComponentMapperAccessor<RectangleShapeComponent>(RectangleShapeComponent::class)
 }

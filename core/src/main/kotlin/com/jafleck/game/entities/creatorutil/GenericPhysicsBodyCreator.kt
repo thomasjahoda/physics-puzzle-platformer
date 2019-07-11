@@ -12,6 +12,7 @@ import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import ktx.box2d.BodyDefinition
+import ktx.box2d.FixtureDefinition
 import ktx.box2d.body
 
 class GenericPhysicsBodyCreator(
@@ -23,24 +24,48 @@ class GenericPhysicsBodyCreator(
             type = BodyDef.BodyType.StaticBody
 
             val physicsEntity = GenericPhysicsEntity(entity)
-            determineShape(physicsEntity)
-            storeUserData(physicsEntity)
-            setPosition(physicsEntity.position)
-            setRotation(physicsEntity)
+            setCommonProperties(physicsEntity)
+            determineShape(physicsEntity) {}
         }))
     }
 
-    private fun BodyDefinition.determineShape(physicsEntity: GenericPhysicsEntity) {
+    fun createDynamicBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
+        entity.add(BodyComponent(world.body {
+            type = BodyDef.BodyType.DynamicBody
+
+            val physicsEntity = GenericPhysicsEntity(entity)
+            setCommonProperties(physicsEntity)
+            determineShape(physicsEntity, fixtureBlock)
+        }))
+    }
+
+    fun createKinematicBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
+        entity.add(BodyComponent(world.body {
+            type = BodyDef.BodyType.DynamicBody
+
+            val physicsEntity = GenericPhysicsEntity(entity)
+            setCommonProperties(physicsEntity)
+            determineShape(physicsEntity, fixtureBlock)
+        }))
+    }
+
+    private fun BodyDefinition.setCommonProperties(physicsEntity: GenericPhysicsEntity) {
+        storeUserData(physicsEntity)
+        setPosition(physicsEntity.position)
+        setRotation(physicsEntity)
+    }
+
+    private fun BodyDefinition.determineShape(physicsEntity: GenericPhysicsEntity, fixtureBlock: FixtureDefinition.() -> Unit) {
         when {
             withItIfNotNull(physicsEntity.rectangleShape) {
                 box(it.width, it.height) {
-
+                    fixtureBlock()
                 }
             } -> {
             }
             withItIfNotNull(physicsEntity.circleShape) {
                 circle(it.radius) {
-
+                    fixtureBlock()
                 }
             } -> {
             }

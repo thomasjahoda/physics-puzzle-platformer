@@ -14,14 +14,14 @@ internal class MapLoaderTest {
         val mapEntityLoaderLocator = mockk<MapEntityLoaderLocator>()
         val mockedMapEntityLoader = mockk<MapEntityLoader>()
         every { mapEntityLoaderLocator.getMapEntityLoader("Platform") } returns mockedMapEntityLoader
-        every { mapEntityLoaderLocator.getMapEntityLoader("PlayerSpawn") } returns mockedMapEntityLoader
+        every { mapEntityLoaderLocator.getMapEntityLoader("Player") } returns mockedMapEntityLoader
         every { mockedMapEntityLoader.loadEntity(any()) } returns null
 
         val mapLoader = MapLoader(CustomClasspathAssetsFileHandleResolver(), mapEntityLoaderLocator)
         mapLoader.loadMap("mapLoaderTest.tmx")
 
         verify { mapEntityLoaderLocator.getMapEntityLoader("Platform") }
-        verify { mapEntityLoaderLocator.getMapEntityLoader("PlayerSpawn") }
+        verify { mapEntityLoaderLocator.getMapEntityLoader("Player") }
         verify { mockedMapEntityLoader.loadEntity(any()) }
     }
 }
