@@ -8,10 +8,10 @@ import com.badlogic.gdx.utils.ShortArray
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
-import com.jafleck.game.components.BodyComponent
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.RotationComponent
-import com.jafleck.game.components.VelocityComponent
+import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
@@ -27,8 +27,6 @@ class GenericPhysicsBodyCreator(
 
     private val polygonTriangulator = EarClippingTriangulator()
     private val polygonTypeDetector = PolygonTypeDetector()
-
-    private val tmpTriangleVertices = FloatArray(3 * 2)
 
     fun createStaticBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
         entity.add(BodyComponent(world.body {

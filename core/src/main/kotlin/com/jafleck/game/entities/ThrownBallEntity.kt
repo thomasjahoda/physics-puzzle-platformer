@@ -5,9 +5,17 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.*
+import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.basic.VelocityComponent
+import com.jafleck.game.components.entities.PlayerComponent
+import com.jafleck.game.components.entities.ThrownBallComponent
+import com.jafleck.game.components.logic.RemoveAfterDurationComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.components.visual.RectangleBoundsComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import org.koin.dsl.module
 

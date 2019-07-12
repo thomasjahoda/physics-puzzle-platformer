@@ -4,10 +4,11 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.RotationComponent
-import com.jafleck.game.components.VisualShapeComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import ktx.ashley.allOf
 import ktx.ashley.oneOf
@@ -19,7 +20,8 @@ inline class VisualShape(val entity: Entity) {
             VisualShapeComponent::class
         ).oneOf(
             RectangleShapeComponent::class,
-            CircleShapeComponent::class
+            CircleShapeComponent::class,
+            PolygonShapeComponent::class
         ).get()
     }
 
@@ -34,4 +36,6 @@ inline class VisualShape(val entity: Entity) {
         get() = entity.getOrNull(RectangleShapeComponent)
     val circleShape: CircleShapeComponent?
         get() = entity.getOrNull(CircleShapeComponent)
+    val polygonShape: PolygonShapeComponent?
+        get() = entity.getOrNull(PolygonShapeComponent)
 }

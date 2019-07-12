@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdx.map.id
 import com.jafleck.extensions.libgdx.map.rotationDegrees
-import com.jafleck.game.components.MapObjectComponent
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.RotationComponent
-import com.jafleck.game.components.VelocityComponent
+import com.jafleck.game.components.basic.MapObjectComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent

@@ -10,12 +10,16 @@ import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
 import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.VisualShapeComponent
+import com.jafleck.extensions.libgdx.rendering.triangle
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.families.VisualShape
 import com.jafleck.game.gameplay.ui.GameCamera
+import com.jafleck.game.util.logger
+import com.jafleck.game.util.math.triangulate
 
 
 class ShapeRenderSystem(

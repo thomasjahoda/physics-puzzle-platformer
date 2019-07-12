@@ -3,7 +3,7 @@ package com.jafleck.game.gameplay.systems
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.RemoveAfterDurationComponent
+import com.jafleck.game.components.logic.RemoveAfterDurationComponent
 import ktx.ashley.allOf
 
 

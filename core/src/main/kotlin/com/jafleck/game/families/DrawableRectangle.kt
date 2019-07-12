@@ -4,10 +4,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
-import com.jafleck.game.components.DrawableVisualComponent
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.RectangleBoundsComponent
-import com.jafleck.game.components.RotationComponent
+import com.jafleck.game.components.visual.DrawableVisualComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.visual.RectangleBoundsComponent
+import com.jafleck.game.components.basic.RotationComponent
 import ktx.ashley.allOf
 
 inline class DrawableRectangle(val entity: Entity) {

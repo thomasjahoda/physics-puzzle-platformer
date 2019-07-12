@@ -1,4 +1,4 @@
-package com.jafleck.game.components
+package com.jafleck.game.components.basic
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Vector2

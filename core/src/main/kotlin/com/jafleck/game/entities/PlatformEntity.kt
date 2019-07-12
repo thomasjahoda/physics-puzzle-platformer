@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.PlatformComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.entities.PlatformComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator

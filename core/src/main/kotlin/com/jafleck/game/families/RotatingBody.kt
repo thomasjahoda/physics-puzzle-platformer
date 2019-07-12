@@ -3,8 +3,8 @@ package com.jafleck.game.families
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.BodyComponent
-import com.jafleck.game.components.RotationComponent
+import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.basic.RotationComponent
 import ktx.ashley.allOf
 
 inline class RotatingBody(val entity: Entity) {

@@ -5,10 +5,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.BodyComponent
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.PlayerComponent
-import com.jafleck.game.components.SelectedGadgetComponent
+import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.entities.PlayerComponent
+import com.jafleck.game.components.logic.SelectedGadgetComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator

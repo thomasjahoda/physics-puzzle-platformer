@@ -6,16 +6,14 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.BodyComponent
-import com.jafleck.game.components.PushedUpByWaterComponent
+import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.logic.PushedUpByWaterComponent
 import com.jafleck.game.entities.WaterEntity
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.logger
 import ktx.ashley.allOf
 import ktx.ashley.remove
-import ktx.math.times
-import kotlin.math.max
 import kotlin.math.min
 
 

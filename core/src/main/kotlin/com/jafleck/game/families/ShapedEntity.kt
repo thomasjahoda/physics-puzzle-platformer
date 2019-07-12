@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Family
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
-import com.jafleck.game.components.OriginPositionComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.shape.ShapeComponent

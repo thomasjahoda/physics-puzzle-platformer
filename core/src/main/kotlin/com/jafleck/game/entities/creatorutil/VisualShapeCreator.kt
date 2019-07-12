@@ -1,7 +1,7 @@
 package com.jafleck.game.entities.creatorutil
 
 import com.jafleck.extensions.kotlin.withItIfNotNull
-import com.jafleck.game.components.VisualShapeComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 
 class VisualShapeCreator {

@@ -4,17 +4,13 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
-import com.badlogic.gdx.physics.box2d.World
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.PlatformComponent
-import com.jafleck.game.components.WaterComponent
-import com.jafleck.game.components.VisualShapeComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.entities.WaterComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.creatorutil.apply
-import com.jafleck.game.entities.customizations.CommonPhysicsCustomizations
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.entities.maploading.*
 import com.jafleck.game.entities.presets.Preset
@@ -23,9 +19,7 @@ import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
-import ktx.box2d.filter
 import org.koin.dsl.module
-import kotlin.experimental.or
 
 inline class WaterEntity(val entity: Entity) {
 

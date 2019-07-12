@@ -9,10 +9,10 @@ import com.jafleck.extensions.kotlin.round
 import com.jafleck.extensions.libgdx.math.buildVertices
 import com.jafleck.extensions.libgdx.math.toListOfVertices
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.MapObjectComponent
-import com.jafleck.game.components.OriginPositionComponent
-import com.jafleck.game.components.RotationComponent
-import com.jafleck.game.components.VelocityComponent
+import com.jafleck.game.components.basic.MapObjectComponent
+import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
