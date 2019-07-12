@@ -38,7 +38,7 @@ interface EngineLogicLoader {
 val gameplayModule: Module = module {
     // ui
     single { GameCamera() }
-    single { GameViewport(10f, 10f, get()) }
+    single { GameViewport(25f, 15f, get()) }
     single { UiCamera() }
     single { UiViewport(get()) }
     single { Stage(get<UiViewport>()) }
