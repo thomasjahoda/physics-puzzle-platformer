@@ -16,7 +16,7 @@ Choose `objecttypes.xml` as object types file using the 'View' > 'Object Types E
 
 Open 'View' > 'Views and Toolbars' > 'Templates'.
 In the 'Templates' view, click the 'Choose Templates Directory' button.
-Choose the `objecttemplates` directory.
+Choose the `core/src/main/tiledmaps/objecttemplates` directory.
 
 Use object templates for common objects.
 You can create custom objects and detach objects from templates if they should be unique or limited to this map.

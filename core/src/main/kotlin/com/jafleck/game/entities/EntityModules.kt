@@ -6,6 +6,7 @@ import com.jafleck.game.entities.maploading.entityMaploadingModule
 val entityModules = listOf(
     playerModule,
     platformModule,
+    waterModule,
     thrownBallModule,
     entityMaploadingModule,
     entityCreatorUtilModule

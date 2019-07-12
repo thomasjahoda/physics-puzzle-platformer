@@ -12,10 +12,7 @@ import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
-import com.jafleck.game.gameplay.systems.PhysicsSimulationStepSystem
-import com.jafleck.game.gameplay.systems.PlayerMovementSystem
-import com.jafleck.game.gameplay.systems.RemoveEntityAfterDurationSystem
-import com.jafleck.game.gameplay.systems.TrackPlayerWithCameraSystem
+import com.jafleck.game.gameplay.systems.*
 import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import com.jafleck.game.gameplay.systems.debug.PlayerManualTeleportDebugSystem
 import com.jafleck.game.gameplay.systems.input.CurrentCursorPositionInputSystem
@@ -68,6 +65,7 @@ val gameplayModule: Module = module {
             PlayerGadgetActivationSystem(get(), get()),
 
             // physics
+            WaterSystem(get()),
             PhysicsSimulationStepSystem(get()),
             SyncMovingBodySystem(),
             SyncRotatingBodySystem(),

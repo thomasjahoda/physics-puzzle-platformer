@@ -14,11 +14,9 @@ import org.koin.dsl.module
 inline class ThrownBallEntity(val entity: Entity) {
 
     companion object {
-        val RADIUS: Float = 0.1f
+        val RADIUS: Float = 0.5f
         val SIZE = Vector2(2 * RADIUS, 2 * RADIUS)
         val HALF_SIZE: Vector2 = SIZE.cpy().scl(0.5f)
-        const val DENSITY = 10f
-        const val FRICTION = 0.2f
     }
 
     val position
@@ -53,8 +51,8 @@ class ThrownBallEntityCreator(
                 fillColor = Color.RED.cpy().mul(0.4f)))
             add(VelocityComponent(velocity))
             genericPhysicsBodyCreator.createDynamicBody(this) {
-                density = ThrownBallEntity.DENSITY
-                friction = ThrownBallEntity.FRICTION
+                density = 4f
+                friction = 0.2f
                 restitution = 0.5f
             }
             add(ThrownBallComponent())

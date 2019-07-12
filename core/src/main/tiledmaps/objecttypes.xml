@@ -22,14 +22,17 @@
   <property name="entityType" type="string" default="Player"/>
   <property name="physics_customAngularDamping" type="float" default="-1"/>
   <property name="physics_customDensity" type="float" default="-1"/>
+  <property name="physics_customFixedRotation" type="string"/>
   <property name="physics_customFriction" type="float" default="-1"/>
   <property name="physics_customGravityScale" type="float" default="-1"/>
   <property name="physics_customLinearDamping" type="float" default="-1"/>
   <property name="physics_customRestitution" type="float" default="-1"/>
-  <property name="physics_customFixedRotation" type="string"/>
   <property name="physics_initialVelocity" type="string"/>
   <property name="vis_customBorderColor" type="color"/>
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
+ </objecttype>
+ <objecttype name="Water" color="#00007f">
+  <property name="entityType" type="string" default="Water"/>
  </objecttype>
 </objecttypes>
