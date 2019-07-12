@@ -2,11 +2,11 @@ package com.jafleck.extensions.libgdx.math
 
 import com.badlogic.gdx.math.Vector2
 
-fun Collection<Vector2>.toFloatArray(): FloatArray {
+fun List<Vector2>.toFloatArray(): FloatArray {
     val floatArray = FloatArray(this.size * 2)
-    this.forEachIndexed { index, vector2 ->
-        floatArray[index] = vector2.x
-        floatArray[index + 1] = vector2.y
+    for (i in 0 until this.size) {
+        floatArray[i * 2] = this[i].x
+        floatArray[i * 2 + 1] = this[i].y
     }
     return floatArray
 }
