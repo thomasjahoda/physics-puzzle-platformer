@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="47">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="49">
  <objectgroup id="2" name="Entities">
   <object id="26" template="objecttemplates/platform_horizontal.tx" x="224" y="128"/>
   <object id="27" template="objecttemplates/platform_horizontal.tx" x="384" y="128" rotation="23.4741"/>
@@ -22,6 +22,12 @@
   </object>
   <object id="46" type="Platform" x="232" y="-248" rotation="121.048">
    <polygon points="24,56 -64,24 0,104 0,80 80,40 80,-24 40,8"/>
+  </object>
+  <object id="47" type="Platform" x="-16" y="-48">
+   <polygon points="0,0 32,-32 64,0 32,-16"/>
+  </object>
+  <object id="48" type="Platform" x="88" y="-72">
+   <polygon points="0,0 16,-32 32,0"/>
   </object>
  </objectgroup>
 </map>
