@@ -5,8 +5,10 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.maps.MapObject
 import com.badlogic.gdx.maps.objects.CircleMapObject
 import com.badlogic.gdx.maps.objects.EllipseMapObject
+import com.badlogic.gdx.maps.objects.PolygonMapObject
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdx.map.id
 import com.jafleck.extensions.libgdx.map.rotationDegrees
@@ -15,9 +17,11 @@ import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromMapToWorld
+import kotlin.collections.ArrayList
 
 class MapObjectFormExtractor {
 
@@ -39,6 +43,7 @@ class MapObjectFormExtractor {
             is RectangleMapObject -> extractRectangleShapeAndPosition(mapObject, rotationDegrees, components)
             is CircleMapObject -> extractCircleShapeAndPosition(mapObject, rotationDegrees, components)
             is EllipseMapObject -> extractEllipseShapeAndPosition(mapObject, rotationDegrees, components)
+            is PolygonMapObject -> extractPolygonShapeAndPosition(mapObject, rotationDegrees, components)
             else -> error("Unknown shape of object ${mapObject.id}: ${mapObject.javaClass}")
         }
     }
@@ -73,6 +78,46 @@ class MapObjectFormExtractor {
         val mapRadius = ellipse.width / 2
         components.add(CircleShapeComponent(mapRadius.scaleFromMapToWorld()))
         components.add(OriginPositionComponent(Vector2(ellipse.x + mapRadius, ellipse.y + mapRadius).scaleFromMapToWorld()))
+    }
+
+    private fun extractPolygonShapeAndPosition(mapObject: PolygonMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
+        val mapPolygon = mapObject.polygon
+
+        if (rotationDegrees == 0f) {
+            val (absoluteOriginPosition, worldVertices) = determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon)
+
+            components.add(OriginPositionComponent(absoluteOriginPosition.scaleFromMapToWorld()))
+            components.add(PolygonShapeComponent(worldVertices))
+        } else {
+            // rotate around specified rotation point (x,y in map object) of Tiled (just like Tiled does when displaying the polygon)
+            mapPolygon.rotation = rotationDegrees
+            val (absoluteOriginPosition, worldVertices) = determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon)
+
+            // rotate polygon back to 0°, but now with the actual origin of the polygon -> results in the actual original (unrotated) polygon as designed in the map before the stupid rotation transformation by Tiled
+            val worldPolygon = Polygon(worldVertices)
+            worldPolygon.rotation = -rotationDegrees
+            val originalUnrotatedWorldVertices = worldPolygon.transformedVertices
+            components.add(OriginPositionComponent(absoluteOriginPosition.scaleFromMapToWorld()))
+            components.add(PolygonShapeComponent(originalUnrotatedWorldVertices))
+        }
+    }
+
+    private fun determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon: Polygon): Pair<Vector2, FloatArray> {
+        val absolutePolygonBoundingRectangle = mapPolygon.boundingRectangle
+        val absoluteOriginPosition = absolutePolygonBoundingRectangle.getCenter(Vector2())
+        // move vertices of polygon to be relative to the polygon origin position
+        val translationToPolygonOrigin = absoluteOriginPosition.cpy().scl(-1f)
+        val absoluteMapVertices = mapPolygon.transformedVertices
+        val worldVertices = absoluteMapVertices.clone()
+        translateVerticesAndConvertToWorldScale(worldVertices, translationToPolygonOrigin)
+        return Pair(absoluteOriginPosition, worldVertices)
+    }
+
+    private fun translateVerticesAndConvertToWorldScale(mapVertices: FloatArray, verticesPositionShift: Vector2) {
+        for (i in 0 until mapVertices.size step 2) {
+            mapVertices[i] = (mapVertices[i] + verticesPositionShift.x).scaleFromMapToWorld()
+            mapVertices[i + 1] = (mapVertices[i + 1] + verticesPositionShift.y).scaleFromMapToWorld()
+        }
     }
 
     private fun extractInitialVelocity(mapObject: MapObject, customization: GenericEntityCustomization, moves: Boolean, components: ArrayList<Component>) {

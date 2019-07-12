@@ -2,21 +2,28 @@ package com.jafleck.game.entities.maploading
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.maps.objects.EllipseMapObject
+import com.badlogic.gdx.maps.objects.PolygonMapObject
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.Vector2
+import com.jafleck.extensions.kotlin.round
+import com.jafleck.extensions.libgdx.math.buildVertices
+import com.jafleck.extensions.libgdx.math.toListOfVertices
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.MapObjectComponent
 import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromWorldToMap
 import com.jafleck.testutil.HeadlessLibgdxExtension
+import com.jafleck.testutil.maps.LibGdxTiledMapLoader
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import java.util.*
 import kotlin.math.hypot
 
 @ExtendWith(HeadlessLibgdxExtension::class)
@@ -105,5 +112,85 @@ internal class MapObjectFormExtractorTest {
         Assertions.assertThat(entity[CircleShapeComponent].radius).isEqualTo(4f / 2)
         Assertions.assertThat(entity[VelocityComponent].vector).isEqualTo(Vector2(0f, 0f))
         Assertions.assertThat(entity.components.size()).isEqualTo(4)
+    }
+
+    @Test
+    fun `polygon - actualMap - triangle as easy convex example`() {
+        val map = LibGdxTiledMapLoader().loadMap("polygonTest1_triangle.tmx")
+        val mapObject = map.layers[0].objects[0] as PolygonMapObject
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 2.5f))
+        Assertions.assertThat(entity[PolygonShapeComponent].vertices.toListOfVertices()).isEqualTo(buildVertices {
+            p(-0.5, -0.5)
+            p(0, 0.5)
+            p(0.5, -0.5)
+        }.asListOfVertices())
+    }
+
+    @Test
+    fun `polygon - actualMap - whatever - concave but no intersection of lines`() {
+        val map = LibGdxTiledMapLoader().loadMap("polygonTest2_whatever.tmx")
+        val mapObject = map.layers[0].objects[0] as PolygonMapObject
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
+        Assertions.assertThat(entity[PolygonShapeComponent].vertices.toListOfVertices()).isEqualTo(buildVertices {
+            p(0.5, 1)
+            p(-1.5, 1)
+            p(-0.75, -0.5)
+            p(0.5, 0)
+            p(1.5, -1)
+            p(1.5, 0)
+        }.asListOfVertices())
+    }
+
+    @Test
+    fun `polygon - actualMap - 90° retard-rotation map`() {
+        val map = LibGdxTiledMapLoader().loadMap("polygonTest3_rotation.tmx")
+        val mapObject = map.layers[0].objects[0] as PolygonMapObject
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)  // 360° - 90°
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.25f, 1.25f))
+        println(Arrays.toString(entity[PolygonShapeComponent].vertices))
+        Assertions.assertThat(entity[PolygonShapeComponent].vertices.round(3).toListOfVertices()).isEqualTo(buildVertices {
+            p(-0.5, 1)
+            p(-0.5f, -0f) // 0f and -0f is not equal with the generic object .equals
+            p(0.5, -1)
+            p(0.5, 0)
+        }.asListOfVertices())
+    }
+
+    @Test
+    fun `polygon - actualMap - 90° retard-rotation map unrotated`() {
+        val map = LibGdxTiledMapLoader().loadMap("polygonTest3_rotation.tmx")
+        val mapObject = map.layers[0].objects[0] as PolygonMapObject
+        // overwrite rotation to compare rotated and unrotated polygons
+        mapObject.properties.put("rotation", 0f)
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(4f, 2f))
+        Assertions.assertThat(entity[PolygonShapeComponent].vertices.toListOfVertices()).isEqualTo(buildVertices {
+            p(-0.5, 1)
+            p(-0.5, 0)
+            p(0.5, -1)
+            p(0.5, 0)
+        }.asListOfVertices())
     }
 }

@@ -11,6 +11,7 @@ import com.jafleck.game.components.OriginPositionComponent
 import com.jafleck.game.components.RotationComponent
 import com.jafleck.game.components.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import ktx.box2d.BodyDefinition
 import ktx.box2d.FixtureDefinition
@@ -72,6 +73,12 @@ class GenericPhysicsBodyCreator(
                 }
             } -> {
             }
+            withItIfNotNull(physicsEntity.polygonShape) {
+                polygon(it.vertices) { // TODO support concave polygons by splitting them up into convex polygons (e.g. triangles)
+                    fixtureBlock()
+                }
+            } -> {
+            }
             else -> error("unknown shape")
         }
     }
@@ -109,4 +116,6 @@ inline class GenericPhysicsEntity(val entity: Entity) {
         get() = entity.getOrNull(RectangleShapeComponent)
     val circleShape
         get() = entity.getOrNull(CircleShapeComponent)
+    val polygonShape
+        get() = entity.getOrNull(PolygonShapeComponent)
 }

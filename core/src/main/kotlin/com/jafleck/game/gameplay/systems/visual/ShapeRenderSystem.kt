@@ -5,10 +5,15 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.EarClippingTriangulator
 import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
 import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
+import com.jafleck.game.components.OriginPositionComponent
+import com.jafleck.game.components.VisualShapeComponent
+import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.families.VisualShape
 import com.jafleck.game.gameplay.ui.GameCamera
 
@@ -22,6 +27,7 @@ class ShapeRenderSystem(
     }
     private lateinit var entities: ImmutableArray<Entity>
     private val rectTempPolygon = RectanglePolygon.create()
+    private val polygonTriangulator = EarClippingTriangulator()
 
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(VisualShape.family)
@@ -43,67 +49,75 @@ class ShapeRenderSystem(
 
             val circleShape = entity.circleShape
             if (circleShape != null) {
-                if (borderThickness != null) {
-                    require(renderedShape.fillColor != null) { "Circle with border but without fill color is currently not supported" }
-                    sr.color = renderedShape.borderColor
-                    sr.circle(position.vector, circleShape.radius, camera)
-                    sr.color = renderedShape.fillColor
-                    sr.circle(position.vector, circleShape.radius - borderThickness, camera)
-                } else if (renderedShape.fillColor != null) {
-                    sr.color = renderedShape.fillColor
-                    sr.circle(position.vector, circleShape.radius, camera)
-                }
+                drawCircle(circleShape, position, renderedShape, borderThickness)
             }
 
             val rectangleShape = entity.rectangleShape
             if (rectangleShape != null) {
-                if (rotationDegrees == 0f) {
-                    if (borderThickness != null) {
-                        // rectangle without rotation but border
-                        require(renderedShape.fillColor != null) { "Rectangle with border but without fill color is currently not supported" }
-
-                        // first fill everything with border color
-                        sr.color = renderedShape.borderColor
-                        sr.box(position.vector, rectangleShape.vector)
-
-                        // then fill inner rectangle (where border is excluded) with fill color
-                        sr.color = renderedShape.fillColor
-                        sr.box(position.vector, rectangleShape.vector, borderThickness)
-                    } else if (renderedShape.fillColor != null) {
-                        // simple filled rectangle
-                        sr.color = renderedShape.fillColor
-                        sr.box(position.vector, rectangleShape.vector)
-                    }
-                } else {
-                    if (borderThickness != null) {
-                        // rectangle without rotation but border
-                        require(renderedShape.fillColor != null) { "Rectangle with border but without fill color is currently not supported" }
-
-                        // first fill everything with border color
-                        rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
-                        rectTempPolygon.polygon.rotation = rotationDegrees
-                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
-                        sr.color = renderedShape.borderColor
-                        sr.fillRectanglePolygon(rectTempPolygon)
-
-                        // then fill inner rectangle (where border is excluded) with fill color
-                        rectTempPolygon.setRectangleShapeAround00(rectangleShape.width - 2 * borderThickness, rectangleShape.height - 2 * borderThickness)
-                        rectTempPolygon.polygon.rotation = rotationDegrees
-                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
-                        sr.color = renderedShape.fillColor
-                        sr.fillRectanglePolygon(rectTempPolygon)
-                    } else if (renderedShape.fillColor != null) {
-                        rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
-                        rectTempPolygon.polygon.rotation = rotationDegrees
-                        rectTempPolygon.polygon.setPosition(position.originX, position.originY)
-                        sr.color = renderedShape.fillColor
-                        sr.fillRectanglePolygon(rectTempPolygon)
-                    }
-                }
+                drawRectangle(rectangleShape, position, renderedShape, rotationDegrees, borderThickness)
             }
 
         }
         sr.end()
+    }
+
+    private fun drawCircle(circleShape: CircleShapeComponent, position: OriginPositionComponent, renderedShape: VisualShapeComponent, borderThickness: Float?) {
+        if (borderThickness != null) {
+            require(renderedShape.fillColor != null) { "Circle with border but without fill color is currently not supported" }
+            sr.color = renderedShape.borderColor
+            sr.circle(position.vector, circleShape.radius, camera)
+            sr.color = renderedShape.fillColor
+            sr.circle(position.vector, circleShape.radius - borderThickness, camera)
+        } else if (renderedShape.fillColor != null) {
+            sr.color = renderedShape.fillColor
+            sr.circle(position.vector, circleShape.radius, camera)
+        }
+    }
+
+    private fun drawRectangle(rectangleShape: RectangleShapeComponent, position: OriginPositionComponent, renderedShape: VisualShapeComponent, rotationDegrees: Float, borderThickness: Float?) {
+        if (rotationDegrees == 0f) {
+            if (borderThickness != null) {
+                // rectangle without rotation but border
+                require(renderedShape.fillColor != null) { "Rectangle with border but without fill color is currently not supported" }
+
+                // first fill everything with border color
+                sr.color = renderedShape.borderColor
+                sr.box(position.vector, rectangleShape.vector)
+
+                // then fill inner rectangle (where border is excluded) with fill color
+                sr.color = renderedShape.fillColor
+                sr.box(position.vector, rectangleShape.vector, borderThickness)
+            } else if (renderedShape.fillColor != null) {
+                // simple filled rectangle
+                sr.color = renderedShape.fillColor
+                sr.box(position.vector, rectangleShape.vector)
+            }
+        } else {
+            if (borderThickness != null) {
+                // rectangle without rotation but border
+                require(renderedShape.fillColor != null) { "Rectangle with border but without fill color is currently not supported" }
+
+                // first fill everything with border color
+                rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
+                rectTempPolygon.polygon.rotation = rotationDegrees
+                rectTempPolygon.polygon.setPosition(position.originX, position.originY)
+                sr.color = renderedShape.borderColor
+                sr.fillRectanglePolygon(rectTempPolygon)
+
+                // then fill inner rectangle (where border is excluded) with fill color
+                rectTempPolygon.setRectangleShapeAround00(rectangleShape.width - 2 * borderThickness, rectangleShape.height - 2 * borderThickness)
+                rectTempPolygon.polygon.rotation = rotationDegrees
+                rectTempPolygon.polygon.setPosition(position.originX, position.originY)
+                sr.color = renderedShape.fillColor
+                sr.fillRectanglePolygon(rectTempPolygon)
+            } else if (renderedShape.fillColor != null) {
+                rectTempPolygon.setRectangleShapeAround00(rectangleShape.width, rectangleShape.height)
+                rectTempPolygon.polygon.rotation = rotationDegrees
+                rectTempPolygon.polygon.setPosition(position.originX, position.originY)
+                sr.color = renderedShape.fillColor
+                sr.fillRectanglePolygon(rectTempPolygon)
+            }
+        }
     }
 
 }
