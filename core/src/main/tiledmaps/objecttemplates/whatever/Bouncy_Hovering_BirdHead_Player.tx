@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+ <object name="Flying Player" type="Player_custom">
+  <properties>
+   <property name="physics_customGravityScale" type="float" value="0.01"/>
+   <property name="physics_customRestitution" type="float" value="0.7"/>
+  </properties>
+  <polygon points="0,0 -32,8 -48,32 -80,40 -48,48 -24,64 -40,112 32,112 16,64 24,32"/>
+ </object>
+</template>

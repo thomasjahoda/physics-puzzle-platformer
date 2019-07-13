@@ -1,6 +1,7 @@
 package com.jafleck.extensions.libgdx.math
 
 import com.badlogic.gdx.math.Vector2
+import com.jafleck.extensions.kotlin.round
 
 fun List<Vector2>.toFloatArray(): FloatArray {
     val floatArray = FloatArray(this.size * 2)
@@ -46,4 +47,13 @@ fun buildVertices(block: VerticesBuilder.() -> Unit): VerticesBuilder {
     val builder = VerticesBuilder()
     builder.block()
     return builder
+}
+
+
+fun FloatArray.scale(scaleX: Float, scaleY: Float): FloatArray {
+    for (i in 0 until this.size step 2) {
+        this[i] *= scaleX
+        this[i + 1] *= scaleY
+    }
+    return this
 }

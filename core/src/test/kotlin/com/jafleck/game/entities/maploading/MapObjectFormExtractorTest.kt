@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.kotlin.round
 import com.jafleck.extensions.libgdx.math.buildVertices
+import com.jafleck.extensions.libgdx.math.round
 import com.jafleck.extensions.libgdx.math.toListOfVertices
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.has
@@ -15,7 +16,6 @@ import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
-import com.jafleck.game.components.shape.EllipseShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
@@ -211,7 +211,7 @@ internal class MapObjectFormExtractorTest {
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(2.5f, 2f))
         val circleShapeComponent = entity[CircleShapeComponent]
         Assertions.assertThat(circleShapeComponent.radius).isEqualTo(0.5f)
-        Assertions.assertThat(entity.has(EllipseShapeComponent)).isFalse()
+        Assertions.assertThat(entity.has(PolygonShapeComponent)).isFalse()
     }
 
     @Test
@@ -227,9 +227,6 @@ internal class MapObjectFormExtractorTest {
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
-        val ellipseShapeComponent = entity[EllipseShapeComponent]
-        Assertions.assertThat(ellipseShapeComponent.width).isEqualTo(2f)
-        Assertions.assertThat(ellipseShapeComponent.height).isEqualTo(1f)
-        Assertions.assertThat(entity.has(CircleShapeComponent)).isFalse()
+        Assertions.assertThat(entity[PolygonShapeComponent].getRectangleAroundShape(Vector2()).round(2)).isEqualTo(Vector2(2f, 1f))
     }
 }

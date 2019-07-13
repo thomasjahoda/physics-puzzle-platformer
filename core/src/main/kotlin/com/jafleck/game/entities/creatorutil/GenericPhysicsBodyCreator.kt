@@ -14,6 +14,8 @@ import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.util.box2d.Box2DSettings
+import com.jafleck.game.util.logger
 import com.jafleck.game.util.math.PolygonType
 import com.jafleck.game.util.math.PolygonTypeDetector
 import com.jafleck.game.util.math.triangulate
@@ -27,6 +29,8 @@ class GenericPhysicsBodyCreator(
 
     private val polygonTriangulator = EarClippingTriangulator()
     private val polygonTypeDetector = PolygonTypeDetector()
+
+    private val logger = logger(this::class)
 
     fun createStaticBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
         entity.add(BodyComponent(world.body {
@@ -82,7 +86,11 @@ class GenericPhysicsBodyCreator(
             }
             withItIfNotNull(physicsEntity.polygonShape) {
                 val vertices = it.vertices
-                if (polygonTypeDetector.determinePolygonType(vertices) == PolygonType.CONCAVE) {
+                val triangulate = polygonTypeDetector.determinePolygonType(vertices) == PolygonType.CONCAVE
+                    || (vertices.size / 2 > Box2DSettings.maxPolygonVertices)
+                // note potential performance-improvement: create sub-polygons instead of triangles to vastly increase performance
+                if (triangulate) {
+                    logger.debug { "Polygon is either concave or has more than ${Box2DSettings.maxPolygonVertices}. It has to be triangulated." }
                     triangulate(vertices, polygonTriangulator) { triangleVertices ->
                         polygon(triangleVertices) {
                             fixtureBlock()

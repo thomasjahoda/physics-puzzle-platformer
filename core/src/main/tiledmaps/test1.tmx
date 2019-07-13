@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="53">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="58">
  <objectgroup id="2" name="Entities">
   <object id="26" template="objecttemplates/platform_horizontal.tx" x="224" y="128"/>
   <object id="27" template="objecttemplates/platform_horizontal.tx" x="384" y="128" rotation="23.4741"/>
@@ -20,7 +20,7 @@
    <polygon points="0,0 -8,-72 -144,-16 -216,40 -136,32"/>
   </object>
   <object id="46" type="Platform" x="232" y="-248" rotation="121.048">
-   <polygon points="24,56 -64,24 0,104 0,80 80,40 80,-24 40,8"/>
+   <polygon points="24,56 -11.8799,42.9528 -64,24 0,104 0,80 80,40 80,-24 40,8"/>
   </object>
   <object id="47" type="Platform" x="-16" y="-48">
    <polygon points="0,0 32,-32 64,0 32,-16"/>
@@ -28,6 +28,18 @@
   <object id="48" type="Platform" x="88" y="-72">
    <polygon points="0,0 16,-32 32,0"/>
   </object>
-  <object id="52" template="objecttemplates/player_circle.tx" x="256" y="64"/>
+  <object id="52" template="objecttemplates/player_circle.tx" x="256" y="64" width="64" height="32"/>
+  <object id="53" x="400" y="-176">
+   <polygon points="0,0 -40,24 -80,64 -56,120 -8,152 56,168 96,168 136,144 152,120 160,88 176,56 176,8 152,-8 120,-16 96,-24 72,-16 48,-8"/>
+  </object>
+  <object id="55" x="608" y="0">
+   <polygon points="0,0 -8,-16 -8,-32 0,-80 24,-136 64,-184 96,-216 136,-232 176,-232 208,-224 232,-208 248,-168 256,-120 256,-48 240,-16 224,16 192,32 144,40 104,40 64,32 24,24 8,16"/>
+  </object>
+  <object id="56" type="Platform" x="368" y="-256">
+   <polygon points="0,0 16,-40 56,-48 120,-40 136,-24 144,-8 128,24 72,48 16,40"/>
+  </object>
+  <object id="57" type="Platform" x="192" y="-64" width="40" height="24">
+   <ellipse/>
+  </object>
  </objectgroup>
 </map>

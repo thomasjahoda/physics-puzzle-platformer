@@ -30,7 +30,7 @@ fun ShapeRenderer.box(originPosition: Vector2, rectangleShape: Vector2, borderTh
 }
 
 fun ShapeRenderer.circle(originPosition: Vector2, radius: Float, camera: OrthographicCamera) {
-    val segments = max(1, (6 * Math.cbrt(12 * (radius / camera.combined.scaleX).toDouble()).toFloat()).toInt())
+    val segments = calculateRecommendedCircleSegmentsForRendering(radius, camera)
     circle(originPosition.x, originPosition.y, radius, segments)
 }
 
