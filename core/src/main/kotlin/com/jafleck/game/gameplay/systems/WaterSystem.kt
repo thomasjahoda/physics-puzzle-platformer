@@ -37,12 +37,13 @@ class WaterSystem(
         val submergedDistance = rectangle.y - (submergedEntityTopY - waterTopY)
         val submergedPercentage = min(1f, submergedDistance / rectangle.y)
 
-        val waterArea = (body.mass / body.fixtureList[0].density) * submergedPercentage
+        val bodyDensity = body.fixtureList[0].density // multiple fixtures with different mass not supported currently
+        val waterArea = (body.mass / bodyDensity) * submergedPercentage
 
         val impulse = Vector2(0f, waterArea * WATER_DENSITY)
         body.applyLinearImpulse(impulse, body.position, true)
         body.linearDamping = (body.linearVelocity.len() * body.linearVelocity.len()) / 5
-        logger.debug { "impulse: $impulse" }
+//        logger.debug { "impulse: $impulse" }
     }
 
     override fun addedToEngine(engine: Engine) {
@@ -50,7 +51,12 @@ class WaterSystem(
         world.setContactListener(this)
     }
 
-    override fun beginContact(contact: Contact) {
+    override fun beginContact(contact: Contact?) {
+        if (contact == null) {
+            logger.error { "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
+                "I don't know why this happens yet. It does not seem to happen for endContact." }
+            return
+        }
         if (contact.fixtureA.isSensor or contact.fixtureB.isSensor) {
             logger.debug { "Begin contact with water" }
             val waterFixture = if (contact.fixtureA.isSensor) contact.fixtureA else contact.fixtureB
@@ -68,8 +74,12 @@ class WaterSystem(
             logger.debug { "End contact with water" }
             val otherFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
             val body = otherFixture.body
-            val pushedUpByWaterComponent = body.entity.remove<PushedUpByWaterComponent>() as PushedUpByWaterComponent
-            body.linearDamping = pushedUpByWaterComponent.originalLinearDamping
+            val pushedUpByWaterComponent = body.entity.remove<PushedUpByWaterComponent>() as PushedUpByWaterComponent?
+            if (pushedUpByWaterComponent != null) {
+                body.linearDamping = pushedUpByWaterComponent.originalLinearDamping
+            } else {
+                logger.debug { "No PushedUpByWaterComponent was found on the entity. This probably happened because the body consists of multiple fixtures and therefore generates multiple contacts." }
+            }
         }
     }
 
