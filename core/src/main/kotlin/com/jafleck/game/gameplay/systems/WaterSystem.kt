@@ -6,6 +6,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
 import com.jafleck.extensions.libgdxktx.ashley.get
+import com.jafleck.extensions.libgdxktx.ashley.has
 import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.logic.PushedUpByWaterComponent
 import com.jafleck.game.entities.WaterEntity
@@ -53,7 +54,7 @@ class WaterSystem(
 
     override fun beginContact(contact: Contact?) {
         if (contact == null) {
-            logger.error { "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
+            logger.debug { "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
                 "I don't know why this happens yet. It does not seem to happen for endContact." }
             return
         }
@@ -62,21 +63,26 @@ class WaterSystem(
             val waterFixture = if (contact.fixtureA.isSensor) contact.fixtureA else contact.fixtureB
             val otherFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
 
-            val body = otherFixture.body
-            logger.debug { body.linearDamping.toString() }
-            body.entity.add(PushedUpByWaterComponent(WaterEntity(waterFixture.body.entity), body.linearDamping))
-            body.linearDamping = 1f
+            val submergedBody = otherFixture.body
+            val submergedEntity = submergedBody.entity
+            if (submergedEntity.has(PushedUpByWaterComponent)) {
+                logger.debug { "Body seems to have multiple fixtures because it is already pushed up by water" }
+            } else {
+                logger.debug { submergedBody.linearDamping.toString() }
+                submergedEntity.add(PushedUpByWaterComponent(WaterEntity(waterFixture.body.entity), submergedBody.linearDamping))
+                submergedBody.linearDamping = 1f
+            }
         }
     }
 
     override fun endContact(contact: Contact) {
         if (contact.fixtureA.isSensor or contact.fixtureB.isSensor) {
             logger.debug { "End contact with water" }
-            val otherFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
-            val body = otherFixture.body
-            val pushedUpByWaterComponent = body.entity.remove<PushedUpByWaterComponent>() as PushedUpByWaterComponent?
+            val submergedFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
+            val submergedBody = submergedFixture.body
+            val pushedUpByWaterComponent = submergedBody.entity.remove<PushedUpByWaterComponent>() as PushedUpByWaterComponent?
             if (pushedUpByWaterComponent != null) {
-                body.linearDamping = pushedUpByWaterComponent.originalLinearDamping
+                submergedBody.linearDamping = pushedUpByWaterComponent.originalLinearDamping
             } else {
                 logger.debug { "No PushedUpByWaterComponent was found on the entity. This probably happened because the body consists of multiple fixtures and therefore generates multiple contacts." }
             }
