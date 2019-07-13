@@ -215,6 +215,22 @@ internal class MapObjectFormExtractorTest {
     }
 
     @Test
+    fun `ellipse - actualMap - 1 to 1 rotated ellipse is circle`() {
+        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
+        val mapObject = map.layers[0].objects[0] as EllipseMapObject
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 2f))
+        val circleShapeComponent = entity[CircleShapeComponent]
+        Assertions.assertThat(circleShapeComponent.radius).isEqualTo(0.5f)
+        Assertions.assertThat(entity.has(PolygonShapeComponent)).isFalse()
+    }
+
+    @Test
     fun `ellipse - actualMap - 2 to 1 unrotated ellipse`() {
         val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_2to1ratio_rotated.tmx")
         val mapObject = map.layers[0].objects[0] as EllipseMapObject
@@ -227,6 +243,20 @@ internal class MapObjectFormExtractorTest {
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
+        Assertions.assertThat(entity[PolygonShapeComponent].getRectangleAroundShape(Vector2()).round(2)).isEqualTo(Vector2(2f, 1f))
+    }
+
+    @Test
+    fun `ellipse - actualMap - 2 to 1 rotated ellipse`() {
+        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_2to1ratio_rotated.tmx")
+        val mapObject = map.layers[0].objects[0] as EllipseMapObject
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 1.5f))
         Assertions.assertThat(entity[PolygonShapeComponent].getRectangleAroundShape(Vector2()).round(2)).isEqualTo(Vector2(2f, 1f))
     }
 }

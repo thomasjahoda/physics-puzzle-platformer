@@ -90,14 +90,14 @@ class GenericPhysicsBodyCreator(
                     || (vertices.size / 2 > Box2DSettings.maxPolygonVertices)
                 // note potential performance-improvement: create sub-polygons instead of triangles to vastly increase performance
                 if (triangulate) {
-                    logger.debug { "Polygon is either concave or has more than ${Box2DSettings.maxPolygonVertices}. It has to be triangulated." }
+                    logger.debug { "Polygon is either concave or has more than ${Box2DSettings.maxPolygonVertices} vertices. It has to be triangulated for Box2D." }
                     triangulate(vertices, polygonTriangulator) { triangleVertices ->
-                        polygon(triangleVertices) {
+                        polygon(triangleVertices) {  // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
                             fixtureBlock()
                         }
                     }
                 } else {
-                    polygon(vertices) {
+                    polygon(vertices) { // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
                         fixtureBlock()
                     }
                 }

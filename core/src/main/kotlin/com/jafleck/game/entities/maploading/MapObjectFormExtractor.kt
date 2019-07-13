@@ -24,6 +24,8 @@ import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromMapToWorld
+import com.jafleck.game.util.math.PolygonNotHavingVerticesOnSameLineValidator
+import com.jafleck.game.util.math.QuickDuplicateVertexDetector
 import kotlin.math.max
 
 class MapObjectFormExtractor {
@@ -68,9 +70,11 @@ class MapObjectFormExtractor {
 
     private fun extractEllipseShapeAndPosition(mapObject: EllipseMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val ellipse = mapObject.ellipse
-        require(rotationDegrees == 0f) { "Rotated ellipses are not supported yet (${mapObject.id})" } // TODO support rotated ellipses
         val worldOriginPosition = Vector2(ellipse.x + ellipse.width / 2, ellipse.y + ellipse.height / 2).scaleFromMapToWorld()
         val worldRectangleSize = Vector2(ellipse.width.scaleFromMapToWorld(), ellipse.height.scaleFromMapToWorld())
+        if (rotationDegrees != 0f) {
+            worldOriginPosition.rotateAround(Vector2(ellipse.x, ellipse.y + ellipse.height).scaleFromMapToWorld(), rotationDegrees)
+        }
         components.add(OriginPositionComponent(worldOriginPosition))
         if (ellipse.isCircle()) {
             components.add(CircleShapeComponent(worldRectangleSize.x / 2))
@@ -87,6 +91,8 @@ class MapObjectFormExtractor {
 
     private fun extractPolygonShapeAndPosition(mapObject: PolygonMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val mapPolygon = mapObject.polygon
+        validateVertices(mapObject)
+        require(mapPolygon.vertices.size / 2 >= 3) { "Map object ${mapObject.id} is a polygon and needs at least 3 vertices but only has ${mapPolygon.vertices.size / 2}" }
 
         if (rotationDegrees == 0f) {
             val (absoluteOriginPosition, worldVertices) = determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon)
@@ -105,6 +111,15 @@ class MapObjectFormExtractor {
             components.add(OriginPositionComponent(absoluteOriginPosition.scaleFromMapToWorld()))
             components.add(PolygonShapeComponent(originalUnrotatedWorldVertices))
         }
+    }
+
+    private fun validateVertices(mapObject: PolygonMapObject) {
+        // note potential performance-improvement: those checks could be disabled on production mode. also, box2d automatically excludes duplicate vertices
+        val duplicate = QuickDuplicateVertexDetector.getFirstDuplicate(mapObject.polygon.vertices)
+        require(duplicate == null) {"Polygon of map object ${mapObject.id} has duplicate vertex $duplicate"}
+
+        val vertexOnSameLine = PolygonNotHavingVerticesOnSameLineValidator.getFirstVertexOnLineAsOther(mapObject.polygon.vertices)
+        require(vertexOnSameLine == null) {"Polygon of map object ${mapObject.id} has vertex $vertexOnSameLine which is on the line of the previous vertex to the next one. Please remove this node."}
     }
 
     private fun determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon: Polygon): Pair<Vector2, FloatArray> {
