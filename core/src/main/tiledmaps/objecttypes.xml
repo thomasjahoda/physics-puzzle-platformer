@@ -5,6 +5,7 @@
  </objecttype>
  <objecttype name="Platform_custom" color="#2e3436">
   <property name="entityType" type="string" default="Platform"/>
+  <property name="preset" type="string" default=""/>
   <property name="physics_customFriction" type="float" default="-1"/>
   <property name="physics_customRestitution" type="float" default="-1"/>
   <property name="vis_customBorderColor" type="color"/>
@@ -20,6 +21,7 @@
  </objecttype>
  <objecttype name="Player_custom" color="#cc0000">
   <property name="entityType" type="string" default="Player"/>
+  <property name="preset" type="string" default=""/>
   <property name="physics_customAngularDamping" type="float" default="-1"/>
   <property name="physics_customDensity" type="float" default="-1"/>
   <property name="physics_customFixedRotation" type="string"/>
