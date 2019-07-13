@@ -9,11 +9,13 @@ import com.jafleck.extensions.kotlin.round
 import com.jafleck.extensions.libgdx.math.buildVertices
 import com.jafleck.extensions.libgdx.math.toListOfVertices
 import com.jafleck.extensions.libgdxktx.ashley.get
+import com.jafleck.extensions.libgdxktx.ashley.has
 import com.jafleck.game.components.basic.MapObjectComponent
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.EllipseShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
@@ -192,5 +194,42 @@ internal class MapObjectFormExtractorTest {
             p(0.5, -1)
             p(0.5, 0)
         }.asListOfVertices())
+    }
+
+    @Test
+    fun `ellipse - actualMap - 1 to 1 unrotated ellipse is circle`() {
+        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
+        val mapObject = map.layers[0].objects[0] as EllipseMapObject
+        // overwrite rotation to compare rotated and unrotated circle
+        mapObject.properties.put("rotation", 0f)
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(2.5f, 2f))
+        val circleShapeComponent = entity[CircleShapeComponent]
+        Assertions.assertThat(circleShapeComponent.radius).isEqualTo(0.5f)
+        Assertions.assertThat(entity.has(EllipseShapeComponent)).isFalse()
+    }
+
+    @Test
+    fun `ellipse - actualMap - 2 to 1 unrotated ellipse`() {
+        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_2to1ratio_rotated.tmx")
+        val mapObject = map.layers[0].objects[0] as EllipseMapObject
+        // overwrite rotation to compare rotated and unrotated ellipse
+        mapObject.properties.put("rotation", 0f)
+
+        val entity = Entity()
+        val uut = MapObjectFormExtractor()
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+
+        Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
+        Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
+        val ellipseShapeComponent = entity[EllipseShapeComponent]
+        Assertions.assertThat(ellipseShapeComponent.width).isEqualTo(2f)
+        Assertions.assertThat(ellipseShapeComponent.height).isEqualTo(1f)
+        Assertions.assertThat(entity.has(CircleShapeComponent)).isFalse()
     }
 }

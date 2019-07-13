@@ -3,10 +3,10 @@ package com.jafleck.game.entities.maploading
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.maps.MapObject
-import com.badlogic.gdx.maps.objects.CircleMapObject
 import com.badlogic.gdx.maps.objects.EllipseMapObject
 import com.badlogic.gdx.maps.objects.PolygonMapObject
 import com.badlogic.gdx.maps.objects.RectangleMapObject
+import com.badlogic.gdx.math.Ellipse
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
@@ -17,11 +17,11 @@ import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.EllipseShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.maploading.scaleFromMapToWorld
-import kotlin.collections.ArrayList
 
 class MapObjectFormExtractor {
 
@@ -41,7 +41,6 @@ class MapObjectFormExtractor {
     private fun extractAnyShapeAndPosition(mapObject: MapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         when (mapObject) {
             is RectangleMapObject -> extractRectangleShapeAndPosition(mapObject, rotationDegrees, components)
-            is CircleMapObject -> extractCircleShapeAndPosition(mapObject, rotationDegrees, components)
             is EllipseMapObject -> extractEllipseShapeAndPosition(mapObject, rotationDegrees, components)
             is PolygonMapObject -> extractPolygonShapeAndPosition(mapObject, rotationDegrees, components)
             else -> error("Unknown shape of object ${mapObject.id}: ${mapObject.javaClass}")
@@ -64,21 +63,20 @@ class MapObjectFormExtractor {
         }
     }
 
-    private fun extractCircleShapeAndPosition(mapObject: CircleMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
-        val circle = mapObject.circle
-        require(rotationDegrees == 0f) { "Rotated circles are not supported (${mapObject.id})" }
-        components.add(CircleShapeComponent(circle.radius))
-        components.add(OriginPositionComponent(Vector2(circle.x, circle.y).scaleFromMapToWorld()))
-    }
-
     private fun extractEllipseShapeAndPosition(mapObject: EllipseMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val ellipse = mapObject.ellipse
         require(rotationDegrees == 0f) { "Rotated ellipses are not supported yet (${mapObject.id})" } // TODO support rotated ellipses
-        require(ellipse.width == ellipse.height) { "Only circle-formed ellipses supported currently" }
-        val mapRadius = ellipse.width / 2
-        components.add(CircleShapeComponent(mapRadius.scaleFromMapToWorld()))
-        components.add(OriginPositionComponent(Vector2(ellipse.x + mapRadius, ellipse.y + mapRadius).scaleFromMapToWorld()))
+        val worldOriginPosition = Vector2(ellipse.x + ellipse.width / 2, ellipse.y + ellipse.height / 2).scaleFromMapToWorld()
+        val worldRectangleSize = Vector2(ellipse.width.scaleFromMapToWorld(), ellipse.height.scaleFromMapToWorld())
+        components.add(OriginPositionComponent(worldOriginPosition))
+        if (ellipse.isCircle()) {
+            components.add(CircleShapeComponent(worldRectangleSize.x / 2))
+        } else {
+            components.add(EllipseShapeComponent(worldRectangleSize))
+        }
     }
+
+    private fun Ellipse.isCircle() = this.width == this.height
 
     private fun extractPolygonShapeAndPosition(mapObject: PolygonMapObject, rotationDegrees: Float, components: ArrayList<Component>) {
         val mapPolygon = mapObject.polygon
