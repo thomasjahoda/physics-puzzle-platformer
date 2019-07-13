@@ -7,6 +7,7 @@ import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
+import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.shape.ShapeComponent
 import ktx.ashley.allOf
@@ -25,10 +26,13 @@ inline class ShapedEntity(val entity: Entity) {
         get() = entity.getOrNull(RectangleShapeComponent)
     val circleShape: CircleShapeComponent?
         get() = entity.getOrNull(CircleShapeComponent)
+    val polygonShape: PolygonShapeComponent?
+        get() = entity.getOrNull(PolygonShapeComponent)
     val shape: ShapeComponent
         get() {
             withItIfNotNull(rectangleShape) { return it }
             withItIfNotNull(circleShape) { return it }
+            withItIfNotNull(polygonShape) { return it }
             error("unknown shape")
         }
 }
