@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="62">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="1" nextlayerid="4" nextobjectid="74">
  <objectgroup id="2" name="Entities">
   <object id="26" template="objecttemplates/platform_horizontal.tx" x="224" y="128"/>
   <object id="27" template="objecttemplates/platform_horizontal.tx" x="384" y="128" rotation="23.4741"/>
@@ -10,38 +10,57 @@
   <object id="32" template="objecttemplates/platform_horizontal.tx" x="128" y="512" width="480" height="32"/>
   <object id="33" template="objecttemplates/platform_vertical.tx" x="928" y="-192" width="32" height="568"/>
   <object id="34" template="objecttemplates/platform_horizontal.tx" x="-544" y="344" width="672" height="32"/>
-  <object id="35" template="objecttemplates/platform_vertical.tx" type="Platform_Trampoline" x="1160" y="-664" width="32" height="536" rotation="23.2026"/>
+  <object id="35" template="objecttemplates/platform_vertical.tx" type="Platform_Trampoline" x="1495.64" y="-1447.02" width="32" height="1387.92" rotation="23.2026"/>
   <object id="36" template="objecttemplates/platform_circle_trampoline.tx" x="168" y="112"/>
   <object id="37" template="objecttemplates/platform_circle.tx" x="104" y="336" width="40" height="40"/>
   <object id="38" template="objecttemplates/platform_circle.tx" x="40" y="328" width="40" height="40"/>
   <object id="39" template="objecttemplates/platform_circle.tx" x="-24" y="320" width="40" height="40"/>
-  <object id="45" type="Platform" x="-184" y="-128" rotation="218.528">
+  <object id="45" type="Platform" x="-216" y="-688" rotation="218.528">
    <polygon points="0,0 -8,-72 -144,-16 -216,40 -136,32"/>
   </object>
-  <object id="46" type="Platform" x="256" y="-520" rotation="121.048">
+  <object id="46" type="Platform" x="288" y="-952" rotation="121.048">
    <polygon points="24,56 -11.8799,42.9528 -64,24 0,104 0,80 80,40 80,-24 40,8"/>
   </object>
-  <object id="47" type="Platform" x="-43.6519" y="-257.827" rotation="97.5582">
+  <object id="47" type="Platform" x="-104" y="-768" rotation="97.5582">
    <polygon points="0,0 32,-32 64,0 32,-16"/>
   </object>
-  <object id="48" type="Platform" x="-48" y="-144">
+  <object id="48" type="Platform" x="-256" y="-1128">
    <polygon points="0,0 16,-32 32,0"/>
   </object>
-  <object id="52" template="objecttemplates/player_circle.tx" x="256" y="64" width="64" height="32"/>
-  <object id="53" type="Platform" x="-880" y="-512">
+  <object id="53" type="Platform" x="-856" y="-312">
    <polygon points="0,0 -40,24 -80,64 -56,120 -8,152 56,168 96,168 136,144 152,120 160,88 176,56 176,8 160,-8 128,-16 96,-16"/>
   </object>
-  <object id="55" type="Platform" x="-1120" y="-480">
+  <object id="55" type="Platform" x="-1080" y="-248">
    <polygon points="0,8 -8,-16 -8,-32 0,-80 24,-136 56,-184 96,-216 136,-232 176,-232 208,-224 232,-208 248,-168 256,-120 256,-48 248,-16 224,16 192,32 144,48 96,48 56,40 24,32 8,16"/>
   </object>
-  <object id="56" type="Platform" x="328" y="-496">
+  <object id="56" type="Platform" x="384" y="-848">
    <polygon points="0,0 16,-40 56,-48 120,-40 136,-24 144,-8 128,24 72,48 16,40"/>
   </object>
-  <object id="57" type="Platform_Trampoline" x="96" y="-416" width="168" height="24" rotation="140.126">
+  <object id="57" type="Platform_Trampoline" x="208" y="-488" width="168" height="24" rotation="140.126">
    <ellipse/>
   </object>
   <object id="61" type="Platform_Trampoline" x="-296" y="-296" rotation="-14.7479">
    <polygon points="-331.483,90.1807 -316.399,164.888 -299.708,227.189 -263.882,311.073 -224,384 -136,472 8,520 96,544 88,592 -80,568 -200,528 -298.503,442.592 -357.539,352.599 -395.253,213.036 -391.317,103.804 -372.988,34.1757 -345.296,-8.16987 -313.94,-33.0061"/>
   </object>
+  <object id="62" template="objecttemplates/player_circle.tx" x="320" y="64"/>
+  <object id="63" type="Platform_Trampoline" x="744" y="-968" width="168" height="24" rotation="140.126">
+   <ellipse/>
+  </object>
+  <object id="64" type="Platform_Trampoline" x="-264" y="-1600" rotation="43.7989">
+   <polygon points="-1122.92,208.278 -1071.82,380.819 -1015.28,524.707 -893.919,718.442 -758.816,886.871 -460.71,1090.11 27.1006,1200.97 325.207,1256.4 298.106,1367.26 -271.006,1311.83 -677.514,1219.45 -1011.2,1022.19 -1211.19,814.349 -1338.95,492.02 -1325.61,239.742 -1263.52,78.9309 -1169.71,-18.8688 -1063.49,-76.2296"/>
+  </object>
+  <object id="65" type="Platform" x="-2096" y="-2416" rotation="201.722">
+   <polygon points="0,0 -27.6248,-380.217 -497.246,-84.4927 -745.869,211.232 -469.621,168.985"/>
+  </object>
+  <object id="67" template="objecttemplates/platform_vertical.tx" type="Platform_Trampoline" x="1400" y="-2824" width="32" height="1387.92" rotation="-4.29585"/>
+  <object id="69" type="Platform_Trampoline" x="-192" y="-2480" rotation="107.628">
+   <polygon points="-1122.92,208.278 -1071.82,380.819 -1015.28,524.707 -893.919,718.442 -758.816,886.871 -460.71,1090.11 27.1006,1200.97 325.207,1256.4 298.106,1367.26 -271.006,1311.83 -677.514,1219.45 -1011.2,1022.19 -1211.19,814.349 -1338.95,492.02 -1325.61,239.742 -1263.52,78.9309 -1169.71,-18.8688 -1063.49,-76.2296"/>
+  </object>
+  <object id="70" type="Platform_Trampoline" x="1992" y="-2936" rotation="-290.537">
+   <polygon points="-1122.92,1082.75 -1071.82,910.211 -1015.28,766.323 -893.919,572.588 -758.816,404.159 -460.71,200.92 27.1006,90.0604 325.207,34.6304 298.106,-76.2296 -271.006,-20.7996 -677.514,71.5804 -1011.2,268.84 -1211.19,476.681 -1338.95,799.01 -1325.61,1051.29 -1263.52,1212.1 -1169.71,1309.9 -1063.49,1367.26"/>
+  </object>
+  <object id="71" template="objecttemplates/platform_vertical.tx" type="Platform_Trampoline" x="360" y="-1456" width="26.9994" height="424.527" rotation="88.8012"/>
+  <object id="72" template="objecttemplates/platform_vertical.tx" type="Platform_Trampoline" x="2480" y="-2784" width="56.4419" height="1391.7" rotation="44.3278"/>
+  <object id="73" template="objecttemplates/platform_horizontal.tx" x="2344" y="-2824"/>
  </objectgroup>
 </map>
