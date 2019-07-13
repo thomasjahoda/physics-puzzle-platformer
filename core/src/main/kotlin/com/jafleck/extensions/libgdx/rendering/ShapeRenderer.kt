@@ -34,11 +34,11 @@ fun ShapeRenderer.circle(originPosition: Vector2, radius: Float, camera: Orthogr
     circle(originPosition.x, originPosition.y, radius, segments)
 }
 
-fun ShapeRenderer.triangle(originPosition: Vector2, vertices: FloatArray) {
+fun ShapeRenderer.triangle(originPosition: Vector2, vertices: FloatArray, verticesIndexOffset: Int) {
     val originX = originPosition.x
     val originY = originPosition.y
-    triangle(originX + vertices[0], originY + vertices[1],
-        originX + vertices[2], originY + vertices[3],
-        originX + vertices[4], originY + vertices[5])
+    triangle(originX + vertices[verticesIndexOffset + 0], originY + vertices[verticesIndexOffset + 1],
+        originX + vertices[verticesIndexOffset + 2], originY + vertices[verticesIndexOffset + 3],
+        originX + vertices[verticesIndexOffset + 4], originY + vertices[verticesIndexOffset + 5])
 }
 

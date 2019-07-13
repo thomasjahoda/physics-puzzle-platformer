@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.EarClippingTriangulator
 import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.utils.ShortArray
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
@@ -17,6 +16,7 @@ import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.util.math.PolygonType
 import com.jafleck.game.util.math.PolygonTypeDetector
+import com.jafleck.game.util.math.triangulate
 import ktx.box2d.BodyDefinition
 import ktx.box2d.FixtureDefinition
 import ktx.box2d.body
@@ -83,10 +83,8 @@ class GenericPhysicsBodyCreator(
             withItIfNotNull(physicsEntity.polygonShape) {
                 val vertices = it.vertices
                 if (polygonTypeDetector.determinePolygonType(vertices) == PolygonType.CONCAVE) {
-                    val triangleIndices = polygonTriangulator.computeTriangles(vertices)
-                    for (triangleIndex in 0 until triangleIndices.size / 3) {
-                        copySelectedVerticesOfTriangleToTmp(vertices, triangleIndices, triangleIndex)
-                        polygon(tmpTriangleVertices) {
+                    triangulate(vertices, polygonTriangulator) { triangleVertices ->
+                        polygon(triangleVertices) {
                             fixtureBlock()
                         }
                     }
@@ -99,17 +97,6 @@ class GenericPhysicsBodyCreator(
             }
             else -> error("unknown shape")
         }
-    }
-
-    private fun copySelectedVerticesOfTriangleToTmp(vertices: FloatArray, triangleIndices: ShortArray, triangleIndex: Int) {
-        val tmpVertices = tmpTriangleVertices
-        val baseIndex = triangleIndex * 3
-        tmpVertices[0] = vertices[(triangleIndices[baseIndex + 0].toInt()) * 2]
-        tmpVertices[1] = vertices[(triangleIndices[baseIndex + 0].toInt()) * 2 + 1]
-        tmpVertices[2] = vertices[(triangleIndices[baseIndex + 1].toInt()) * 2]
-        tmpVertices[3] = vertices[(triangleIndices[baseIndex + 1].toInt()) * 2 + 1]
-        tmpVertices[4] = vertices[(triangleIndices[baseIndex + 2].toInt()) * 2]
-        tmpVertices[5] = vertices[(triangleIndices[baseIndex + 2].toInt()) * 2 + 1]
     }
 
     private fun BodyDefinition.storeUserData(physicsEntity: GenericPhysicsEntity) {

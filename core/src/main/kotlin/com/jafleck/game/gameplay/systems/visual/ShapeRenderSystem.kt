@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.EarClippingTriangulator
 import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
@@ -16,6 +15,7 @@ import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import com.jafleck.game.families.VisualShape
 import com.jafleck.game.gameplay.ui.GameCamera
 import com.jafleck.game.util.logger
@@ -31,7 +31,8 @@ class ShapeRenderSystem(
     }
     private lateinit var entities: ImmutableArray<Entity>
     private val rectTempPolygon = RectanglePolygon.create()
-    private val polygonTriangulator = EarClippingTriangulator()
+
+    private val logger = logger(this::class)
 
     override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(VisualShape.family)
@@ -59,6 +60,12 @@ class ShapeRenderSystem(
             val rectangleShape = entity.rectangleShape
             if (rectangleShape != null) {
                 drawRectangle(rectangleShape, position, renderedShape, rotationDegrees, borderThickness)
+            }
+
+            val polygonShape = entity.polygonShape
+            if (polygonShape != null) {
+                val triangulatedVisualPolygon = entity.triangulatedVisualPolygon!!
+                drawPolygon(polygonShape, triangulatedVisualPolygon, position, renderedShape, rotationDegrees, borderThickness)
             }
 
         }
@@ -120,6 +127,18 @@ class ShapeRenderSystem(
                 rectTempPolygon.polygon.setPosition(position.originX, position.originY)
                 sr.color = renderedShape.fillColor
                 sr.fillRectanglePolygon(rectTempPolygon)
+            }
+        }
+    }
+
+    private fun drawPolygon(polygonShape: PolygonShapeComponent, triangulatedVisualPolygon: TriangulatedVisualPolygonComponent,
+                            position: OriginPositionComponent, renderedShape: VisualShapeComponent, rotationDegrees: Float, borderThickness: Float?) {
+        if (renderedShape.fillColor != null) {
+            sr.color = renderedShape.fillColor
+            triangulatedVisualPolygon.setRotationDegrees(rotationDegrees)
+            val triangleVertices = triangulatedVisualPolygon.getTriangleVertices()
+            for (i in 0 until triangleVertices.size step 2 * 3) {
+                sr.triangle(position.vector, triangleVertices, i)
             }
         }
     }

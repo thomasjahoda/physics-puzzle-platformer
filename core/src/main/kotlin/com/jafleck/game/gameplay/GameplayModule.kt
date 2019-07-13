@@ -12,6 +12,7 @@ import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
+import com.jafleck.game.gameplay.standaloneentitylisteners.TriangulateVisualPolygonShapesEntityListener
 import com.jafleck.game.gameplay.systems.*
 import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import com.jafleck.game.gameplay.systems.debug.PlayerManualTeleportDebugSystem
@@ -90,7 +91,8 @@ val gameplayModule: Module = module {
         systems.forEachIndexed { index, entitySystem -> entitySystem.priority = index }
 
         val standaloneEntityListeners = listOf<EntityListener>(
-            SyncRemovedBodiesToWorldEntityListener(get())
+            SyncRemovedBodiesToWorldEntityListener(get()),
+            TriangulateVisualPolygonShapesEntityListener()
         )
 
         val logicLoader: EngineLogicLoader = object : EngineLogicLoader {

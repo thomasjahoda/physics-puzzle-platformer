@@ -10,6 +10,7 @@ import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
+import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import ktx.ashley.allOf
 import ktx.ashley.oneOf
 
@@ -38,4 +39,6 @@ inline class VisualShape(val entity: Entity) {
         get() = entity.getOrNull(CircleShapeComponent)
     val polygonShape: PolygonShapeComponent?
         get() = entity.getOrNull(PolygonShapeComponent)
+    val triangulatedVisualPolygon: TriangulatedVisualPolygonComponent?
+        get() = entity.getOrNull(TriangulatedVisualPolygonComponent)
 }
