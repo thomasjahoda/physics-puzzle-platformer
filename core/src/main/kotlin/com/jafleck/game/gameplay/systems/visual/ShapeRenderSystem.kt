@@ -4,22 +4,22 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
 import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
-import com.jafleck.extensions.libgdx.rendering.triangle
+import com.jafleck.extensions.libgdx.rendering.triangles
 import com.jafleck.game.components.basic.OriginPositionComponent
-import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.families.VisualShape
 import com.jafleck.game.gameplay.ui.GameCamera
 import com.jafleck.game.util.logger
-import com.jafleck.game.util.math.triangulate
 
 
 class ShapeRenderSystem(
@@ -134,11 +134,25 @@ class ShapeRenderSystem(
     private fun drawPolygon(polygonShape: PolygonShapeComponent, triangulatedVisualPolygon: TriangulatedVisualPolygonComponent,
                             position: OriginPositionComponent, renderedShape: VisualShapeComponent, rotationDegrees: Float, borderThickness: Float?) {
         if (renderedShape.fillColor != null) {
-            sr.color = renderedShape.fillColor
             triangulatedVisualPolygon.setRotationDegrees(rotationDegrees)
+            val colorOnFullArea: Color
+            val colorOnInnerArea: Color?
+            if (borderThickness != null) {
+                colorOnFullArea = renderedShape.borderColor!!
+                colorOnInnerArea = renderedShape.fillColor!!
+            } else {
+                colorOnFullArea = renderedShape.fillColor!!
+                colorOnInnerArea = null
+            }
+
+            sr.color = colorOnFullArea
             val triangleVertices = triangulatedVisualPolygon.getTriangleVertices()
-            for (i in 0 until triangleVertices.size step 2 * 3) {
-                sr.triangle(position.vector, triangleVertices, i)
+            sr.triangles(position.vector, triangleVertices)
+
+            if (colorOnInnerArea != null) {
+                sr.color = colorOnInnerArea
+                val innerTriangleVertices = triangulatedVisualPolygon.getInnerTriangleVertices()!!
+                sr.triangles(position.vector, innerTriangleVertices)
             }
         }
     }

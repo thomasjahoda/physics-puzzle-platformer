@@ -42,3 +42,9 @@ fun ShapeRenderer.triangle(originPosition: Vector2, vertices: FloatArray, vertic
         originX + vertices[verticesIndexOffset + 4], originY + vertices[verticesIndexOffset + 5])
 }
 
+fun ShapeRenderer.triangles(originPosition: Vector2, triangleVertices: FloatArray) {
+    for (i in 0 until triangleVertices.size step 2 * 3) {
+        triangle(originPosition, triangleVertices, i)
+    }
+}
+

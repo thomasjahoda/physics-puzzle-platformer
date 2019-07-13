@@ -39,6 +39,7 @@ object DependencyVersions {
     const val assertJVersion = "3.12.2"
     const val mockKVersion = "1.9.3"
     const val thirdPartyKotlinXmlBuilder = "1.5.1"
+    const val jtsVersion = "1.16.1"
 }
 
 //import com.badlogic.gdx.tools.texturepacker.TexturePacker
@@ -148,6 +149,9 @@ project(":core") {
 
         implementation("org.koin:koin-core:${DependencyVersions.koinVersion}")
         testImplementation("org.koin:koin-test:${DependencyVersions.koinVersion}")
+
+        // geometry library, initially for https://locationtech.github.io/jts/javadoc/org/locationtech/jts/geom/Geometry.html#buffer-double-
+        api("org.locationtech.jts:jts-core:${DependencyVersions.jtsVersion}")
 
         testApi("com.badlogicgames.gdx:gdx-backend-headless:${DependencyVersions.gdxVersion}")
         testApi("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-desktop")
