@@ -23,7 +23,6 @@ import com.jafleck.game.families.PhysicalShapedEntity
 import ktx.ashley.allOf
 import ktx.box2d.Box2DDsl
 import ktx.box2d.filter
-import ktx.box2d.revoluteJointWith
 import ktx.box2d.ropeJointWith
 import ktx.math.minus
 import ktx.math.times
@@ -137,16 +136,11 @@ class RopeEntityCreator(
         engine.addEntity(newRopePart.entity)
 
         // attach to next part
-        val revoluteJoint = bodyToAttachTo.revoluteJointWith(newRopePart.asPhysicalShapedEntity().body.value) {
-            initialize(bodyA, bodyB, newPartTopEdgeMiddlePointPosition)
-        }
-        val ropeJoint = bodyToAttachTo.ropeJointWith(newRopePart.asPhysicalShapedEntity().body.value) {
+        newRopePart.ropePart.restrictedToNextPartBy = bodyToAttachTo.ropeJointWith(newRopePart.asPhysicalShapedEntity().body.value) {
             localAnchorA.set(Vector2.Zero)
             localAnchorB.set(Vector2.Zero)
-            maxLength = ropePartLength + 0.01f // tolerance
+            maxLength = ropePartLength
         }
-        newRopePart.ropePart.anchoredToNextPartBy = revoluteJoint
-        newRopePart.ropePart.restrictedToNextPartBy = ropeJoint
 
         return newRopePart
     }
