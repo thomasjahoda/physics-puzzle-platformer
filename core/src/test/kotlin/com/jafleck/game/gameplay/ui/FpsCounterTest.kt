@@ -22,18 +22,18 @@ internal class FpsCounterTest {
     }
 
     @Test
-    fun `2 different times result in average between the two`() {
+    fun `2 different times result in something between the two`() {
         val fpsCounter = FpsCounter()
         var fps = 0f
 
-        for (i in 0..FpsCounter.RELEVANT_FRAME_COUNT / 2) {
+        for (i in 0 until FpsCounter.RELEVANT_FRAME_COUNT / 2) {
             fps = fpsCounter.calculateFps(1 / 60f)
         }
-        for (i in FpsCounter.RELEVANT_FRAME_COUNT / 2..FpsCounter.RELEVANT_FRAME_COUNT) {
+        for (i in FpsCounter.RELEVANT_FRAME_COUNT / 2 until FpsCounter.RELEVANT_FRAME_COUNT) {
             fps = fpsCounter.calculateFps(1 / 30f)
         }
 
-        assertFps(fps, 45f)
+        assertFps(fps, 40f)
     }
 
     private fun assertFps(actual: Float, expected: Float) {
