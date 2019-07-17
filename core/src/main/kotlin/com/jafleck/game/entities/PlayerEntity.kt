@@ -87,7 +87,8 @@ val playerPresets = listOf(
         borderColor = Color.BLACK, borderThickness = 0.04f,
         fillColor = Color.FIREBRICK.cpy().mul(0.9f),
         density = 4f,
-        friction = 0.2f
+        friction = 0.2f,
+        angularDamping = 0.3f
     ))
 ).asMap()
 
