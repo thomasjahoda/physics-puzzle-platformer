@@ -9,6 +9,8 @@ class PhysicsSimulationStepSystem(
 ) : EntitySystem() {
 
     override fun update(deltaSeconds: Float) {
+        if (deltaSeconds == 0f) return
+
         // increased iterations for more accurate for many joints, e.g. in ropes. Same config is used in box2d manual example
         world.step(deltaSeconds, 10, 8)
     }

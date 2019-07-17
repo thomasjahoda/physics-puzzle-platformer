@@ -14,24 +14,24 @@ abstract class PlayerEntitySystem : EntitySystem() {
     final override fun addedToEngine(engine: Engine) {
         entities = engine.getEntitiesFor(PositionedPlayer.family)
         additionalAddedToEngine(engine)
-        process()
+        process(0f)
     }
 
     protected open fun additionalAddedToEngine(engine: Engine) {
     }
 
     final override fun update(deltaSeconds: Float) {
-        process()
+        process(deltaSeconds)
     }
 
-    private fun process() {
+    private fun process(deltaSeconds: Float) {
         require(entities.size() <= 1) { "Only one player may exist at one time but ${entities.size()} were found" }
         if (entities.size() == 1) {
             val entity = PlayerEntity(entities.get(0))
-            processPlayer(entity)
+            processPlayer(entity, deltaSeconds)
         }
     }
 
-    protected abstract fun processPlayer(playerEntity: PlayerEntity)
+    protected abstract fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float)
 
 }

@@ -44,7 +44,7 @@ class PlayerGadgetActivationSystem(
         }
     }
 
-    override fun processPlayer(playerEntity: PlayerEntity) {
+    override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
         clickedWorldPositions.forEach { targetPosition ->
             val gadget = playerEntity.selectedGadget.value
             if (gadget is MouseActivatedGadget) {

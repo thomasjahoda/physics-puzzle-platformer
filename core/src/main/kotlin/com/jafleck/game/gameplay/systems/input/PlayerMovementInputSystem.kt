@@ -128,7 +128,7 @@ class PlayerMovementInputSystem(
         }
     }
 
-    override fun processPlayer(playerEntity: PlayerEntity) {
+    override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
         val playerPosition = playerEntity.position.vector
         lastKnownPlayerPosition.set(playerPosition)
 

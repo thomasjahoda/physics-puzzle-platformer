@@ -35,7 +35,7 @@ class PlayerManualTeleportDebugSystem(
         }
     }
 
-    override fun processPlayer(playerEntity: PlayerEntity) {
+    override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
         if (teleportRequested) {
             val targetTeleportPosition = currentCursorPositionInputSystem.currentCursorWorldPosition
             teleportRequested = false

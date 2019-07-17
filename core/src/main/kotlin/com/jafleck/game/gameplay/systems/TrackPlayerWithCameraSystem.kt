@@ -8,7 +8,7 @@ class TrackPlayerWithCameraSystem(
     private val camera: GameCamera
 ) : PlayerEntitySystem() {
 
-    override fun processPlayer(playerEntity: PlayerEntity) {
+    override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
         camera.position.set(playerEntity.position.vector, camera.position.z)
         camera.update()
     }
