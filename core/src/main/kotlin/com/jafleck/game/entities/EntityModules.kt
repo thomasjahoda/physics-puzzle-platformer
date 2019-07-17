@@ -8,6 +8,8 @@ val entityModules = listOf(
     platformModule,
     waterModule,
     thrownBallModule,
+    ropeModule,
+    visualDebugMarkerModule,
     entityMaploadingModule,
     entityCreatorUtilModule
 )

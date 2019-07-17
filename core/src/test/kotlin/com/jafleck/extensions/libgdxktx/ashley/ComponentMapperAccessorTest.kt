@@ -54,7 +54,7 @@ internal class ComponentMapperAccessorTest {
         }
         Assertions.assertThatThrownBy { entity[DummyComponentA] }
             .isExactlyInstanceOf(IllegalStateException::class.java)
-            .hasMessage("componentMapper[entity] must not be null")
+            .hasMessage("Entity does not have component of type DummyComponentA")
     }
 
     @Test

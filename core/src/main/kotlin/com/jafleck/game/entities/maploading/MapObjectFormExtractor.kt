@@ -152,7 +152,7 @@ class MapObjectFormExtractor {
     private fun extractRotation(mapObject: MapObject, rotates: Boolean, components: ArrayList<Component>): Float {
         val rotationDegrees = getRotationDegrees(rotates, mapObject)
         if (rotates) {
-            components.add(RotationComponent(MathUtils.degreesToRadians * rotationDegrees))
+            components.add(RotationComponent.fromDegrees(rotationDegrees))
         }
         return rotationDegrees
     }

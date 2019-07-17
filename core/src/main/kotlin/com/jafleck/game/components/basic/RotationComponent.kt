@@ -14,5 +14,9 @@ data class RotationComponent(
             radians = value * MathUtils.degreesToRadians
         }
 
-    companion object : ComponentMapperAccessor<RotationComponent>(RotationComponent::class)
+    companion object : ComponentMapperAccessor<RotationComponent>(RotationComponent::class) {
+        fun fromDegrees(degrees: Float): RotationComponent {
+            return RotationComponent(degrees * MathUtils.degreesToRadians)
+        }
+    }
 }

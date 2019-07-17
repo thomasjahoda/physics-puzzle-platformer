@@ -17,11 +17,13 @@ import com.jafleck.game.entities.maploading.GenericEntityConfig
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
+import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
+import ktx.box2d.filter
 import org.koin.dsl.module
 
 inline class PlatformEntity(val entity: Entity) {
@@ -56,6 +58,9 @@ class PlatformEntityCreator(
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
+                filter {
+                    categoryBits = CollisionEntityCategory.environment
+                }
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
             }
             add(visualShapeCreator.createVisualShape(genericCustomization))

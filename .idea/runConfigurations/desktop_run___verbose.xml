@@ -6,6 +6,7 @@
           <entry key="GAME_LOGGING_LEVEL" value="debug" />
           <entry key="GDX_LOGGING_LEVEL" value="none" />
           <entry key="KOIN_LOGGING_LEVEL" value="INFO" />
+          <entry key="MANUAL_TIME_CONTROL_ENABLED" value="true" />
           <entry key="PHYSICS_DEBUG_RENDERING" value="true" />
           <entry key="SHOW_CURSOR_WORLD_POSITION" value="true" />
         </map>

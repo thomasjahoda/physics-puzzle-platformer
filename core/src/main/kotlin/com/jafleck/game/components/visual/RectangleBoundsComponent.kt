@@ -1,8 +1,10 @@
 package com.jafleck.game.components.visual
 
 import com.badlogic.ashley.core.Component
+import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
+import com.jafleck.game.families.ShapedEntity
 
 /**
  * Describes the size of a rectangle around the unrotated shape of the entity.
@@ -26,5 +28,9 @@ data class RectangleBoundsComponent(
             vector.y = value
         }
 
-    companion object : ComponentMapperAccessor<RectangleBoundsComponent>(RectangleBoundsComponent::class)
+    companion object : ComponentMapperAccessor<RectangleBoundsComponent>(RectangleBoundsComponent::class) {
+        fun fromShapedEntity(entity: ShapedEntity): RectangleBoundsComponent {
+            return RectangleBoundsComponent(entity.shape.getRectangleAroundShape(Vector2()))
+        }
+    }
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.jafleck.extensions.kotlin.round
 import com.jafleck.game.gameplay.systems.input.CurrentCursorPositionInputSystem
+import com.jafleck.game.util.ashley.getComponentsDebugDump
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.logger
@@ -71,12 +72,9 @@ class CursorDebugSystem(
             foundEntity = true
             logger.info {
                 val entity = it.body.entity
-                val componentsOutput = entity.components.joinToString(separator = "\n") {
-                    it.toString()
-                }
                 "Selected entity: $entity  (at position $position)\n" +
                     "============================\n" +
-                    "$componentsOutput\n" +
+                    "${entity.getComponentsDebugDump()}\n" +
                     "============================"
             }
             return@query Query.STOP

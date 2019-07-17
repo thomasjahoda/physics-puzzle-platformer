@@ -11,6 +11,7 @@ import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.logic.PushedUpByWaterComponent
 import com.jafleck.game.entities.WaterEntity
 import com.jafleck.game.families.ShapedEntity
+import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.logger
 import ktx.ashley.allOf
@@ -19,7 +20,8 @@ import kotlin.math.min
 
 
 class WaterSystem(
-    private val world: World
+    private val world: World,
+    private val contactListenerMultiplexer: ContactListenerMultiplexer
 ) : IteratingSystem(allOf(PushedUpByWaterComponent::class).get()), ContactListener {
     private val logger = logger(this::class)
 
@@ -49,15 +51,16 @@ class WaterSystem(
 
     override fun addedToEngine(engine: Engine) {
         super.addedToEngine(engine)
-        world.setContactListener(this)
+        contactListenerMultiplexer.addListener(this)
     }
 
-    override fun beginContact(contact: Contact?) {
-        if (contact == null) {
-            logger.debug { "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
-                "I don't know why this happens yet. It does not seem to happen for endContact." }
-            return
-        }
+    override fun removedFromEngine(engine: Engine?) {
+        super.removedFromEngine(engine)
+        contactListenerMultiplexer.removeListener(this)
+    }
+
+    override fun beginContact(contact: Contact) {
+        // TODO refactor with contact.getEntityWithFixtureByComponentOrNull like in ThrownRopeSystem; the current logic won't work with other entities as sensors
         if (contact.fixtureA.isSensor or contact.fixtureB.isSensor) {
             logger.debug { "Begin contact with water" }
             val waterFixture = if (contact.fixtureA.isSensor) contact.fixtureA else contact.fixtureB

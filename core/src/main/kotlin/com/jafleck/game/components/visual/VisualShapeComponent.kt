@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Color
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
 data class VisualShapeComponent(
-    var borderColor: Color?,
-    var borderThickness: Float?,
+    var borderColor: Color? = null,
+    var borderThickness: Float? = null,
     var fillColor: Color?
 ) : Component {
 

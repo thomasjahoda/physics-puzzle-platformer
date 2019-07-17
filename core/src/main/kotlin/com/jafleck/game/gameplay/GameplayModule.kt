@@ -9,8 +9,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.game.assets.GdxHoloSkin
+import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
+import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.TriangulateVisualPolygonShapesEntityListener
 import com.jafleck.game.gameplay.systems.*
@@ -24,6 +26,7 @@ import com.jafleck.game.gameplay.systems.physicssync.SyncRotatingBodySystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
 import com.jafleck.game.gameplay.ui.*
+import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import com.jafleck.game.util.listeners.EntityFamilyListener
@@ -47,9 +50,10 @@ val gameplayModule: Module = module {
     single { UiInputMultiplexer() }
     single { GameInputMultiplexer() }
     single { GdxHoloSkin(get()) }
-    single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull(), getOrNull()) }
+    single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull(), getOrNull(), getOrNull()) }
     // gadgets
     single { BallThrowerGadget(get()) }
+    single { RopeThrowerGadget(get()) }
     // entity component system
     single { Engine() }
     single { CurrentCursorPositionInputSystem(get(), get()) }
@@ -66,7 +70,7 @@ val gameplayModule: Module = module {
             PlayerGadgetActivationSystem(get(), get()),
 
             // physics
-            WaterSystem(get()),
+            WaterSystem(get(), get()),
             PhysicsSimulationStepSystem(get()),
             SyncMovingBodySystem(),
             SyncRotatingBodySystem(),
@@ -74,6 +78,7 @@ val gameplayModule: Module = module {
             //  logic
             RemoveEntityAfterDurationSystem(),
             PlayerMovementSystem(),
+            ThrownRopeSystem(get(), get()),
 
             // rendering
             TrackPlayerWithCameraSystem(get()),
@@ -112,11 +117,18 @@ val gameplayModule: Module = module {
         logicLoader
     }
     // physics
+    single { ContactListenerMultiplexer() }
     single {
         Box2D.init()
-        createWorld(gravity = earthGravity)
+        val world = createWorld(gravity = earthGravity)
+        world.setContactListener(get<ContactListenerMultiplexer>())
+        world
     }
     if (PhysicsConfiguration.debugRendering) {
         single { Box2DDebugRenderer() }
+    }
+    // general debug tooling
+    if (GeneralDebugConfiguration.manualTimeControlEnabled) {
+        single { ManualTimeControl(get()) }
     }
 }

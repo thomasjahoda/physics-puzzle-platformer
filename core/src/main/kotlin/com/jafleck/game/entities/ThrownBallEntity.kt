@@ -31,8 +31,6 @@ inline class ThrownBallEntity(val entity: Entity) {
         get() = entity[OriginPositionComponent]
     val size
         get() = entity[RectangleShapeComponent]
-    val player
-        get() = entity[PlayerComponent]
     val body
         get() = entity[BodyComponent]
 
@@ -52,7 +50,6 @@ class ThrownBallEntityCreator(
         val entity = engine.createEntity().apply {
             add(OriginPositionComponent(originPosition))
             add(CircleShapeComponent(ThrownBallEntity.RADIUS))
-            add(RectangleBoundsComponent(ThrownBallEntity.SIZE))
             add(RotationComponent(0f))
             add(VisualShapeComponent(
                 borderColor = Color.RED.cpy().mul(0.9f), borderThickness = ThrownBallEntity.RADIUS / 3,

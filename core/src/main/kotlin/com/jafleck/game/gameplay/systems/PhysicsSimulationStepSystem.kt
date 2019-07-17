@@ -9,6 +9,7 @@ class PhysicsSimulationStepSystem(
 ) : EntitySystem() {
 
     override fun update(deltaSeconds: Float) {
-        world.step(deltaSeconds, 6, 2)
+        // increased iterations for more accurate for many joints, e.g. in ropes. Same config is used in box2d manual example
+        world.step(deltaSeconds, 10, 8)
     }
 }

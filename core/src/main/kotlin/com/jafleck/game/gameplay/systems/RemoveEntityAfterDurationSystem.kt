@@ -7,8 +7,7 @@ import com.jafleck.game.components.logic.RemoveAfterDurationComponent
 import ktx.ashley.allOf
 
 
-class RemoveEntityAfterDurationSystem(
-) : IteratingSystem(allOf(
+class RemoveEntityAfterDurationSystem : IteratingSystem(allOf(
     RemoveAfterDurationComponent::class
 ).get()) {
 

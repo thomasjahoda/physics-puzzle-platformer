@@ -18,13 +18,16 @@ import com.jafleck.game.entities.maploading.GenericEntityConfig
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
+import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.Gadget
+import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
+import ktx.box2d.filter
 import org.koin.dsl.module
 
 inline class PlayerEntity(val entity: Entity) {
@@ -64,6 +67,9 @@ class PlayerEntityCreator(
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createDynamicBody(this) {
+                filter {
+                    categoryBits = CollisionEntityCategory.player
+                }
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
             }
             add(visualShapeCreator.createVisualShape(genericCustomization))
@@ -86,5 +92,5 @@ val playerPresets = listOf(
 ).asMap()
 
 val playerModule = module {
-    single { PlayerEntityCreator(get(), get(), get(), get(), get(), get(), get<BallThrowerGadget>()) }
+    single { PlayerEntityCreator(get(), get(), get(), get(), get(), get(), get<RopeThrowerGadget>()) }
 }

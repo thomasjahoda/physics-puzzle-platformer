@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen
 import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.assets.assetsModule
 import com.jafleck.game.config.LoggingConfig
+import com.jafleck.game.entities.VisualDebugMarkerEntityCreator
 import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.EngineLogicLoader
 import com.jafleck.game.gameplay.gameplayModule
@@ -40,6 +41,7 @@ class GdxApplication : KtxGame<Screen>() {
         }
 
         koinApplication.koin.get<GdxHoloSkin>().setAsDefault()
+        koinApplication.koin.get<VisualDebugMarkerEntityCreator>() // initialize global debug tool instance
 
         loadSystems(koinApplication)
 

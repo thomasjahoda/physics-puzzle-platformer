@@ -11,13 +11,18 @@ import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.shape.ShapeComponent
 import ktx.ashley.allOf
+import ktx.ashley.oneOf
 
 inline class ShapedEntity(val entity: Entity) {
     companion object {
-        val family: Family = allOf(
+        val family: Family = oneOf(
             RectangleShapeComponent::class,
-            CircleShapeComponent::class
-        ).get()
+            CircleShapeComponent::class,
+            PolygonShapeComponent::class
+        )
+            .allOf(OriginPositionComponent::class)
+            .get()
+
     }
 
     val position

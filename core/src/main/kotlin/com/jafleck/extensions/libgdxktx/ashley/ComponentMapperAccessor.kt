@@ -5,10 +5,10 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import kotlin.reflect.KClass
 
-open class ComponentMapperAccessor<T : Component>(componentClass: KClass<T>) {
+open class ComponentMapperAccessor<T : Component>(val componentClass: KClass<T>) {
     private var componentMapper = ComponentMapper.getFor(componentClass.java)
 
-    fun getFrom(entity: Entity): T = componentMapper[entity]
+    fun getFrom(entity: Entity): T = componentMapper[entity] ?: error("Entity does not have component of type ${componentClass.simpleName}")
     fun getFromOrNull(entity: Entity): T? = componentMapper[entity]
 
     fun isIn(entity: Entity): Boolean = componentMapper.has(entity)

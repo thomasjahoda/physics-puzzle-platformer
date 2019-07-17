@@ -29,7 +29,8 @@ class PlayScreen(
     private val gameInputMultiplexer: GameInputMultiplexer,
     private val uiInputMultiplexer: UiInputMultiplexer,
     private val box2DDebugRenderer: Box2DDebugRenderer?,
-    private val cursorDebugSystem: CursorDebugSystem?
+    private val cursorDebugSystem: CursorDebugSystem?,
+    private val manualTimeControl: ManualTimeControl?
 ) : KtxScreen {
 
     private val rootTable = table {
@@ -55,7 +56,8 @@ class PlayScreen(
     }
 
     override fun render(delta: Float) {
-        updateAndRender(delta)
+        val deltaSeconds: Float = manualTimeControl?.transformDeltaTime(delta) ?: delta
+        updateAndRender(deltaSeconds)
     }
 
     private fun updateAndRender(deltaSeconds: Float) {
