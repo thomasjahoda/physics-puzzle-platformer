@@ -39,6 +39,8 @@ class ThrownRopeSystem(
     }
 
     override fun update(deltaTime: Float) {
+        if (deltaTime == 0f) return
+
         processStickyRopePartCollisions()
         super.update(deltaTime)
     }
@@ -46,24 +48,22 @@ class ThrownRopeSystem(
     private fun processStickyRopePartCollisions() {
         stickyRopePartsToAttach.forEach {
             val (collidedRopePartFixture, fixtureToAttachTo, attachmentPoint) = it
-            if (collidedRopePartFixture.body.userData == null) {
-                logger.error { "Lol" }
-            }
+            logger.debug { "Processing event that sticky rope part should be attached to a collided fixture. ($it)" }
             val ropePartEntity = RopePartEntity(collidedRopePartFixture.body.entity)
             val stickyRopePartComponent = ropePartEntity.entity[StickyRopePartComponent]
-            if (stickyRopePartComponent.anchored) return
+            if (!stickyRopePartComponent.anchored) {
+                stickyRopePartComponent.anchoredBy = collidedRopePartFixture.body.revoluteJointWith(fixtureToAttachTo.body) {
+                    initialize(bodyA, bodyB, attachmentPoint)
+                }
+                stickyRopePartComponent.anchoredTo = fixtureToAttachTo.body.entity
 
-            stickyRopePartComponent.anchoredBy = collidedRopePartFixture.body.revoluteJointWith(fixtureToAttachTo.body) {
-                initialize(bodyA, bodyB, attachmentPoint)
-            }
-            stickyRopePartComponent.anchoredTo = fixtureToAttachTo.body.entity
-
-            // anchor rope to thrower if it is thrown rope
-            val ropeEntity = ropePartEntity.ropePart.owningRopeEntity
-            val thrownRopeEntity = ropeEntity.asThrownRope()
-            if (thrownRopeEntity != null) {
-                if (!thrownRopeEntity.thrownRope.anchored) {
-                    anchorThrownRope(thrownRopeEntity)
+                // anchor rope to thrower if it is thrown rope
+                val ropeEntity = ropePartEntity.ropePart.owningRopeEntity
+                val thrownRopeEntity = ropeEntity.asThrownRope()
+                if (thrownRopeEntity != null) {
+                    if (!thrownRopeEntity.thrownRope.anchored) {
+                        anchorThrownRope(thrownRopeEntity)
+                    }
                 }
             }
         }
@@ -98,7 +98,10 @@ class ThrownRopeSystem(
                 val worldManifold = contact.worldManifold
                 if (worldManifold.numberOfContactPoints != 0) {
                     val contactPoint = worldManifold.points[0] // TODO improve, use middle point in case there are two contact points (poly on poly)
-                    stickyRopePartsToAttach.add(Triple(fixture, otherFixture, contactPoint))
+                    // attach sticky rope part to fixture asynchronously (outside of physics simulation)
+                    val element = Triple(fixture, otherFixture, contactPoint)
+                    logger.debug { "A sticky rope part has collided with an fixture and should be anchored after the simulation. Adding $element to list of events to process." }
+                    stickyRopePartsToAttach.add(element)
                 }
             }
         }

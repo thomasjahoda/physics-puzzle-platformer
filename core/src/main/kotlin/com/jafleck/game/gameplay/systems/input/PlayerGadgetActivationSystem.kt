@@ -45,7 +45,9 @@ class PlayerGadgetActivationSystem(
     }
 
     override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
-        if (lastClickedWorldPosition != null){
+        if (deltaSeconds == 0f) return
+
+        if (lastClickedWorldPosition != null) {
             val gadget = playerEntity.selectedGadget.value
             if (gadget is MouseActivatedGadget) {
                 logger.debug { "Activating gadget at world position $lastClickedWorldPosition" }
