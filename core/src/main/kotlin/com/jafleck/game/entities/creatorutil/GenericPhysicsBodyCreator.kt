@@ -55,7 +55,7 @@ class GenericPhysicsBodyCreator(
 
     fun createKinematicBody(entity: Entity, fixtureBlock: FixtureDefinition.() -> Unit) {
         entity.add(BodyComponent(world.body {
-            type = BodyDef.BodyType.DynamicBody
+            type = BodyDef.BodyType.KinematicBody
 
             val physicsEntity = GenericPhysicsEntity(entity)
             setCommonProperties(physicsEntity)

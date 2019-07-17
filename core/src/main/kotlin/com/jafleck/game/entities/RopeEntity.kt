@@ -15,6 +15,7 @@ import com.jafleck.game.components.entities.RopeComponent
 import com.jafleck.game.components.entities.RopePartComponent
 import com.jafleck.game.components.entities.StickyRopePartComponent
 import com.jafleck.game.components.entities.ThrownRopeComponent
+import com.jafleck.game.components.logic.ThrowerOfRopeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
@@ -111,6 +112,8 @@ class RopeEntityCreator(
         engine.addEntity(ropePart)
 
         engine.addEntity(ropeEntity.entity)
+
+        thrower.entity.add(ThrowerOfRopeComponent(ropeEntity.asThrownRope()!!))
         return RopeEntity(ropeEntity.entity)
     }
 

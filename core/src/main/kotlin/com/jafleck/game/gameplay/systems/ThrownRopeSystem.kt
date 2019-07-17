@@ -14,6 +14,7 @@ import com.jafleck.game.entities.ThrownRopeEntity
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.libgdx.box2d.getEntityWithFixtureByComponentOrNull
+import com.jafleck.game.util.logger
 import ktx.box2d.revoluteJointWith
 import ktx.math.minus
 
@@ -24,6 +25,8 @@ class ThrownRopeSystem(
 ) : IteratingSystem(ThrownRopeEntity.family), ContactListener {
 
     private val stickyRopePartsToAttach = mutableListOf<Triple<Fixture, Fixture, Vector2>>()
+
+    private val logger = logger(this::class)
 
     override fun addedToEngine(engine: Engine) {
         super.addedToEngine(engine)
@@ -43,6 +46,9 @@ class ThrownRopeSystem(
     private fun processStickyRopePartCollisions() {
         stickyRopePartsToAttach.forEach {
             val (collidedRopePartFixture, fixtureToAttachTo, attachmentPoint) = it
+            if (collidedRopePartFixture.body.userData == null) {
+                logger.error { "Lol" }
+            }
             val ropePartEntity = RopePartEntity(collidedRopePartFixture.body.entity)
             val stickyRopePartComponent = ropePartEntity.entity[StickyRopePartComponent]
             if (stickyRopePartComponent.anchored) return
@@ -86,7 +92,7 @@ class ThrownRopeSystem(
 
     override fun beginContact(contact: Contact) {
         withItIfNotNull(contact.getEntityWithFixtureByComponentOrNull(StickyRopePartComponent)) {
-            val (entity, fixture, otherFixture, isFixtureA) = it
+            val (entity, fixture, otherFixture, _) = it
             val stickyRopePartComponent = entity[StickyRopePartComponent]
             if (!stickyRopePartComponent.anchored) {
                 val worldManifold = contact.worldManifold

@@ -56,7 +56,7 @@ val gameplayModule: Module = module {
     }
     // gadgets
     single { BallThrowerGadget(get()) }
-    single { RopeThrowerGadget(get()) }
+    single { RopeThrowerGadget(get(), get()) }
     // entity component system
     single { Engine() }
     single { CurrentCursorPositionInputSystem(get(), get()) }
