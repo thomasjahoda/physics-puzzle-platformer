@@ -30,13 +30,18 @@ class PlayScreen(
     private val uiInputMultiplexer: UiInputMultiplexer,
     private val box2DDebugRenderer: Box2DDebugRenderer?,
     private val cursorDebugSystem: CursorDebugSystem?,
-    private val manualTimeControl: ManualTimeControl?
+    private val manualTimeControl: ManualTimeControl?,
+    private val fpsCounter: FpsCounter?
 ) : KtxScreen {
 
     private val rootTable = table {
         if (cursorDebugSystem != null) {
             add(label("  "))
             add(cursorDebugSystem.worldCoordsOfCursorLabel)
+        }
+        if (fpsCounter != null) {
+            add(label("   "))
+            add(fpsCounter.fpsLabel)
         }
 //        setFillParent(true)
         pack()
@@ -56,6 +61,7 @@ class PlayScreen(
     }
 
     override fun render(delta: Float) {
+        fpsCounter?.calculateFps(delta)
         val deltaSeconds: Float = manualTimeControl?.transformDeltaTime(delta) ?: delta
         updateAndRender(deltaSeconds)
     }

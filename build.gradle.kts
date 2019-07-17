@@ -154,6 +154,7 @@ project(":core") {
         api("org.locationtech.jts:jts-core:${DependencyVersions.jtsVersion}")
 
         testApi("com.badlogicgames.gdx:gdx-backend-headless:${DependencyVersions.gdxVersion}")
+        testApi("com.badlogicgames.gdx:gdx-backend-lwjgl:${DependencyVersions.gdxVersion}")
         testApi("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-desktop")
         testApi("com.badlogicgames.gdx:gdx-box2d-platform:${DependencyVersions.gdxVersion}:natives-desktop")
 

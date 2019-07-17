@@ -9,6 +9,7 @@
           <entry key="MANUAL_TIME_CONTROL_ENABLED" value="true" />
           <entry key="PHYSICS_DEBUG_RENDERING" value="true" />
           <entry key="SHOW_CURSOR_WORLD_POSITION" value="true" />
+          <entry key="SHOW_FPS" value="true" />
         </map>
       </option>
       <option name="executionName" />

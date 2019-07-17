@@ -50,7 +50,10 @@ val gameplayModule: Module = module {
     single { UiInputMultiplexer() }
     single { GameInputMultiplexer() }
     single { GdxHoloSkin(get()) }
-    single { PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), getOrNull(), getOrNull(), getOrNull()) }
+    single {
+        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            getOrNull(), getOrNull(), getOrNull(), getOrNull())
+    }
     // gadgets
     single { BallThrowerGadget(get()) }
     single { RopeThrowerGadget(get()) }
@@ -130,5 +133,8 @@ val gameplayModule: Module = module {
     // general debug tooling
     if (GeneralDebugConfiguration.manualTimeControlEnabled) {
         single { ManualTimeControl(get()) }
+    }
+    if (GeneralDebugConfiguration.showFps) {
+        single { FpsCounter() }
     }
 }
