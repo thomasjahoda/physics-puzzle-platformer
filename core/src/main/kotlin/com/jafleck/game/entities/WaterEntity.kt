@@ -13,12 +13,14 @@ import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.creatorutil.apply
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
 import com.jafleck.game.entities.maploading.*
+import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
+import ktx.box2d.filter
 import org.koin.dsl.module
 
 inline class WaterEntity(val entity: Entity) {
@@ -58,6 +60,9 @@ class WaterEntityCreator(
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, WaterEntityCreator.ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
+                filter {
+                    categoryBits = CollisionEntityCategory.environment
+                }
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
                 isSensor = true
             }
