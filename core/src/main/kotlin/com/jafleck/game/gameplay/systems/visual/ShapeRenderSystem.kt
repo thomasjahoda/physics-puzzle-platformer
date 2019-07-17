@@ -13,7 +13,6 @@ import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.triangles
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
-import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
@@ -65,7 +64,7 @@ class ShapeRenderSystem(
             val polygonShape = entity.polygonShape
             if (polygonShape != null) {
                 val triangulatedVisualPolygon = entity.triangulatedVisualPolygon!!
-                drawPolygon(polygonShape, triangulatedVisualPolygon, position, renderedShape, rotationDegrees, borderThickness)
+                drawPolygon(triangulatedVisualPolygon, position, renderedShape, rotationDegrees, borderThickness)
             }
 
         }
@@ -131,8 +130,8 @@ class ShapeRenderSystem(
         }
     }
 
-    private fun drawPolygon(polygonShape: PolygonShapeComponent, triangulatedVisualPolygon: TriangulatedVisualPolygonComponent,
-                            position: OriginPositionComponent, renderedShape: VisualShapeComponent, rotationDegrees: Float, borderThickness: Float?) {
+    private fun drawPolygon(triangulatedVisualPolygon: TriangulatedVisualPolygonComponent, position: OriginPositionComponent,
+                            renderedShape: VisualShapeComponent, rotationDegrees: Float, borderThickness: Float?) {
         if (renderedShape.fillColor != null) {
             triangulatedVisualPolygon.setRotationDegrees(rotationDegrees)
             val colorOnFullArea: Color

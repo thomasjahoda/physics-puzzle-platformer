@@ -18,7 +18,7 @@ class PlayerGadgetActivationSystem(
 ) : PlayerEntitySystem() {
 
     private val basicGameGestureDetector = GestureDetector(GestureListener())
-    private val clickedWorldPositions = arrayListOf<Vector2>()
+    private var lastClickedWorldPosition: Vector2? = null
 
     private val logger = logger(this::class)
 
@@ -36,7 +36,7 @@ class PlayerGadgetActivationSystem(
             if (button == Input.Buttons.LEFT) {
                 val screenPosition = Vector2(x, y)
                 val worldClickPosition = gameViewport.unproject(screenPosition)
-                clickedWorldPositions.add(worldClickPosition)
+                lastClickedWorldPosition = worldClickPosition
                 return true
             } else {
                 return false
@@ -45,13 +45,13 @@ class PlayerGadgetActivationSystem(
     }
 
     override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
-        clickedWorldPositions.forEach { targetPosition ->
+        if (lastClickedWorldPosition != null){
             val gadget = playerEntity.selectedGadget.value
             if (gadget is MouseActivatedGadget) {
-                logger.debug { "Activating gadget at world position $targetPosition" }
-                gadget.activate(playerEntity.entity, targetPosition)
+                logger.debug { "Activating gadget at world position $lastClickedWorldPosition" }
+                gadget.activate(playerEntity.entity, lastClickedWorldPosition!!)
             }
+            lastClickedWorldPosition = null
         }
-        clickedWorldPositions.clear()
     }
 }
