@@ -4,7 +4,9 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
 import com.badlogic.ashley.utils.ImmutableArray
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.jafleck.extensions.libgdx.math.RectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.box
@@ -41,6 +43,7 @@ class ShapeRenderSystem(
     }
 
     override fun update(deltaSeconds: Float) {
+        Gdx.gl20.glEnable(GL20.GL_BLEND) // enable alpha in color having an effect (default blending equation: https://stackoverflow.com/a/38555868/1218254)
         sr.projectionMatrix = camera.combined
 
         sr.begin(ShapeRenderer.ShapeType.Filled)

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
+import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.basic.OriginPositionComponent
@@ -52,8 +53,8 @@ class ThrownBallEntityCreator(
             add(CircleShapeComponent(ThrownBallEntity.RADIUS))
             add(RotationComponent(0f))
             add(VisualShapeComponent(
-                borderColor = Color.RED.cpy().mul(0.9f), borderThickness = ThrownBallEntity.RADIUS / 3,
-                fillColor = Color.RED.cpy().mul(0.4f)))
+                borderColor = Color.RED.cpy().mulExceptAlpha(0.9f), borderThickness = ThrownBallEntity.RADIUS / 3,
+                fillColor = Color.RED.cpy().mulExceptAlpha(0.4f)))
             add(VelocityComponent(velocity))
             genericPhysicsBodyCreator.createDynamicBody(this) {
                 density = 4f

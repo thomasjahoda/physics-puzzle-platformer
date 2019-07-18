@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
+import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.basic.OriginPositionComponent
@@ -85,7 +86,7 @@ class PlayerEntityCreator(
 val playerPresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
         borderColor = Color.BLACK, borderThickness = 0.04f,
-        fillColor = Color.FIREBRICK.cpy().mul(0.9f),
+        fillColor = Color.FIREBRICK.cpy().mulExceptAlpha(0.9f),
         density = 4f,
         friction = 0.2f,
         angularDamping = 0.3f

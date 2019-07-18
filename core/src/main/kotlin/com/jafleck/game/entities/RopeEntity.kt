@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Filter
+import com.jafleck.extensions.libgdx.graphics.cpyWithAlpha
+import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.OriginPositionComponent
@@ -120,6 +122,7 @@ class RopeEntityCreator(
     }
 
     fun createNormalRopePartAttachedTo(ropeOriginatingFromPosition: Vector2, ropePartToAttachTo: RopePartEntity): RopePartEntity {
+        VisualDebugMarkerEntityCreator.instance.createMarker(ropeOriginatingFromPosition, Color.YELLOW, "ropeOriginatingFromPosition")
         val ropeEntity = ropePartToAttachTo.ropePart.owningRopeEntity
         val bodyToAttachTo = ropePartToAttachTo.asPhysicalShapedEntity().body.value
         val targetPartLocalAnchorPosition = ropePartToAttachTo.asPhysicalShapedEntity().asShapedEntity().shape.getRectangleAroundShape(Vector2()).let {
@@ -133,10 +136,11 @@ class RopeEntityCreator(
         val originPosition = newPartTopEdgeMiddlePointPosition - (directionFromRopeOriginatingPositionToNextPartTopEdgePosition * (ropePartLength / 2))
 
         val velocity = ropePartToAttachTo.velocity.vector.cpy() * (1 - max(1f, 0.003f * ropeEntity.rope.parts.size))
-//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(ropePartToAttachTo.entity, Color.GREEN, "ropePartToAttachTo")
-//        VisualDebugMarkerEntityCreator.instance.createMarker(newPartTopEdgeMiddlePointPosition, Color.BLUE, "newPartTopEdgeMiddlePointPosition")
-//        VisualDebugMarkerEntityCreator.instance.createMarker(originPosition, Color.VIOLET, "originPosition")
+//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(ropePartToAttachTo.entity, Color.GREEN.cpyWithAlpha(0.5f), "ropePartToAttachTo")
+//        VisualDebugMarkerEntityCreator.instance.createMarker(newPartTopEdgeMiddlePointPosition, Color.BLUE.cpyWithAlpha(0.5f), "newPartTopEdgeMiddlePointPosition")
+//        VisualDebugMarkerEntityCreator.instance.createMarker(originPosition, Color.VIOLET.cpyWithAlpha(0.5f), "originPosition")
         val newRopePart = createNormalRopePart(originPosition, velocity, directionFromRopeOriginatingPositionToNextPartTopEdgePosition.scl(-1f).angle(), ropeEntity)
+//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(newRopePart.entity, Color.LIME.cpyWithAlpha(0.5f), "ropePartToAttachTo")
         ropeEntity.rope.parts.add(0, newRopePart.entity)
         engine.addEntity(newRopePart.entity)
 
@@ -156,8 +160,8 @@ class RopeEntityCreator(
             add(RotationComponent.fromDegrees(rotationDegrees))
             add(RectangleShapeComponent(RopePartEntity.ROPE_PART_SIZE))
             add(VisualShapeComponent(
-                borderColor = Color.CORAL.cpy().mul(0.9f), borderThickness = RopePartEntity.ROPE_PART_SIZE.x / 6,
-                fillColor = Color.BROWN.cpy().mul(0.4f)))
+                borderColor = Color.CORAL.cpy().mulExceptAlpha(0.9f), borderThickness = RopePartEntity.ROPE_PART_SIZE.x / 6,
+                fillColor = Color.BROWN.cpy().mulExceptAlpha(0.4f)))
             add(VelocityComponent(velocity))
             genericPhysicsBodyCreator.createDynamicBody(this) {
                 density = RopePartEntity.NORMAL_PART_DENSITY
@@ -179,8 +183,8 @@ class RopeEntityCreator(
             add(RotationComponent.fromDegrees(rotationDegrees))
             add(RectangleShapeComponent(RopePartEntity.ROPE_PART_SIZE))
             add(VisualShapeComponent(
-                borderColor = Color.CHARTREUSE.cpy().mul(0.9f), borderThickness = RopePartEntity.ROPE_PART_SIZE.x / 6,
-                fillColor = Color.BROWN.cpy().mul(0.4f)))
+                borderColor = Color.CHARTREUSE.cpy().mulExceptAlpha(0.9f), borderThickness = RopePartEntity.ROPE_PART_SIZE.x / 6,
+                fillColor = Color.BROWN.cpy().mulExceptAlpha(0.4f)))
             add(VelocityComponent(velocity))
             genericPhysicsBodyCreator.createDynamicBody(this) {
                 density = RopePartEntity.TOP_PART_DENSITY

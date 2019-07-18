@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
+import com.jafleck.extensions.libgdx.graphics.cpyWithAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.WaterComponent
@@ -76,8 +77,7 @@ class WaterEntityCreator(
 
 val waterPresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
-        borderColor = Color.BLUE, borderThickness = 0.1f,
-        fillColor = Color.BLUE.cpy().apply { a = 0.6f } // TODO support alpha
+        fillColor = Color.BLUE.cpyWithAlpha(0.6f)
     ))
 ).asMap()
 

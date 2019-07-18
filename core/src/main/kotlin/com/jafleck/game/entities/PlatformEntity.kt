@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
+import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.PlatformComponent
@@ -74,12 +75,12 @@ class PlatformEntityCreator(
 val platformPresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
         borderColor = Color.PURPLE, borderThickness = 0.1f,
-        fillColor = Color.WHITE.cpy().mul(0.9f)
+        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
     )),
     Preset("Trampoline",
         genericCustomization = GenericEntityCustomization(
             borderColor = Color.GREEN, borderThickness = 0.1f,
-            fillColor = Color.WHITE.cpy().mul(0.9f)
+            fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
         ).apply(CommonPhysicsCustomizations.BOUNCY)
     )
 ).asMap()
