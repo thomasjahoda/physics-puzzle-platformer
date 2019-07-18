@@ -8,7 +8,7 @@ import com.jafleck.game.config.LoggingConfig
 import com.jafleck.game.entities.VisualDebugMarkerEntityCreator
 import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.EngineLogicLoader
-import com.jafleck.game.gameplay.gameplayModule
+import com.jafleck.game.gameplay.gameplayModules
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.mapLoadingModule
@@ -36,7 +36,7 @@ class GdxApplication : KtxGame<Screen>() {
                 + entityModules
                 + mapLoadingModule
                 + assetsModule
-                + gameplayModule
+                + gameplayModules
             )
         }
 

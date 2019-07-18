@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.Box2D
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.kotlin.withItIfNotNull
-import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
@@ -32,15 +31,13 @@ import com.jafleck.game.util.input.UiInputMultiplexer
 import com.jafleck.game.util.listeners.EntityFamilyListener
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
 interface EngineLogicLoader {
     fun load(engine: Engine)
 }
 
-val gameplayModule: Module = module {
-    // ui
+internal val gameplayUiModule = module {
     single { GameCamera() }
     single { GameViewport(25f, 15f, get()) }
     single { UiCamera() }
@@ -49,16 +46,22 @@ val gameplayModule: Module = module {
     single { SpriteBatch() }
     single { UiInputMultiplexer() }
     single { GameInputMultiplexer() }
-    single { GdxHoloSkin(get()) }
     single {
         PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
             getOrNull(), getOrNull(), getOrNull(), getOrNull())
     }
-    // gadgets
+}
+
+internal val gameplayGadgetsModule = module {
     single { BallThrowerGadget(get()) }
     single { RopeThrowerGadget(get(), get()) }
-    // entity component system
+}
+
+internal val gameplayEntityComponentSystemBasicsModule = module {
     single { Engine() }
+}
+
+internal val gameplayEntityComponentSystemLogicModule = module {
     single { CurrentCursorPositionInputSystem(get(), get()) }
     if (PhysicsConfiguration.showCursorWorldPosition) {
         single { CursorDebugSystem(get(), get(), get()) }
@@ -119,7 +122,9 @@ val gameplayModule: Module = module {
         }
         logicLoader
     }
-    // physics
+}
+
+internal val gameplayPhysicsModule = module {
     single { ContactListenerMultiplexer() }
     single {
         Box2D.init()
@@ -138,3 +143,11 @@ val gameplayModule: Module = module {
         single { FpsCounter() }
     }
 }
+
+val gameplayModules = listOf(
+    gameplayUiModule,
+    gameplayGadgetsModule,
+    gameplayEntityComponentSystemBasicsModule,
+    gameplayEntityComponentSystemLogicModule,
+    gameplayPhysicsModule
+)

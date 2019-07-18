@@ -20,4 +20,5 @@ val assetsModule = module {
         }
     }
     single { ScreenToWorldScalingPropagator() }
+    single { GdxHoloSkin(get()) }
 }
