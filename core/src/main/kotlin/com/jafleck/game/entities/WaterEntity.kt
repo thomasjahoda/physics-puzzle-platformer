@@ -13,7 +13,10 @@ import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.creatorutil.apply
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
-import com.jafleck.game.entities.maploading.*
+import com.jafleck.game.entities.maploading.GenericEntityConfig
+import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
+import com.jafleck.game.entities.maploading.MapObjectFormExtractor
+import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
 import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
@@ -29,6 +32,7 @@ inline class WaterEntity(val entity: Entity) {
     companion object {
         const val FRICTION = 0.2f
     }
+
     fun asShapedEntity() = ShapedEntity(entity)
 
     val position

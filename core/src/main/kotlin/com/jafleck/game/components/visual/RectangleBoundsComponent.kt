@@ -1,7 +1,6 @@
 package com.jafleck.game.components.visual
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 import com.jafleck.game.families.ShapedEntity

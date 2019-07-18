@@ -3,8 +3,10 @@ package com.jafleck.game.families
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.jafleck.extensions.libgdxktx.ashley.get
+import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
@@ -28,6 +30,8 @@ inline class PhysicalShapedEntity(val entity: Entity) {
 
     val position
         get() = entity[OriginPositionComponent]
+    val velocity
+        get() = entity.getOrNull(VelocityComponent)
     val body: BodyComponent
         get() = entity[BodyComponent]
 

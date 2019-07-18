@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="17">
+ <objectgroup id="2" name="Entities">
+  <object id="13" template="../../main/tiledmaps/objecttemplates/platform_horizontal.tx" x="0" y="128"/>
+  <object id="15" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" x="128" y="0" width="32" height="128"/>
+  <object id="16" template="../../main/tiledmaps/objecttemplates/player_circle.tx" x="0" y="96"/>
+ </objectgroup>
+</map>

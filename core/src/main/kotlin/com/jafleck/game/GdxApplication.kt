@@ -59,12 +59,6 @@ class GdxApplication : KtxGame<Screen>() {
 
     private fun loadSystems(koinApplication: KoinApplication) {
         koinApplication.koin.get<EngineLogicLoader>().load(koinApplication.koin.get())
-
-        // can be used in case the entity systems are defined as separate beans
-//        koinApplication.koin.rootScope.beanRegistry.getAllDefinitions().filter {
-//            return@filter it.primaryType == EntitySystem::class
-//                || it.primaryType.supertypes.map { it.classifier }.contains(EntitySystem::class)
-//        }.forEach { it.resolveInstance<EntitySystem>(InstanceContext(koinApplication.koin)) }
     }
 
     override fun dispose() {

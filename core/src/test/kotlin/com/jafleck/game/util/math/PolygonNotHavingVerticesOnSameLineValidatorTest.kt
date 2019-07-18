@@ -5,8 +5,6 @@ import com.jafleck.extensions.libgdx.math.buildVertices
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class PolygonNotHavingVerticesOnSameLineValidatorTest {
 
     @Test
@@ -20,6 +18,7 @@ internal class PolygonNotHavingVerticesOnSameLineValidatorTest {
         Assertions.assertThat(PolygonNotHavingVerticesOnSameLineValidator.getFirstVertexOnLineAsOther(vertices))
             .isEqualTo(null)
     }
+
     @Test
     fun `ok - 2`() {
         val vertices = buildVertices {
@@ -32,6 +31,7 @@ internal class PolygonNotHavingVerticesOnSameLineValidatorTest {
         Assertions.assertThat(PolygonNotHavingVerticesOnSameLineValidator.getFirstVertexOnLineAsOther(vertices))
             .isEqualTo(null)
     }
+
     @Test
     fun `nok - 1`() {
         val vertices = buildVertices {

@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.objects.EllipseMapObject
 import com.badlogic.gdx.maps.objects.PolygonMapObject
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.math.Ellipse
-import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdx.map.id
@@ -116,10 +115,10 @@ class MapObjectFormExtractor {
     private fun validateVertices(mapObject: PolygonMapObject) {
         // note potential performance-improvement: those checks could be disabled on production mode. also, box2d automatically excludes duplicate vertices
         val duplicate = QuickDuplicateVertexDetector.getFirstDuplicate(mapObject.polygon.vertices)
-        require(duplicate == null) {"Polygon of map object ${mapObject.id} has duplicate vertex $duplicate"}
+        require(duplicate == null) { "Polygon of map object ${mapObject.id} has duplicate vertex $duplicate" }
 
         val vertexOnSameLine = PolygonNotHavingVerticesOnSameLineValidator.getFirstVertexOnLineAsOther(mapObject.polygon.vertices)
-        require(vertexOnSameLine == null) {"Polygon of map object ${mapObject.id} has vertex $vertexOnSameLine which is on the line of the previous vertex to the next one. Please remove this node."}
+        require(vertexOnSameLine == null) { "Polygon of map object ${mapObject.id} has vertex $vertexOnSameLine which is on the line of the previous vertex to the next one. Please remove this node." }
     }
 
     private fun determineAbsolutePolygonOriginAndPolygonVerticesRelativeToOrigin(mapPolygon: Polygon): Pair<Vector2, FloatArray> {

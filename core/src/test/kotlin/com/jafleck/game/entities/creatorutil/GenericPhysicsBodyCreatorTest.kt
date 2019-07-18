@@ -1,6 +1,5 @@
 package com.jafleck.game.entities.creatorutil
 
-import com.badlogic.gdx.math.GeometryUtils
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2D
 import com.badlogic.gdx.physics.box2d.PolygonShape

@@ -6,6 +6,7 @@ import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
@@ -27,6 +28,8 @@ inline class ShapedEntity(val entity: Entity) {
 
     val position
         get() = entity[OriginPositionComponent]
+    val rotation
+        get() = entity.getOrNull(RotationComponent)
     val rectangleShape: RectangleShapeComponent?
         get() = entity.getOrNull(RectangleShapeComponent)
     val circleShape: CircleShapeComponent?

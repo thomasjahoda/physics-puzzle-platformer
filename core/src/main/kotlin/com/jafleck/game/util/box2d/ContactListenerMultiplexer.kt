@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.SnapshotArray
 import com.jafleck.extensions.libgdx.utils.safeForEach
 import com.jafleck.game.util.logger
 
-class ContactListenerMultiplexer: ContactListener  {
+class ContactListenerMultiplexer : ContactListener {
     private val listeners = SnapshotArray<ContactListener>(4)
 
     private val logger = logger(this::class)
@@ -23,8 +23,10 @@ class ContactListenerMultiplexer: ContactListener  {
 
     override fun beginContact(contact: Contact?) {
         if (contact == null) {
-            logger.debug { "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
-                "I don't know why this happens yet. It does not seem to happen for endContact." }
+            logger.debug {
+                "contact in beginContact is null. This happens with bodies consisting of multiple fixtures in the water. " +
+                    "I don't know why this happens yet. It does not seem to happen for endContact."
+            }
             return
         }
         listeners.safeForEach {

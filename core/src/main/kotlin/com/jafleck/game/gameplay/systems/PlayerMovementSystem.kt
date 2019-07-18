@@ -12,7 +12,7 @@ class PlayerMovementSystem : PlayerEntitySystem() {
     override fun processPlayer(playerEntity: PlayerEntity, deltaSeconds: Float) {
         if (deltaSeconds == 0f) return
 
-        val effectiveAccelerationForTick = baseAcceleration * (deltaSeconds / (1/60f))
+        val effectiveAccelerationForTick = baseAcceleration * (deltaSeconds / (1 / 60f))
         when (playerEntity.player.movementState) {
             PlayerMovementState.LEFT -> acceleratePlayer(playerEntity, -effectiveAccelerationForTick)
             PlayerMovementState.RIGHT -> acceleratePlayer(playerEntity, effectiveAccelerationForTick)

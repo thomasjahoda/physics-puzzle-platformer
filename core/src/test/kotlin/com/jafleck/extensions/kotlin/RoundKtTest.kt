@@ -3,9 +3,6 @@ package com.jafleck.extensions.kotlin
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-import kotlin.math.pow
-
 internal class RoundKtTest {
 
     @Test

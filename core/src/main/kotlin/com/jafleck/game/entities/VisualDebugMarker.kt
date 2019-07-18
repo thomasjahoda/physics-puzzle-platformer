@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
-import com.jafleck.extensions.libgdxktx.ashley.has
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.entities.VisualDebugMarkerComponent
@@ -18,7 +17,6 @@ import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
-import com.jafleck.game.entities.maploading.GenericEntityConfig
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.families.ShapedEntity
@@ -41,7 +39,7 @@ class VisualDebugMarkerEntityCreator(
     private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer
 ) {
     companion object {
-        lateinit var instance:  VisualDebugMarkerEntityCreator
+        lateinit var instance: VisualDebugMarkerEntityCreator
     }
 
     init {

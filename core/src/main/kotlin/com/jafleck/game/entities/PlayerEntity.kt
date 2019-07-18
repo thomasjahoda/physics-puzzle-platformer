@@ -2,6 +2,7 @@ package com.jafleck.game.entities
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
+import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
@@ -23,15 +24,22 @@ import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
-import com.jafleck.game.gadgets.BallThrowerGadget
+import com.jafleck.game.families.PhysicalShapedEntity
 import com.jafleck.game.gadgets.Gadget
 import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
+import ktx.ashley.allOf
 import ktx.box2d.filter
 import org.koin.dsl.module
 
 inline class PlayerEntity(val entity: Entity) {
+
+    companion object {
+        val family: Family = allOf(
+            PlayerComponent::class
+        ).get()
+    }
 
     val position
         get() = entity[OriginPositionComponent]
@@ -41,6 +49,8 @@ inline class PlayerEntity(val entity: Entity) {
         get() = entity[BodyComponent]
     val selectedGadget
         get() = entity[SelectedGadgetComponent]
+
+    fun asPhysicalShapedEntity() = PhysicalShapedEntity(entity)
 }
 
 class PlayerEntityCreator(

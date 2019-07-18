@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.BeforeAllCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 
 
-class HeadlessLibgdxAndDummyUiSkinExtension : BeforeAllCallback, AfterAllCallback {
+class HeadlessLibgdxAndMockedGraphics : BeforeAllCallback, AfterAllCallback {
 
     private val headlessLibgdxExtension = HeadlessLibgdxExtension()
     private val uiSkinExtension = DummyUiSkinExtension()

@@ -7,7 +7,6 @@ import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.OriginPositionComponent
-import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.logic.ThrowerOfRopeComponent
 import com.jafleck.game.entities.RopeEntityCreator

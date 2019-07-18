@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.libgdx.math.RectanglePolygon
-import kotlin.math.max
 
 
 fun ShapeRenderer.fillRectanglePolygon(rectanglePolygon: RectanglePolygon) {

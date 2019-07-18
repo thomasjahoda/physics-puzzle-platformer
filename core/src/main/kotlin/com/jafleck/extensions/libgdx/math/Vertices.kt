@@ -1,7 +1,6 @@
 package com.jafleck.extensions.libgdx.math
 
 import com.badlogic.gdx.math.Vector2
-import com.jafleck.extensions.kotlin.round
 
 fun List<Vector2>.toFloatArray(): FloatArray {
     val floatArray = FloatArray(this.size * 2)

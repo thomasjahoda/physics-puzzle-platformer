@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Filter
-import com.jafleck.extensions.libgdx.graphics.cpyWithAlpha
 import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
@@ -31,7 +30,6 @@ import ktx.math.minus
 import ktx.math.times
 import org.koin.dsl.module
 import java.util.*
-import kotlin.math.max
 
 inline class RopeEntity(val entity: Entity) {
 
@@ -70,6 +68,7 @@ inline class ThrownRopeEntity(val entity: Entity) {
     val thrownRope
         get() = entity[ThrownRopeComponent]
 
+    fun asRopeEntity() = RopeEntity(entity)
 }
 
 inline class RopePartEntity(val entity: Entity) {
@@ -90,6 +89,8 @@ inline class RopePartEntity(val entity: Entity) {
         get() = entity[RopePartComponent]
     val velocity
         get() = entity[VelocityComponent]
+    val stickyRopePart
+        get() = entity.getOrNull(StickyRopePartComponent)
 
 
     fun asPhysicalShapedEntity() = PhysicalShapedEntity(entity)
@@ -104,29 +105,29 @@ class RopeEntityCreator(
         localAnchorBodyPosition: Vector2,
         originPosition: Vector2,
         velocity: Vector2
-    ): RopeEntity {
+    ): ThrownRopeEntity {
         val ropeParts = LinkedList<Entity>()
-        val ropeEntity = RopeEntity(engine.createEntity().apply {
+        val thrownRopeEntity = ThrownRopeEntity(engine.createEntity().apply {
             add(RopeComponent(ropeParts))
             add(ThrownRopeComponent(thrower, localAnchorBodyPosition, ThrownRopeEntity.MAX_LENGTH_IN_PARTS, null))
         })
 
-        val ropePart = createTopRopePart(originPosition, velocity, ropeEntity)
+        val ropePart = createTopRopePart(originPosition, velocity, thrownRopeEntity.asRopeEntity())
         ropeParts.add(ropePart)
         engine.addEntity(ropePart)
 
-        engine.addEntity(ropeEntity.entity)
+        engine.addEntity(thrownRopeEntity.entity)
 
-        thrower.entity.add(ThrowerOfRopeComponent(ropeEntity.asThrownRope()!!))
-        return RopeEntity(ropeEntity.entity)
+        thrower.entity.add(ThrowerOfRopeComponent(thrownRopeEntity))
+        return thrownRopeEntity
     }
 
-    fun createNormalRopePartAttachedTo(ropeOriginatingFromPosition: Vector2, ropePartToAttachTo: RopePartEntity): RopePartEntity {
-        VisualDebugMarkerEntityCreator.instance.createMarker(ropeOriginatingFromPosition, Color.YELLOW, "ropeOriginatingFromPosition")
+    fun createNormalRopePartAttachedTo(ropeOriginatingFromPosition: Vector2, ropePartToAttachTo: RopePartEntity, velocity: Vector2): RopePartEntity {
+//        VisualDebugMarkerEntityCreator.instance.createMarker(ropeOriginatingFromPosition, Color.YELLOW, "ropeOriginatingFromPosition")
         val ropeEntity = ropePartToAttachTo.ropePart.owningRopeEntity
         val bodyToAttachTo = ropePartToAttachTo.asPhysicalShapedEntity().body.value
         val targetPartLocalAnchorPosition = ropePartToAttachTo.asPhysicalShapedEntity().asShapedEntity().shape.getRectangleAroundShape(Vector2()).let {
-            Vector2(0f, -it.y)
+            Vector2(-it.x / 2, 0f) // this is the unrotated connection point -> we connect to the left point of the shape
         }
 
         // create new part from next part in direction to originating position
@@ -135,12 +136,12 @@ class RopeEntityCreator(
         val directionFromRopeOriginatingPositionToNextPartTopEdgePosition = (newPartTopEdgeMiddlePointPosition - ropeOriginatingFromPosition).nor()
         val originPosition = newPartTopEdgeMiddlePointPosition - (directionFromRopeOriginatingPositionToNextPartTopEdgePosition * (ropePartLength / 2))
 
-        val velocity = ropePartToAttachTo.velocity.vector.cpy() * (1 - max(1f, 0.003f * ropeEntity.rope.parts.size))
 //        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(ropePartToAttachTo.entity, Color.GREEN.cpyWithAlpha(0.5f), "ropePartToAttachTo")
 //        VisualDebugMarkerEntityCreator.instance.createMarker(newPartTopEdgeMiddlePointPosition, Color.BLUE.cpyWithAlpha(0.5f), "newPartTopEdgeMiddlePointPosition")
 //        VisualDebugMarkerEntityCreator.instance.createMarker(originPosition, Color.VIOLET.cpyWithAlpha(0.5f), "originPosition")
-        val newRopePart = createNormalRopePart(originPosition, velocity, directionFromRopeOriginatingPositionToNextPartTopEdgePosition.scl(-1f).angle(), ropeEntity)
-//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(newRopePart.entity, Color.LIME.cpyWithAlpha(0.5f), "ropePartToAttachTo")
+        val rotationDegrees = directionFromRopeOriginatingPositionToNextPartTopEdgePosition.angle()
+        val newRopePart = createNormalRopePart(originPosition, velocity, rotationDegrees, ropeEntity)
+//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(newRopePart.entity, Color.GOLD.cpyWithAlpha(0.5f), "ropePartToAttachTo")
         ropeEntity.rope.parts.add(0, newRopePart.entity)
         engine.addEntity(newRopePart.entity)
 

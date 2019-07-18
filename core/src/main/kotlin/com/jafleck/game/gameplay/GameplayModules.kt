@@ -33,32 +33,19 @@ import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 import org.koin.dsl.module
 
-interface EngineLogicLoader {
-    fun load(engine: Engine)
-}
-
-internal val gameplayUiModule = module {
-    single { GameCamera() }
-    single { GameViewport(25f, 15f, get()) }
-    single { UiCamera() }
-    single { UiViewport(get()) }
-    single { Stage(get<UiViewport>()) }
-    single { SpriteBatch() }
-    single { UiInputMultiplexer() }
-    single { GameInputMultiplexer() }
-    single {
-        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
-            getOrNull(), getOrNull(), getOrNull(), getOrNull())
-    }
-}
-
-internal val gameplayGadgetsModule = module {
-    single { BallThrowerGadget(get()) }
-    single { RopeThrowerGadget(get(), get()) }
-}
-
 internal val gameplayEntityComponentSystemBasicsModule = module {
     single { Engine() }
+}
+
+internal val gameplayUtilitiesModule = module {
+    single { GameViewport(25f, 15f, get()) }
+    single { GameCamera() }
+    single { SpriteBatch() }
+    single { GameInputMultiplexer() }
+}
+
+interface EngineLogicLoader {
+    fun load(engine: Engine)
 }
 
 internal val gameplayEntityComponentSystemLogicModule = module {
@@ -124,6 +111,11 @@ internal val gameplayEntityComponentSystemLogicModule = module {
     }
 }
 
+internal val gameplayGadgetsModule = module {
+    single { BallThrowerGadget(get()) }
+    single { RopeThrowerGadget(get(), get()) }
+}
+
 internal val gameplayPhysicsModule = module {
     single { ContactListenerMultiplexer() }
     single {
@@ -144,10 +136,22 @@ internal val gameplayPhysicsModule = module {
     }
 }
 
+internal val gameplayUiModule = module {
+    single { UiCamera() }
+    single { UiViewport(get()) }
+    single { Stage(get<UiViewport>()) }
+    single { UiInputMultiplexer() }
+    single {
+        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            getOrNull(), getOrNull(), getOrNull(), getOrNull())
+    }
+}
+
 val gameplayModules = listOf(
-    gameplayUiModule,
+    gameplayUtilitiesModule,
     gameplayGadgetsModule,
     gameplayEntityComponentSystemBasicsModule,
     gameplayEntityComponentSystemLogicModule,
-    gameplayPhysicsModule
+    gameplayPhysicsModule,
+    gameplayUiModule
 )

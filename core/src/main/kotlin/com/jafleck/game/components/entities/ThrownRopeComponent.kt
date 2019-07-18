@@ -1,7 +1,6 @@
 package com.jafleck.game.components.entities
 
 import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor

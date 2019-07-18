@@ -92,12 +92,14 @@ class GenericPhysicsBodyCreator(
                 if (triangulate) {
                     logger.debug { "Polygon is either concave or has more than ${Box2DSettings.maxPolygonVertices} vertices. It has to be triangulated for Box2D." }
                     triangulate(vertices, polygonTriangulator) { triangleVertices ->
-                        polygon(triangleVertices) {  // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
+                        polygon(triangleVertices) {
+                            // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
                             fixtureBlock()
                         }
                     }
                 } else {
-                    polygon(vertices) { // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
+                    polygon(vertices) {
+                        // if this fails, your polygon might have vertices on the same line, e.g. 0,0 1,0 2,0
                         fixtureBlock()
                     }
                 }

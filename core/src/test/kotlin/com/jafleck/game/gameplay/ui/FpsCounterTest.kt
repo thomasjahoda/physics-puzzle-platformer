@@ -1,12 +1,12 @@
 package com.jafleck.game.gameplay.ui
 
-import com.jafleck.testutil.HeadlessLibgdxAndDummyUiSkinExtension
+import com.jafleck.testutil.HeadlessLibgdxAndMockedGraphics
 import org.assertj.core.api.Assertions
 import org.assertj.core.data.Offset
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(HeadlessLibgdxAndDummyUiSkinExtension::class)
+@ExtendWith(HeadlessLibgdxAndMockedGraphics::class)
 internal class FpsCounterTest {
 
     @Test
