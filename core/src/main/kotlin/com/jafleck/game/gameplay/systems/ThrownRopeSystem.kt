@@ -89,7 +89,8 @@ class ThrownRopeSystem(
         val worldAnchorPointToThrower = thrower.body.value.getWorldPoint(thrownRope.thrownRope.throwerLocalAnchorPoint)
         val distanceVectorFromFirstPartToOriginatingPosition = firstRopePart.asPhysicalShapedEntity().position.vector - worldAnchorPointToThrower
         if (distanceVectorFromFirstPartToOriginatingPosition.len() > RopePartEntity.ROPE_PART_SIZE.y * 1.5f) {
-            ropeEntityCreator.createNormalRopePartAttachedTo(worldAnchorPointToThrower, firstRopePart)
+            val velocity = thrower.velocity!!.vector.cpy()
+            ropeEntityCreator.createNormalRopePartAttachedTo(worldAnchorPointToThrower, firstRopePart, velocity)
             addNewPartsIfSpaceIsFree(thrownRope)
         }
     }

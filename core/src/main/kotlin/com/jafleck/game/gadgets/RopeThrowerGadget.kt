@@ -7,6 +7,8 @@ import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.getOrNull
 import com.jafleck.game.components.basic.OriginPositionComponent
+import com.jafleck.game.components.basic.RotationComponent
+import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.logic.ThrowerOfRopeComponent
 import com.jafleck.game.entities.RopeEntityCreator
 import com.jafleck.game.entities.RopePartEntity
@@ -52,7 +54,7 @@ class RopeThrowerGadget(
         val entityPosition = handler[OriginPositionComponent].vector
 
         val throwDirection = (targetPosition - entityPosition).nor()
-        val velocity = throwDirection * throwSpeed
+        val velocity = (throwDirection * throwSpeed) + (handler.getOrNull(VelocityComponent)?.vector ?: Vector2.Zero)
         val spawnPosition = entityPosition + throwDirection * (entityRectangleSize / 2 + RopePartEntity.ROPE_PART_SIZE / 2)
 
         logger.debug { "Spawning ball at $spawnPosition with velocity $velocity" }
