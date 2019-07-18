@@ -59,6 +59,8 @@ inline class ThrownRopeEntity(val entity: Entity) {
             ThrownRopeComponent::class
         )
             .get()
+
+        const val MAX_LENGTH_IN_PARTS = 50
     }
 
     val rope
@@ -104,7 +106,7 @@ class RopeEntityCreator(
         val ropeParts = LinkedList<Entity>()
         val ropeEntity = RopeEntity(engine.createEntity().apply {
             add(RopeComponent(ropeParts))
-            add(ThrownRopeComponent(thrower, localAnchorBodyPosition, null))
+            add(ThrownRopeComponent(thrower, localAnchorBodyPosition, ThrownRopeEntity.MAX_LENGTH_IN_PARTS, null))
         })
 
         val ropePart = createTopRopePart(originPosition, velocity, ropeEntity)

@@ -10,6 +10,7 @@ import com.jafleck.game.families.PhysicalShapedEntity
 class ThrownRopeComponent(
     val thrownBy: PhysicalShapedEntity,
     val throwerLocalAnchorPoint: Vector2,
+    val maxLengthInParts: Int,
     var anchoredBy: RevoluteJoint?
 ) : Component {
 

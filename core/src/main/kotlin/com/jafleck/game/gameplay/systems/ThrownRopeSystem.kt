@@ -62,7 +62,7 @@ class ThrownRopeSystem(
                 val thrownRopeEntity = ropeEntity.asThrownRope()
                 if (thrownRopeEntity != null) {
                     if (!thrownRopeEntity.thrownRope.anchored) {
-                        anchorThrownRope(thrownRopeEntity)
+                        anchorThrownRopeToThrower(thrownRopeEntity)
                     }
                 }
             }
@@ -75,18 +75,22 @@ class ThrownRopeSystem(
 
         val thrownRope = ThrownRopeEntity(entity)
         if (!thrownRope.thrownRope.anchored) {
-            addNewPartIfSpaceIsFree(thrownRope)
+            // note: the maxLengthInParts may be overstepped if the player moves fast and multiple parts have been added at one time
+            addNewPartsIfSpaceIsFree(thrownRope)
+            if (thrownRope.rope.parts.size >= thrownRope.thrownRope.maxLengthInParts) {
+                anchorThrownRopeToThrower(thrownRope)
+            }
         }
     }
 
-    private fun addNewPartIfSpaceIsFree(thrownRope: ThrownRopeEntity) {
+    private fun addNewPartsIfSpaceIsFree(thrownRope: ThrownRopeEntity) {
         val thrower = thrownRope.thrownRope.thrownBy
         val firstRopePart = RopePartEntity(thrownRope.rope.parts[0])
         val worldAnchorPointToThrower = thrower.body.value.getWorldPoint(thrownRope.thrownRope.throwerLocalAnchorPoint)
         val distanceVectorFromFirstPartToOriginatingPosition = firstRopePart.asPhysicalShapedEntity().position.vector - worldAnchorPointToThrower
         if (distanceVectorFromFirstPartToOriginatingPosition.len() > RopePartEntity.ROPE_PART_SIZE.y * 1.5f) {
             ropeEntityCreator.createNormalRopePartAttachedTo(worldAnchorPointToThrower, firstRopePart)
-            addNewPartIfSpaceIsFree(thrownRope)
+            addNewPartsIfSpaceIsFree(thrownRope)
         }
     }
 
@@ -107,7 +111,7 @@ class ThrownRopeSystem(
         }
     }
 
-    private fun anchorThrownRope(thrownRopeEntity: ThrownRopeEntity) {
+    private fun anchorThrownRopeToThrower(thrownRopeEntity: ThrownRopeEntity) {
         require(thrownRopeEntity.thrownRope.anchored.not())
         val throwerEntity = thrownRopeEntity.thrownRope.thrownBy
         val firstRopePartEntityOfRope = RopePartEntity(thrownRopeEntity.rope.parts[0])
