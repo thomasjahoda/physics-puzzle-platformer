@@ -23,13 +23,14 @@ android {
     }
     defaultConfig {
         applicationId = "com.jafleck.game"
-        minSdkVersion(21)
+        minSdkVersion(26) // TODO [Support normal Android versions #50] support android 21
         targetSdkVersion(28)
         versionCode = 1
         versionName = "1.0"
     }
     buildTypes {
         getByName("release") {
+//            isShrinkResources = true
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
