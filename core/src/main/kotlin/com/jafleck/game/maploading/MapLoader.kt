@@ -1,5 +1,6 @@
 package com.jafleck.game.maploading
 
+import com.badlogic.ashley.core.Engine
 import com.jafleck.extensions.libgdx.map.PatchedTmxMapLoader
 import com.jafleck.extensions.libgdx.map.id
 import com.jafleck.game.util.files.AssetsFileHandleResolver
@@ -9,7 +10,8 @@ import com.jafleck.game.util.logger
 
 class MapLoader(
     private val assetsFileHandleResolver: AssetsFileHandleResolver,
-    private val mapEntityLoaderLocator: MapEntityLoaderLocator
+    private val mapEntityLoaderLocator: MapEntityLoaderLocator,
+    private val engine: Engine
 ) {
     companion object {
         const val MAP_ASSETS_DIRECTORY = "maps"
@@ -18,6 +20,8 @@ class MapLoader(
     private val logger = logger(this::class)
 
     fun loadMap(name: String) {
+        require(engine.entities.size() == 0) { "${MapUnloader::class.simpleName} has to be called first to unload the map" }
+
         val map = PatchedTmxMapLoader(assetsFileHandleResolver).load("$MAP_ASSETS_DIRECTORY/$name")
         val allMapObjects = map.layers.flatMap { it.objects }
         logger.debug { "Loading ${allMapObjects.size} map objects" }

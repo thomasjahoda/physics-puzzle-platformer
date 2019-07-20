@@ -6,14 +6,14 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
 import com.badlogic.gdx.physics.box2d.World
+import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.libgdxktx.clearScreen
 import com.jafleck.game.assets.ScreenToWorldScalingPropagator
-import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
 import ktx.app.KtxScreen
-import ktx.scene2d.label
+import ktx.scene2d.KContainer
 import ktx.scene2d.table
 
 
@@ -28,28 +28,25 @@ class PlayScreen(
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
     private val gameInputMultiplexer: GameInputMultiplexer,
     private val uiInputMultiplexer: UiInputMultiplexer,
+    private val menuRowFactory: MenuRowFactory,
+    private val debugRowFactory: DebugRowFactory,
     private val box2DDebugRenderer: Box2DDebugRenderer?,
-    private val cursorDebugSystem: CursorDebugSystem?,
     private val manualTimeControl: ManualTimeControl?,
     private val fpsCounter: FpsCounter?
 ) : KtxScreen {
 
     private val rootTable = table {
-        if (cursorDebugSystem != null) {
-            add(label("  "))
-            add(cursorDebugSystem.worldCoordsOfCursorLabel)
-        }
-        if (fpsCounter != null) {
-            add(label("   "))
-            add(fpsCounter.fpsLabel)
-        }
-//        setFillParent(true)
-        pack()
+        setFillParent(true)
+
+        add(menuRowFactory.createMenuRow()).expandX().fillX()
+        row()
+        add(KContainer<Actor>()).expandY().expandX()
+        row()
+        add(debugRowFactory.createDebugRow()).expandX().fillX()
     }
 
     init {
         stage.apply {
-            // add UI here when necessary
             addActor(rootTable)
         }
         uiInputMultiplexer.addProcessor(stage)
@@ -72,12 +69,14 @@ class PlayScreen(
         gameViewport.apply()
         engine.update(deltaSeconds)
         box2DDebugRenderer?.render(world, gameCamera.combined)
-        renderUi()
+        renderUi(deltaSeconds)
     }
 
-    private fun renderUi() {
+    private fun renderUi(deltaSeconds: Float) {
         uiViewport.apply()
         rootTable.pack()
+//        stage.isDebugAll = true
+        stage.act(deltaSeconds)
         stage.draw()
     }
 

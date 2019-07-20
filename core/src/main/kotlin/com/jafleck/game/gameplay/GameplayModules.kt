@@ -141,9 +141,11 @@ internal val gameplayUiModule = module {
     single { UiViewport(get()) }
     single { Stage(get<UiViewport>()) }
     single { UiInputMultiplexer() }
+    single { MenuRowFactory() }
+    single { DebugRowFactory(getOrNull(), getOrNull(), getOrNull()) }
     single {
-        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
-            getOrNull(), getOrNull(), getOrNull(), getOrNull())
+        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            getOrNull(), getOrNull(), getOrNull())
     }
 }
 
