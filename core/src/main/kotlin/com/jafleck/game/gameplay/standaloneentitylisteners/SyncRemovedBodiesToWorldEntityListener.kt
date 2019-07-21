@@ -5,7 +5,7 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.physics.box2d.World
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.BodyComponent
-import com.jafleck.game.util.listeners.EntityFamilyListener
+import com.jafleck.game.util.ashley.EntityFamilyListener
 import com.jafleck.game.util.logger
 import ktx.ashley.allOf
 

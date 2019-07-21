@@ -1,4 +1,4 @@
-package com.jafleck.game.util.listeners
+package com.jafleck.game.util.ashley
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntityListener

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(HeadlessLibgdxExtension::class)
-internal class MapLoaderTest {
+internal class GameMapLoaderTest {
 
     @Test
     fun loadMap() {
@@ -21,7 +21,7 @@ internal class MapLoaderTest {
         every { mockedMapEntityLoader.loadEntity(any()) } returns null
 
         val mapLoader = MapLoader(CustomClasspathAssetsFileHandleResolver(), mapEntityLoaderLocator, Engine())
-        mapLoader.loadMap("mapLoaderTest.tmx")
+        mapLoader.loadMap(GameMap("mapLoaderTest.tmx", "mapLoaderTest.tmx"))
 
         verify { mapEntityLoaderLocator.getMapEntityLoader("Platform") }
         verify { mapEntityLoaderLocator.getMapEntityLoader("Player") }

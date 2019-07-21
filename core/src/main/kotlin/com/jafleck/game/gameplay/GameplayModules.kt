@@ -25,10 +25,10 @@ import com.jafleck.game.gameplay.systems.physicssync.SyncRotatingBodySystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
 import com.jafleck.game.gameplay.ui.*
+import com.jafleck.game.util.ashley.EntityFamilyListener
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
-import com.jafleck.game.util.listeners.EntityFamilyListener
 import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 import org.koin.dsl.module

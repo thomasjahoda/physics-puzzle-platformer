@@ -12,7 +12,7 @@ import com.jafleck.game.components.basic.RotationComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
-import com.jafleck.game.util.listeners.EntityFamilyListener
+import com.jafleck.game.util.ashley.EntityFamilyListener
 import com.jafleck.game.util.math.triangulate
 import ktx.ashley.allOf
 import ktx.ashley.remove

@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Button
 import com.jafleck.extensions.libgdx.scenes.scene2d.select
 import com.jafleck.extensions.libgdx.scenes.scene2d.selectBoxOfSimpleElements
-import com.jafleck.game.maploading.MapList
+import com.jafleck.game.maploading.GameMapList
 import com.jafleck.game.maploading.MapSelection
 import ktx.actors.onChange
 import ktx.actors.onClick
@@ -14,7 +14,7 @@ import ktx.scene2d.table
 import ktx.scene2d.textButton
 
 class MenuRow(
-    private val mapList: MapList,
+    private val gameMapList: GameMapList,
     private val mapSelection: MapSelection
 ) {
 
@@ -43,11 +43,12 @@ class MenuRow(
     }
     private val mapListTable by lazy {
         table {
-            add(selectBoxOfSimpleElements(mapList.maps, { it.name }) {
+            add(selectBoxOfSimpleElements(gameMapList.maps, { it.name }) {
                 select(mapSelection.selectedMap)
+                mapSelection.selectedMapListeners.addNewValueListener { select(it) }
                 onChange {
                     val selected = selected
-                    if (selected != null) {
+                    if (selected != null && selected.element != mapSelection.selectedMap) {
                         mapSelection.selectedMap = selected.element
                     }
                 }

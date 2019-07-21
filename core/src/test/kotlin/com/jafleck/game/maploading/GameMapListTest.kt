@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(HeadlessLibgdxExtension::class)
-internal class MapListTest {
+internal class GameMapListTest {
 
     @Test
     fun getMaps() {
-        val uut = MapList(CustomClasspathAssetsFileHandleResolver())
+        val uut = GameMapList(CustomClasspathAssetsFileHandleResolver())
         Assertions.assertThat(uut.maps.size).isNotEqualTo(0)
         Assertions.assertThat(uut.maps[0].name).isNotNull()
         Assertions.assertThat(uut.maps[0].path).isNotNull()

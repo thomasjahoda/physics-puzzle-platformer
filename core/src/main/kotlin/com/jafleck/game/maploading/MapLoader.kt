@@ -19,11 +19,12 @@ class MapLoader(
 
     private val logger = logger(this::class)
 
-    fun loadMap(name: String) {
+    fun loadMap(map: GameMap) {
         require(engine.entities.size() == 0) { "${MapUnloader::class.simpleName} has to be called first to unload the map" }
 
-        val map = PatchedTmxMapLoader(assetsFileHandleResolver).load("$MAP_ASSETS_DIRECTORY/$name")
-        val allMapObjects = map.layers.flatMap { it.objects }
+        val tmxMapLoader = PatchedTmxMapLoader(assetsFileHandleResolver)
+        val tiledMap = tmxMapLoader.load("$MAP_ASSETS_DIRECTORY/${map.name}")
+        val allMapObjects = tiledMap.layers.flatMap { it.objects }
         logger.debug { "Loading ${allMapObjects.size} map objects" }
 
         allMapObjects.forEach {

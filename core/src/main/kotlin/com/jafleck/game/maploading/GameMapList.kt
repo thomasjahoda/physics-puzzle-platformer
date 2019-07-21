@@ -5,23 +5,23 @@ import com.jafleck.game.util.files.AssetsFileHandleResolver
 import com.jafleck.game.util.logger
 import java.io.File
 
-class MapList(
+class GameMapList(
     private val assetsFileHandleResolver: AssetsFileHandleResolver
 ) {
     private val logger = logger(this::class)
 
-    val maps: List<Map>
+    val maps: List<GameMap>
 
     init {
         val mapListFilePath = "maps/list.json"
         val file = assetsFileHandleResolver.resolve(mapListFilePath)
         logger.debug { "Reading $mapListFilePath" }
         val jsonString = file.readString(Charsets.UTF_8.name())
-        maps = Klaxon().parseArray<SerializedMap>(jsonString)!!
-            .map { Map(File(it.path).name, it.path) }
+        maps = Klaxon().parseArray<SerializedGameMap>(jsonString)!!
+            .map { GameMap(File(it.path).name, it.path) }
             .sortedBy { it.path }
     }
 }
 
-private data class SerializedMap(val path: String)
-data class Map(val name: String, val path: String)
+private data class SerializedGameMap(val path: String)
+data class GameMap(val name: String, val path: String)

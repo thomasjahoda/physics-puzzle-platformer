@@ -10,6 +10,7 @@ import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.EngineLogicLoader
 import com.jafleck.game.gameplay.gameplayModules
 import com.jafleck.game.gameplay.ui.PlayScreen
+import com.jafleck.game.maploading.GameMap
 import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.mapLoadingModule
 import com.jafleck.game.preferences.preferencesModule
@@ -52,7 +53,7 @@ class GdxApplication : KtxGame<Screen>() {
 //        val mapName = "customized_values_sandbox.tmx"
 //        val mapName = "trampoline_preset_test.tmx"
 //        val mapName = "single_platform.tmx"
-        mapLoader.loadMap(mapName)
+        mapLoader.loadMap(GameMap(mapName, mapName))
 
         val screen = koinApplication.koin.get<PlayScreen>()
         addScreen(screen)
