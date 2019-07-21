@@ -22,7 +22,7 @@ inline fun <T> selectBoxOfSimpleElements(
 }
 
 fun <T> KSelectBox<CustomToStringElement<T>>.select(element: T) {
-    selected = items.find { it.element == element }
+    selected = items.find { it.element == element } ?: error("Could not find element $element in items $items")
 }
 
 class CustomToStringElement<T>(val element: T, private val customToStringValue: String) {
