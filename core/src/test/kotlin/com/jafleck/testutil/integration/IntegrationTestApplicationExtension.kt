@@ -12,6 +12,7 @@ import com.jafleck.game.entities.VisualDebugMarkerEntityCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.*
+import com.jafleck.game.maploading.GameMap
 import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.mapLoadingModule
 import com.jafleck.game.util.LoggingLevel
@@ -68,14 +69,15 @@ class IntegrationTestApplicationExtension(
         }
         this.koinApplication = koinApplication
 
+        val koin = koinApplication.koin
         if (loadAssets) {
-            koinApplication.koin.get<GdxHoloSkin>().setAsDefault()
+            koin.get<GdxHoloSkin>().setAsDefault()
         }
-        koinApplication.koin.get<VisualDebugMarkerEntityCreator>() // initialize global debug tool instance
+        koin.get<VisualDebugMarkerEntityCreator>() // initialize global debug tool instance
 
         if (loadedMap != null) {
-            val mapLoader = koinApplication.koin.get<MapLoader>()
-            mapLoader.loadMap(loadedMap)
+            val mapLoader = koin.get<MapLoader>()
+            mapLoader.loadMap(GameMap(loadedMap, loadedMap))
         }
     }
 

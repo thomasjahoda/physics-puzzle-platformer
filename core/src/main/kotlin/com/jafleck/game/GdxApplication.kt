@@ -12,6 +12,7 @@ import com.jafleck.game.gameplay.gameplayModules
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.maploading.GameMap
 import com.jafleck.game.maploading.MapLoader
+import com.jafleck.game.maploading.MapSelection
 import com.jafleck.game.maploading.mapLoadingModule
 import com.jafleck.game.preferences.preferencesModule
 import com.jafleck.game.util.asGdxLoggingLevel
@@ -43,19 +44,16 @@ class GdxApplication : KtxGame<Screen>() {
             )
         }
 
-        koinApplication.koin.get<GdxHoloSkin>().setAsDefault()
-        koinApplication.koin.get<VisualDebugMarkerEntityCreator>() // initialize global debug tool instance
+        val koin = koinApplication.koin
+        koin.get<GdxHoloSkin>().setAsDefault()
+        koin.get<VisualDebugMarkerEntityCreator>() // initialize global debug tool instance
 
         loadSystems(koinApplication)
 
-        val mapLoader = koinApplication.koin.get<MapLoader>()
-        val mapName = "test1.tmx"
-//        val mapName = "customized_values_sandbox.tmx"
-//        val mapName = "trampoline_preset_test.tmx"
-//        val mapName = "single_platform.tmx"
-        mapLoader.loadMap(GameMap(mapName, mapName))
+        val mapLoader = koin.get<MapLoader>()
+        mapLoader.loadMap(koin.get<MapSelection>().selectedMap)
 
-        val screen = koinApplication.koin.get<PlayScreen>()
+        val screen = koin.get<PlayScreen>()
         addScreen(screen)
         setScreen<PlayScreen>()
     }
