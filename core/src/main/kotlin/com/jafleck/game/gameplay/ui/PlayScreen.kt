@@ -38,11 +38,11 @@ class PlayScreen(
     private val rootTable = table {
         setFillParent(true)
 
-        add(menuRow.content).expandX().fillX()
+        add(menuRow.content)
+            .expandX().fillX()
+            .expandY().fillY()
         row()
-        add(KContainer<Actor>()).expandY().expandX()
-        row()
-        add(debugRow.content).expandX().fillX()
+        add(debugRow.content).expandX().fillX().bottom()
     }
 
     init {

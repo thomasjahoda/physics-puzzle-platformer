@@ -10,7 +10,8 @@ inline fun <T> selectBoxOfSimpleElements(
     elementDisplayFunction: (T) -> String,
     style: String = defaultStyle,
     skin: Skin = Scene2DSkin.defaultSkin,
-    init: KSelectBox<CustomToStringElement<T>>.() -> Unit = {}): KSelectBox<CustomToStringElement<T>> {
+    init: KSelectBox<CustomToStringElement<T>>.() -> Unit = {}
+): KSelectBox<CustomToStringElement<T>> {
     val selectBox = KSelectBox<CustomToStringElement<T>>(skin, style).apply {
         elements.forEach {
             items.add(CustomToStringElement(it, elementDisplayFunction(it)))
