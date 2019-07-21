@@ -12,6 +12,7 @@ import com.jafleck.game.gameplay.gameplayModules
 import com.jafleck.game.gameplay.ui.PlayScreen
 import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.mapLoadingModule
+import com.jafleck.game.preferences.preferencesModule
 import com.jafleck.game.util.asGdxLoggingLevel
 import com.jafleck.game.util.files.filesModule
 import ktx.app.KtxGame
@@ -33,6 +34,7 @@ class GdxApplication : KtxGame<Screen>() {
             }
             modules(listOf(createMainModule(this@GdxApplication))
                 + filesModule
+                + preferencesModule
                 + entityModules
                 + mapLoadingModule
                 + assetsModule

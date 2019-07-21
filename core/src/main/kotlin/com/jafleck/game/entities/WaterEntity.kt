@@ -4,7 +4,6 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
-import com.jafleck.extensions.libgdx.graphics.cpyWithAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.WaterComponent
@@ -25,6 +24,7 @@ import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
 import ktx.box2d.filter
+import ktx.graphics.copy
 import org.koin.dsl.module
 
 inline class WaterEntity(val entity: Entity) {
@@ -81,7 +81,7 @@ class WaterEntityCreator(
 
 val waterPresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
-        fillColor = Color.BLUE.cpyWithAlpha(0.6f)
+        fillColor = Color.BLUE.copy(alpha = 0.6f)
     ))
 ).asMap()
 

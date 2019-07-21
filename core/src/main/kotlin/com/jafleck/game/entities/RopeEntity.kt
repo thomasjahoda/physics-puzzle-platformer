@@ -136,12 +136,12 @@ class RopeEntityCreator(
         val directionFromRopeOriginatingPositionToNextPartTopEdgePosition = (newPartTopEdgeMiddlePointPosition - ropeOriginatingFromPosition).nor()
         val originPosition = newPartTopEdgeMiddlePointPosition - (directionFromRopeOriginatingPositionToNextPartTopEdgePosition * (ropePartLength / 2))
 
-//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(ropePartToAttachTo.entity, Color.GREEN.cpyWithAlpha(0.5f), "ropePartToAttachTo")
-//        VisualDebugMarkerEntityCreator.instance.createMarker(newPartTopEdgeMiddlePointPosition, Color.BLUE.cpyWithAlpha(0.5f), "newPartTopEdgeMiddlePointPosition")
-//        VisualDebugMarkerEntityCreator.instance.createMarker(originPosition, Color.VIOLET.cpyWithAlpha(0.5f), "originPosition")
+//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(ropePartToAttachTo.entity, Color.GREEN.copy(alpha = 0.5f), "ropePartToAttachTo")
+//        VisualDebugMarkerEntityCreator.instance.createMarker(newPartTopEdgeMiddlePointPosition, Color.BLUE.copy(alpha = 0.5f), "newPartTopEdgeMiddlePointPosition")
+//        VisualDebugMarkerEntityCreator.instance.createMarker(originPosition, Color.VIOLET.copy(alpha = 0.5f), "originPosition")
         val rotationDegrees = directionFromRopeOriginatingPositionToNextPartTopEdgePosition.angle()
         val newRopePart = createNormalRopePart(originPosition, velocity, rotationDegrees, ropeEntity)
-//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(newRopePart.entity, Color.GOLD.cpyWithAlpha(0.5f), "ropePartToAttachTo")
+//        VisualDebugMarkerEntityCreator.instance.createMarkerFromCurrentEntity(newRopePart.entity, Color.GOLD.copy(alpha = 0.5f), "ropePartToAttachTo")
         ropeEntity.rope.parts.add(0, newRopePart.entity)
         engine.addEntity(newRopePart.entity)
 

@@ -16,6 +16,7 @@ import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.mapLoadingModule
 import com.jafleck.game.util.LoggingLevel
 import com.jafleck.game.util.asGdxLoggingLevel
+import com.jafleck.testutil.preferences.testPreferencesModule
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
@@ -48,6 +49,7 @@ class IntegrationTestApplicationExtension(
             }
             modules({
                 var modules = listOf(testFilesModule) +
+                    testPreferencesModule +
                     entityModules +
                     mapLoadingModule +
                     listOf(

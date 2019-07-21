@@ -15,8 +15,8 @@ class ManualTimeControl(
         uiInputMultiplexer.addProcessor(InputListener())
     }
 
-    var manualMode = false
-    var advanceFrames: Int = 0
+    private var manualMode = false
+    private var advanceFrames: Int = 0
 
     inner class InputListener : InputAdapter() {
 

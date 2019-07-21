@@ -5,6 +5,8 @@ import com.badlogic.gdx.ApplicationListener
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.backends.headless.HeadlessApplication
 import com.badlogic.gdx.graphics.GL20
+import com.jafleck.game.util.LoggingLevel
+import com.jafleck.game.util.asGdxLoggingLevel
 import io.mockk.mockk
 import org.junit.jupiter.api.extension.AfterAllCallback
 import org.junit.jupiter.api.extension.BeforeAllCallback
@@ -26,6 +28,7 @@ class HeadlessLibgdxExtension : BeforeAllCallback, AfterAllCallback {
         val gl20 = mockk<GL20>(relaxed = true)
         Gdx.gl = gl20
         Gdx.gl20 = gl20
+        Gdx.app.logLevel = LoggingLevel.DEBUG.asGdxLoggingLevel() // ignoring config
     }
 
     override fun afterAll(context: ExtensionContext?) {

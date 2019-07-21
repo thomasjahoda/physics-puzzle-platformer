@@ -6,14 +6,15 @@ import com.jafleck.game.gameplay.systems.debug.CursorDebugSystem
 import ktx.scene2d.KContainer
 import ktx.scene2d.table
 
-class DebugRowFactory(
+class DebugRow(
     private val cursorDebugSystem: CursorDebugSystem?,
     private val manualTimeControl: ManualTimeControl?,
     private val fpsCounter: FpsCounter?
 ) {
 
-    fun createDebugRow(): Actor {
-        return table {
+
+    val content: Actor = {
+        table {
             if (cursorDebugSystem != null) {
                 add(cursorDebugSystem.worldCoordsOfCursorLabel).apply {
                     percentWidthOfTable(0.6f)
@@ -26,5 +27,5 @@ class DebugRowFactory(
             }
             add(KContainer<Actor>()).expandX().fillX()
         }
-    }
+    }()
 }

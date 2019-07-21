@@ -18,9 +18,9 @@ buildscript {
         google()
     }
     dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.android.tools.build:gradle:3.4.1")
         classpath("com.mobidevelop.robovm:robovm-gradle-plugin:2.3.6")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.badlogicgames.gdx:gdx-tools:$gdxVersion")
     }
 }
@@ -28,6 +28,7 @@ buildscript {
 object DependencyVersions {
     const val appName = "physics-puzzle-platformer"
     const val kotlinVersion = "1.3.41"
+    const val klaxonJsonLibraryVersion = "5.0.1"
     const val gdxVersion = "1.9.9"
     const val roboVMVersion = "2.3.6"
     const val box2DLightsVersion = "1.4"
@@ -135,6 +136,7 @@ project(":core") {
         api("com.badlogicgames.ashley:ashley:${DependencyVersions.ashleyVersion}")
         api("org.jetbrains.kotlin:kotlin-stdlib:${DependencyVersions.kotlinVersion}")
         api("org.jetbrains.kotlin:kotlin-reflect:${DependencyVersions.kotlinVersion}")
+        api("com.beust:klaxon:${DependencyVersions.klaxonJsonLibraryVersion}")
 
         api("io.github.libktx:ktx-actors:${DependencyVersions.ktxVersion}")
         api("io.github.libktx:ktx-app:${DependencyVersions.ktxVersion}")
@@ -189,6 +191,14 @@ project(":core") {
         dependsOn("texturePacker")
     }
 
+    fun writeMapListFile(outputDir: File, tmxFiles: List<File>) {
+        val mapListFile = project.file(outputDir.absolutePath + "/list.json")
+        @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+        val relativeMapPaths = tmxFiles.map { it.relativeTo(outputDir).path }
+        val json = relativeMapPaths.joinToString(separator = ",", prefix = "[", postfix = "]",
+            transform = { "{\"path\": \"$it\"}" })
+        mapListFile.writeText(json)
+    }
 
     fun configureTaskForExportingMaps(task: Task, inputDir: String, outputDir: String) {
         task.inputs.dir(inputDir)
@@ -210,15 +220,19 @@ project(":core") {
             }
 
             val tmxFiles = project.file(inputDir).listFiles { dir, name -> name.endsWith(".tmx") }
+            val outputDirFile = project.file(outputDir)
             @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-            tmxFiles.forEach {
+            val outputTmxFiles = tmxFiles.map {
                 logger.info("Exporting ${it.name}")
+                val outputFile = File(outputDirFile.absolutePath + "/" + it.name)
                 val result = project.exec {
-                    val outputFile = project.file(outputDir).absolutePath + "/" + it.name
-                    commandLine = listOf(tiledCli, "--export-map", "--detach-templates", "--resolve-types-and-properties", it.absolutePath, outputFile)
+                    commandLine = listOf(tiledCli, "--export-map", "--detach-templates", "--resolve-types-and-properties", it.absolutePath, outputFile.absolutePath)
                 }
                 result.assertNormalExitValue()
+                outputFile
             }
+            @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+            writeMapListFile(outputDirFile, outputTmxFiles)
         }
     }
 
@@ -235,7 +249,7 @@ project(":core") {
     tasks.processResources {
         dependsOn("exportMaps")
     }
-    
+
     task("testExportMaps") {
         val inputDir = "$projectDir/src/test/tiledmaps"
         val outputDir = "$projectDir/src/test/resources/maps"

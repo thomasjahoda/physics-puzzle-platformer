@@ -28,8 +28,8 @@ class PlayScreen(
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
     private val gameInputMultiplexer: GameInputMultiplexer,
     private val uiInputMultiplexer: UiInputMultiplexer,
-    private val menuRowFactory: MenuRowFactory,
-    private val debugRowFactory: DebugRowFactory,
+    private val menuRow: MenuRow,
+    private val debugRow: DebugRow,
     private val box2DDebugRenderer: Box2DDebugRenderer?,
     private val manualTimeControl: ManualTimeControl?,
     private val fpsCounter: FpsCounter?
@@ -38,11 +38,11 @@ class PlayScreen(
     private val rootTable = table {
         setFillParent(true)
 
-        add(menuRowFactory.createMenuRow()).expandX().fillX()
+        add(menuRow.content).expandX().fillX()
         row()
         add(KContainer<Actor>()).expandY().expandX()
         row()
-        add(debugRowFactory.createDebugRow()).expandX().fillX()
+        add(debugRow.content).expandX().fillX()
     }
 
     init {
@@ -74,7 +74,6 @@ class PlayScreen(
 
     private fun renderUi(deltaSeconds: Float) {
         uiViewport.apply()
-        rootTable.pack()
 //        stage.isDebugAll = true
         stage.act(deltaSeconds)
         stage.draw()

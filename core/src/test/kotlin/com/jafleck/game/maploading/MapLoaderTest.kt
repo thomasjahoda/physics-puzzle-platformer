@@ -1,5 +1,6 @@
 package com.jafleck.game.maploading
 
+import com.badlogic.ashley.core.Engine
 import com.jafleck.testutil.CustomClasspathAssetsFileHandleResolver
 import com.jafleck.testutil.HeadlessLibgdxExtension
 import io.mockk.every
@@ -19,7 +20,7 @@ internal class MapLoaderTest {
         every { mapEntityLoaderLocator.getMapEntityLoader("Player") } returns mockedMapEntityLoader
         every { mockedMapEntityLoader.loadEntity(any()) } returns null
 
-        val mapLoader = MapLoader(CustomClasspathAssetsFileHandleResolver(), mapEntityLoaderLocator)
+        val mapLoader = MapLoader(CustomClasspathAssetsFileHandleResolver(), mapEntityLoaderLocator, Engine())
         mapLoader.loadMap("mapLoaderTest.tmx")
 
         verify { mapEntityLoaderLocator.getMapEntityLoader("Platform") }

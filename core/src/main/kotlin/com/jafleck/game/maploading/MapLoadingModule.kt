@@ -6,4 +6,6 @@ val mapLoadingModule = module {
     single { MapEntityLoaderLocator() }
     single { MapLoader(get(), get(), get()) }
     single { MapUnloader(get(), get()) }
+    single { MapList(get()) }
+    single { MapSelection(get(), get()) }
 }
