@@ -7,6 +7,7 @@ val entityModules = listOf(
     playerModule,
     platformModule,
     waterModule,
+    goalZoneModule,
     thrownBallModule,
     ropeModule,
     visualDebugMarkerModule,

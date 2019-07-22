@@ -29,10 +29,6 @@ import org.koin.dsl.module
 
 inline class WaterEntity(val entity: Entity) {
 
-    companion object {
-        const val FRICTION = 0.2f
-    }
-
     fun asShapedEntity() = ShapedEntity(entity)
 
     val position
@@ -63,7 +59,7 @@ class WaterEntityCreator(
         val preset = waterPresets.getPresetOrDefault(mapObject.preset)
         val genericCustomization = preset.genericCustomization.combine(genericEntityCustomizationLoader.load(mapObject))
         return engine.createEntity().apply {
-            loadGeneralComponentsFrom(mapObject, WaterEntityCreator.ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
+            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
                 filter {
                     categoryBits = CollisionEntityCategory.environment

@@ -2,16 +2,13 @@ package com.jafleck.game.entities
 
 import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
-import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdx.physics.box2d.maskAll
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.basic.BodyComponent
 import com.jafleck.game.components.basic.OriginPositionComponent
-import com.jafleck.game.components.entities.PlayerComponent
-import com.jafleck.game.components.logic.SelectedGadgetComponent
+import com.jafleck.game.components.entities.GoalZoneComponent
+import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
@@ -25,86 +22,69 @@ import com.jafleck.game.entities.physics.CollisionEntityCategory
 import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
-import com.jafleck.game.families.PhysicalShapedEntity
-import com.jafleck.game.gadgets.Gadget
-import com.jafleck.game.gadgets.RopeThrowerGadget
+import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.map.preset
-import ktx.ashley.allOf
 import ktx.box2d.filter
+import ktx.graphics.copy
 import org.koin.dsl.module
 
-inline class PlayerEntity(val entity: Entity) {
+inline class GoalZoneEntity(val entity: Entity) {
 
-    companion object {
-        val family: Family = allOf(
-            PlayerComponent::class
-        ).get()
-    }
+    fun asShapedEntity() = ShapedEntity(entity)
 
     val position
         get() = entity[OriginPositionComponent]
-    val player
-        get() = entity[PlayerComponent]
-    val body
-        get() = entity[BodyComponent]
-    val selectedGadget
-        get() = entity[SelectedGadgetComponent]
-
-    fun asPhysicalShapedEntity() = PhysicalShapedEntity(entity)
+    val goalZone
+        get() = entity[GoalZoneComponent]
 }
 
-class PlayerEntityCreator(
+class GoalZoneEntityCreator(
     private val engine: Engine,
     private val genericEntityCustomizationLoader: GenericEntityCustomizationLoader,
     private val mapObjectFormExtractor: MapObjectFormExtractor,
     private val genericPhysicsBodyCreator: GenericPhysicsBodyCreator,
     private val visualShapeCreator: VisualShapeCreator,
-    private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer,
-    private val initialGadget: Gadget
+    private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer
 ) : MapEntityLoader {
     companion object {
         private val ENTITY_CONFIG = GenericEntityConfig(
-            rotates = true,
-            moves = true
+            rotates = false,
+            moves = false
         )
     }
 
     override val type: String
-        get() = "Player"
+        get() = "GoalZone"
 
     override fun loadEntity(mapObject: MapObject): Entity {
-        val preset = playerPresets.getPresetOrDefault(mapObject.preset)
+        val preset = goalZonePresets.getPresetOrDefault(mapObject.preset)
         val genericCustomization = preset.genericCustomization.combine(genericEntityCustomizationLoader.load(mapObject))
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
-            genericPhysicsBodyCreator.createDynamicBody(this) {
+            genericPhysicsBodyCreator.createStaticBody(this) {
                 filter {
-                    categoryBits = CollisionEntityCategory.player
-                    maskAll()
+                    categoryBits = CollisionEntityCategory.default
+                    maskBits = CollisionEntityCategory.player
                 }
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
+                isSensor = true
             }
             add(visualShapeCreator.createVisualShape(genericCustomization))
-            add(PlayerComponent())
-            add(SelectedGadgetComponent(initialGadget))
+            add(EntityCollisionTrackingZoneComponent())
+            add(GoalZoneComponent())
             engine.addEntity(this)
         }
     }
 
 }
 
-
-val playerPresets = listOf(
+val goalZonePresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
-        borderColor = Color.BLACK, borderThickness = 0.04f,
-        fillColor = Color.FIREBRICK.cpy().mulExceptAlpha(0.9f),
-        density = 4f,
-        friction = 0.2f,
-        angularDamping = 0.3f
+        fillColor = Color.GOLD.copy(alpha = 0.4f)
     ))
 ).asMap()
 
-val playerModule = module {
-    single { PlayerEntityCreator(get(), get(), get(), get(), get(), get(), get<RopeThrowerGadget>()) }
+val goalZoneModule = module {
+    single { GoalZoneEntityCreator(get(), get(), get(), get(), get(), get()) }
 }

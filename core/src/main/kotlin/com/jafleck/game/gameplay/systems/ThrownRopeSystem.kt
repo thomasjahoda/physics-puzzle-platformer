@@ -5,7 +5,6 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.*
-import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.entities.StickyRopePartComponent
 import com.jafleck.game.entities.RopeEntityCreator
@@ -13,7 +12,7 @@ import com.jafleck.game.entities.RopePartEntity
 import com.jafleck.game.entities.ThrownRopeEntity
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
-import com.jafleck.game.util.libgdx.box2d.getEntityWithFixtureByComponentOrNull
+import com.jafleck.game.util.libgdx.box2d.processIfComponentInvolved
 import com.jafleck.game.util.logger
 import ktx.box2d.revoluteJointWith
 import ktx.math.minus
@@ -96,15 +95,14 @@ class ThrownRopeSystem(
     }
 
     override fun beginContact(contact: Contact) {
-        withItIfNotNull(contact.getEntityWithFixtureByComponentOrNull(StickyRopePartComponent)) {
-            val (entity, fixture, otherFixture, _) = it
-            val stickyRopePartComponent = entity[StickyRopePartComponent]
+        contact.processIfComponentInvolved(StickyRopePartComponent) { ownerEntity, _, ownerFixture, otherFixture ->
+            val stickyRopePartComponent = ownerEntity[StickyRopePartComponent]
             if (!stickyRopePartComponent.anchored) {
                 val worldManifold = contact.worldManifold
                 if (worldManifold.numberOfContactPoints != 0) {
                     val contactPoint = worldManifold.points[0] // TODO improve, use middle point in case there are two contact points (poly on poly)
                     // attach sticky rope part to fixture asynchronously (outside of physics simulation)
-                    val element = Triple(fixture, otherFixture, contactPoint)
+                    val element = Triple(ownerFixture, otherFixture, contactPoint)
                     logger.debug { "A sticky rope part has collided with an fixture and should be anchored after the simulation. Adding $element to list of events to process." }
                     stickyRopePartsToAttach.add(element)
                 }

@@ -58,22 +58,27 @@ internal val gameplayEntityComponentSystemLogicModule = module {
         val systems = mutableListOf<EntitySystem>()
         systems.add(get<CurrentCursorPositionInputSystem>())
         systems.addAll(listOf(
-            // input handling
+            // == input handling
             PlayerMovementInputSystem(get(), get()),
             PlayerGadgetActivationSystem(get(), get()),
 
-            // physics
-            WaterSystem(get(), get()),
+            // == physics
+            // basic
             PhysicsSimulationStepSystem(get()),
+            // generic
             SyncMovingBodySystem(),
             SyncRotatingBodySystem(),
+            EntityCollisionTrackingZoneSystem(get()),
+            // entities
+            WaterSystem(get()),
+            GoalZoneSystem(),
 
-            //  logic
+            // == logic
             RemoveEntityAfterDurationSystem(),
             PlayerMovementSystem(),
             ThrownRopeSystem(get(), get()),
 
-            // rendering
+            // == rendering
             TrackPlayerWithCameraSystem(get()),
             ShapeRenderSystem(get()),
             RenderDrawableRectangleComponentsSystem(get(), get(), get())

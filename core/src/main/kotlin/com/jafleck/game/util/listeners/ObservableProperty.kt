@@ -19,10 +19,15 @@ class PropertyChangeListenerMultiplexer<T> : PropertyChangeListener<T> {
         listeners.add(listener)
     }
 
-    fun addNewValueListener(listener: (T) -> Unit) {
-        listeners.add { new, _, _ ->
+    /**
+     * @return actual listener registered which can be used to remove the listener again
+     */
+    fun addNewValueListener(listener: (T) -> Unit): PropertyChangeListener<T> {
+        val propertyChangeListener: PropertyChangeListener<T> = { new, _, _ ->
             listener(new)
         }
+        addListener(propertyChangeListener)
+        return propertyChangeListener
     }
 
     fun removeListener(listener: PropertyChangeListener<T>) {

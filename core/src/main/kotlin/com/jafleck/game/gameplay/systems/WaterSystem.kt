@@ -4,15 +4,20 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.physics.box2d.Contact
+import com.badlogic.gdx.physics.box2d.ContactImpulse
+import com.badlogic.gdx.physics.box2d.ContactListener
+import com.badlogic.gdx.physics.box2d.Manifold
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.extensions.libgdxktx.ashley.has
 import com.jafleck.game.components.basic.BodyComponent
+import com.jafleck.game.components.entities.WaterComponent
 import com.jafleck.game.components.logic.PushedUpByWaterComponent
 import com.jafleck.game.entities.WaterEntity
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
+import com.jafleck.game.util.libgdx.box2d.processIfComponentInvolved
 import com.jafleck.game.util.logger
 import ktx.ashley.allOf
 import ktx.ashley.remove
@@ -20,9 +25,10 @@ import kotlin.math.min
 
 
 class WaterSystem(
-    private val world: World,
     private val contactListenerMultiplexer: ContactListenerMultiplexer
 ) : IteratingSystem(allOf(PushedUpByWaterComponent::class).get()), ContactListener {
+    // refactor to use EntityCollisionTrackingZoneSystem?
+
     private val logger = logger(this::class)
 
     companion object {
@@ -60,28 +66,24 @@ class WaterSystem(
     }
 
     override fun beginContact(contact: Contact) {
-        // TODO refactor with contact.getEntityWithFixtureByComponentOrNull like in ThrownRopeSystem; the current logic won't work with other entities as sensors
-        if (contact.fixtureA.isSensor or contact.fixtureB.isSensor) {
+        contact.processIfComponentInvolved(WaterComponent) { waterEntity, _, _, submergedFixture ->
             logger.debug { "Begin contact with water" }
-            val waterFixture = if (contact.fixtureA.isSensor) contact.fixtureA else contact.fixtureB
-            val otherFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
 
-            val submergedBody = otherFixture.body
+            val submergedBody = submergedFixture.body
             val submergedEntity = submergedBody.entity
             if (submergedEntity.has(PushedUpByWaterComponent)) {
                 logger.debug { "Body seems to have multiple fixtures because it is already pushed up by water" }
             } else {
                 logger.debug { submergedBody.linearDamping.toString() }
-                submergedEntity.add(PushedUpByWaterComponent(WaterEntity(waterFixture.body.entity), submergedBody.linearDamping))
+                submergedEntity.add(PushedUpByWaterComponent(WaterEntity(waterEntity), submergedBody.linearDamping))
                 submergedBody.linearDamping = 1f
             }
         }
     }
 
     override fun endContact(contact: Contact) {
-        if (contact.fixtureA.isSensor or contact.fixtureB.isSensor) {
+        contact.processIfComponentInvolved(WaterComponent) { _, _, _, submergedFixture ->
             logger.debug { "End contact with water" }
-            val submergedFixture = if (contact.fixtureA.isSensor) contact.fixtureB else contact.fixtureA
             val submergedBody = submergedFixture.body
             val pushedUpByWaterComponent = submergedBody.entity.remove<PushedUpByWaterComponent>() as PushedUpByWaterComponent?
             if (pushedUpByWaterComponent != null) {
