@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
- <object type="Platform_Trampoline" width="224" height="32"/>
+ <object type="platform/Trampoline" width="224" height="32"/>
 </template>

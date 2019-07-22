@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="18">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="20">
  <objectgroup id="2" name="Entities">
-  <object id="1" template="objecttemplates/platform_horizontal.tx" x="96" y="160" width="448" height="32"/>
-  <object id="4" template="objecttemplates/platform_horizontal.tx" x="96" y="352" width="448" height="32"/>
-  <object id="5" template="objecttemplates/platform_vertical.tx" x="512" y="192" width="32" height="160"/>
-  <object id="8" template="objecttemplates/platform_vertical.tx" x="96" y="192"/>
-  <object id="9" template="objecttemplates/platform_horizontal.tx" x="280" y="352" width="104" height="32" rotation="-45"/>
-  <object id="10" template="objecttemplates/platform_horizontal.tx" x="443.115" y="387.055" width="104" height="32" rotation="-136.436"/>
-  <object id="11" template="objecttemplates/platform_horizontal.tx" x="383" y="448" width="104" height="32" rotation="-154.789"/>
-  <object id="12" template="objecttemplates/platform_horizontal.tx" x="396.197" y="419.61" width="104" height="32" rotation="-35.3702"/>
+  <object id="1" template="objecttemplates/platform/horizontal.tx" x="96" y="160" width="448" height="32"/>
+  <object id="4" template="objecttemplates/platform/horizontal.tx" x="96" y="352" width="448" height="32"/>
+  <object id="5" template="objecttemplates/platform/vertical.tx" x="512" y="192" width="32" height="160"/>
+  <object id="8" template="objecttemplates/platform/vertical.tx" x="96" y="192"/>
+  <object id="9" template="objecttemplates/platform/horizontal.tx" x="280" y="352" width="104" height="32" rotation="-45"/>
+  <object id="10" template="objecttemplates/platform/horizontal.tx" x="443.115" y="387.055" width="104" height="32" rotation="-136.436"/>
+  <object id="11" template="objecttemplates/platform/horizontal.tx" x="383" y="448" width="104" height="32" rotation="-154.789"/>
+  <object id="12" template="objecttemplates/platform/horizontal.tx" x="396.197" y="419.61" width="104" height="32" rotation="-35.3702"/>
   <object id="13" type="Platform" x="232" y="288" width="20" height="20">
    <ellipse/>
   </object>
-  <object id="14" template="objecttemplates/player_rectangle.tx" x="456" y="288">
+  <object id="14" template="objecttemplates/player/rectangle.tx" x="456" y="288">
    <properties>
     <property name="velocity" value="-10,20"/>
    </properties>
   </object>
+  <object id="18" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="128" y="192" width="32" height="64"/>
+  <object id="19" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="128" y="320" width="32" height="32"/>
  </objectgroup>
 </map>

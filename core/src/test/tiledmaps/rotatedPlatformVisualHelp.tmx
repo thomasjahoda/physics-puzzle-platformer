@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="40" height="40" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="38">
  <objectgroup id="2" name="Entities">
-  <object id="8" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Actual rectangle" x="320" y="160" width="128" height="128" rotation="-45"/>
+  <object id="8" template="../../main/tiledmaps/objecttemplates/platform/vertical.tx" name="Actual rectangle" x="320" y="160" width="128" height="128" rotation="-45"/>
   <object id="12" name="Actual origin position" x="411" y="160">
    <point/>
   </object>
-  <object id="15" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" x="320" y="160" width="128" height="128" rotation="0"/>
+  <object id="15" template="../../main/tiledmaps/objecttemplates/platform/vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" x="320" y="160" width="128" height="128" rotation="0"/>
   <object id="16" x="304" y="336" width="176" height="88">
    <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">The map rotation values are rotating around the top-left corner, they need to be calculated with (360-value) because we need the rotation around the bottom-left corner.</text>
   </object>
@@ -15,11 +15,11 @@
   <object id="22" x="128" y="216" width="176" height="24">
    <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">LibGDX converts position from top-left to bottom-left</text>
   </object>
-  <object id="23" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Actual rectangle" x="800" y="160" width="128" height="128" rotation="-20"/>
+  <object id="23" template="../../main/tiledmaps/objecttemplates/platform/vertical.tx" name="Actual rectangle" x="800" y="160" width="128" height="128" rotation="-20"/>
   <object id="25" name="Actual origin position" x="880" y="200">
    <point/>
   </object>
-  <object id="26" template="../../main/tiledmaps/objecttemplates/platform_vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" x="800" y="160" width="128" height="128" rotation="0"/>
+  <object id="26" template="../../main/tiledmaps/objecttemplates/platform/vertical.tx" name="Rectangle without rotation as saved to file and seen by LibGDX parser" x="800" y="160" width="128" height="128" rotation="0"/>
   <object id="31" x="632" y="152" width="144" height="24">
    <text fontfamily="DejaVu Sans" pixelsize="9" wrap="1">Another example seen here:</text>
   </object>
