@@ -74,6 +74,7 @@ internal val entityComponentSystemLogicModule = module {
             EntityCollisionTrackingZoneSystem(get()),
             // entities
             WaterSystem(get()),
+            DeathZoneSystem(),
             GoalZoneSystem(get()),
 
             // == logic
