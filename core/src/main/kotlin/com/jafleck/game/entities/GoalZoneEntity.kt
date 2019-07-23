@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.entities.GoalZoneComponent
+import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
@@ -31,6 +32,8 @@ inline class GoalZoneEntity(val entity: Entity) {
 
     fun asShapedEntity() = ShapedEntity(entity)
 
+    val visualShape
+        get() = entity[VisualShapeComponent]
     val entityCollisionTrackingZone
         get() = entity[EntityCollisionTrackingZoneComponent]
     val goalZone
@@ -50,6 +53,8 @@ class GoalZoneEntityCreator(
             rotates = false,
             moves = false
         )
+        internal val DEFAULT_START_COLOR = Color.GOLD.copy(alpha = 0.4f)
+        internal val END_COLOR = Color.RED.copy(alpha = 0.4f)
     }
 
     override val type: String
@@ -68,9 +73,10 @@ class GoalZoneEntityCreator(
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
                 isSensor = true
             }
-            add(visualShapeCreator.createVisualShape(genericCustomization))
+            val visualShape = visualShapeCreator.createVisualShape(genericCustomization)
+            add(visualShape)
             add(EntityCollisionTrackingZoneComponent())
-            add(GoalZoneComponent())
+            add(GoalZoneComponent(startColor = visualShape.fillColor!!.cpy(), endColor = END_COLOR))
             engine.addEntity(this)
         }
     }
@@ -79,7 +85,7 @@ class GoalZoneEntityCreator(
 
 val goalZonePresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
-        fillColor = Color.GOLD.copy(alpha = 0.4f)
+        fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR
     ))
 ).asMap()
 
