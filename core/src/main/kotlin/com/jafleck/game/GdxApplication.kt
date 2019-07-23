@@ -10,7 +10,6 @@ import com.jafleck.game.entities.entityModules
 import com.jafleck.game.gameplay.EngineLogicLoader
 import com.jafleck.game.gameplay.gameplayModules
 import com.jafleck.game.gameplay.ui.PlayScreen
-import com.jafleck.game.maploading.GameMap
 import com.jafleck.game.maploading.MapLoader
 import com.jafleck.game.maploading.MapSelection
 import com.jafleck.game.maploading.mapLoadingModule
