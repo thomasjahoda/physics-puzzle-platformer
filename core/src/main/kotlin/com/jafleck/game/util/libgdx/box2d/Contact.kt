@@ -23,7 +23,7 @@ inline fun <ComponentType : Component> Contact.processIfComponentInvolved(
     }
 }
 
-typealias CollisionInvolvingComponentHandleFunction<ComponentType> = (ownerEntity: Entity, relevantComponent: ComponentType,  ownerFixture: Fixture, otherFixture: Fixture) -> Unit
+typealias CollisionInvolvingComponentHandleFunction<ComponentType> = (ownerEntity: Entity, relevantComponent: ComponentType, ownerFixture: Fixture, otherFixture: Fixture) -> Unit
 
 fun Contact.debugDump() {
     println(getDebugDump())

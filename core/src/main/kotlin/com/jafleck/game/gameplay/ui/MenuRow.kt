@@ -3,7 +3,6 @@ package com.jafleck.game.gameplay.ui
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.ui.Button
-import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.jafleck.extensions.libgdx.scenes.scene2d.select
 import com.jafleck.extensions.libgdx.scenes.scene2d.selectBoxOfSimpleElements
 import com.jafleck.game.maploading.GameMapList

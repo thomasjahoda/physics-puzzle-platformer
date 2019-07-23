@@ -11,7 +11,6 @@ import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.libgdx.box2d.processIfComponentInvolved
 import com.jafleck.game.util.logger
-import kotlin.collections.mutableSetOf
 import kotlin.collections.set
 
 
@@ -51,7 +50,8 @@ class EntityCollisionTrackingZoneSystem(
     override fun endContact(contact: Contact) {
         contact.processIfComponentInvolved(EntityCollisionTrackingZoneComponent) { _, relevantComponent, _, otherFixture ->
             val otherEntity = otherFixture.body.entity
-            val fixturesWithinZone = relevantComponent.fixturesWithinZoneByEntity[otherEntity] ?: error("This should never happen")
+            val fixturesWithinZone = relevantComponent.fixturesWithinZoneByEntity[otherEntity]
+                ?: error("This should never happen")
             if (fixturesWithinZone.size == 1) {
                 relevantComponent.entitiesWithinZone.remove(otherEntity)
                 relevantComponent.fixturesWithinZoneByEntity.remove(otherEntity)

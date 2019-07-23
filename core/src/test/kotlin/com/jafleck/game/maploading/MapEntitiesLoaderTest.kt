@@ -16,7 +16,7 @@ internal class MapEntitiesLoaderTest {
     @Test
     fun loadMap() {
         val gameMap = GameMap("mapLoaderTest.tmx", "mapLoaderTest.tmx")
-        val tiledMap = PatchedTmxMapLoader(CustomClasspathAssetsFileHandleResolver()).load(MapLoader.MAP_ASSETS_DIRECTORY+"/${gameMap.path}")
+        val tiledMap = PatchedTmxMapLoader(CustomClasspathAssetsFileHandleResolver()).load(MapLoader.MAP_ASSETS_DIRECTORY + "/${gameMap.path}")
 
         val mapEntityLoaderLocator = mockk<MapEntityLoaderLocator>()
         val mockedMapEntityLoader = mockk<MapEntityLoader>()

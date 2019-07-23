@@ -1,16 +1,7 @@
 package com.jafleck.testutil.preferences
 
-import com.badlogic.gdx.Files.FileType
 import com.badlogic.gdx.Preferences
-import com.badlogic.gdx.backends.headless.HeadlessFileHandle
-import com.badlogic.gdx.files.FileHandle
-import com.badlogic.gdx.utils.GdxRuntimeException
-import com.badlogic.gdx.utils.StreamUtils
-
-import java.io.*
-import java.util.HashMap
-import kotlin.collections.Map.Entry
-import java.util.Properties
+import java.util.*
 
 class InMemoryPreferences : Preferences {
     private val properties = Properties()
