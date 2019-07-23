@@ -15,8 +15,8 @@ class PhysicsSimulationStepSystem(
         if (deltaSeconds == 0f) return
 
         // increased iterations for more accurate for many joints, e.g. in ropes. Same config is used in box2d manual example
-        logger.debug { "Starting physics simulation" }
+//        logger.debug { "Starting physics simulation" }
         world.step(deltaSeconds, 10, 8)
-        logger.debug { "Ended physics simulation" }
+//        logger.debug { "Ended physics simulation" }
     }
 }

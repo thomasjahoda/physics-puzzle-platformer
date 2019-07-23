@@ -12,6 +12,9 @@ import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.RopeThrowerGadget
+import com.jafleck.game.gameplay.controlandmainphases.FinishedMapSuccessfullyHandler
+import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
+import com.jafleck.game.gameplay.controlandmainphases.PostSystemUpdatePhaseActionExecutor
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.TriangulateVisualPolygonShapesEntityListener
 import com.jafleck.game.gameplay.systems.*
@@ -33,11 +36,11 @@ import ktx.box2d.createWorld
 import ktx.box2d.earthGravity
 import org.koin.dsl.module
 
-internal val gameplayEntityComponentSystemBasicsModule = module {
+internal val entityComponentSystemBasicsModule = module {
     single { Engine() }
 }
 
-internal val gameplayUtilitiesModule = module {
+internal val utilitiesModule = module {
     single { GameViewport(25f, 15f, get()) }
     single { GameCamera() }
     single { SpriteBatch() }
@@ -48,7 +51,7 @@ interface EngineLogicLoader {
     fun load(engine: Engine)
 }
 
-internal val gameplayEntityComponentSystemLogicModule = module {
+internal val entityComponentSystemLogicModule = module {
     single { CurrentCursorPositionInputSystem(get(), get()) }
     if (PhysicsConfiguration.showCursorWorldPosition) {
         single { CursorDebugSystem(get(), get(), get()) }
@@ -71,7 +74,7 @@ internal val gameplayEntityComponentSystemLogicModule = module {
             EntityCollisionTrackingZoneSystem(get()),
             // entities
             WaterSystem(get()),
-            GoalZoneSystem(),
+            GoalZoneSystem(get()),
 
             // == logic
             RemoveEntityAfterDurationSystem(),
@@ -82,6 +85,9 @@ internal val gameplayEntityComponentSystemLogicModule = module {
             TrackPlayerWithCameraSystem(get()),
             ShapeRenderSystem(get()),
             RenderDrawableRectangleComponentsSystem(get(), get(), get())
+
+            // == phase-hook: at end of tick
+//            get<PostSystemUpdatePhaseActionExecutor>()
         ))
 
         withItIfNotNull(this@single.getOrNull<CursorDebugSystem>()) {
@@ -116,12 +122,18 @@ internal val gameplayEntityComponentSystemLogicModule = module {
     }
 }
 
-internal val gameplayGadgetsModule = module {
+internal val controlAndMainPhasesModule = module {
+    single { GameLogicTickExecutor(get(), get(), get(), get(), getOrNull()) }
+    single { PostSystemUpdatePhaseActionExecutor() }
+    single { FinishedMapSuccessfullyHandler(get(), get(), get()) }
+}
+
+internal val gadgetsModule = module {
     single { BallThrowerGadget(get()) }
     single { RopeThrowerGadget(get(), get()) }
 }
 
-internal val gameplayPhysicsModule = module {
+internal val physicsModule = module {
     single { ContactListenerMultiplexer() }
     single {
         Box2D.init()
@@ -141,7 +153,7 @@ internal val gameplayPhysicsModule = module {
     }
 }
 
-internal val gameplayUiModule = module {
+internal val uiModule = module {
     single { UiCamera() }
     single { UiViewport(get()) }
     single { Stage(get<UiViewport>()) }
@@ -150,16 +162,17 @@ internal val gameplayUiModule = module {
     single { MenuRow(get(), get(), get()) }
     single { DebugRow(getOrNull(), getOrNull(), getOrNull()) }
     single {
-        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(), get(),
-            getOrNull(), getOrNull(), getOrNull())
+        PlayScreen(get(), get(), get(), get(), get(), get(), get(), get(), get(),
+            getOrNull(), getOrNull())
     }
 }
 
 val gameplayModules = listOf(
-    gameplayUtilitiesModule,
-    gameplayGadgetsModule,
-    gameplayEntityComponentSystemBasicsModule,
-    gameplayEntityComponentSystemLogicModule,
-    gameplayPhysicsModule,
-    gameplayUiModule
+    utilitiesModule,
+    gadgetsModule,
+    entityComponentSystemBasicsModule,
+    entityComponentSystemLogicModule,
+    controlAndMainPhasesModule,
+    physicsModule,
+    uiModule
 )

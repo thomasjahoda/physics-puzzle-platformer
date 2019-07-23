@@ -4,9 +4,7 @@ import com.badlogic.ashley.core.Engine
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
-import com.jafleck.extensions.libgdx.physics.box2d.maskAll
 import com.jafleck.extensions.libgdxktx.ashley.get
-import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.GoalZoneComponent
 import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
@@ -33,8 +31,8 @@ inline class GoalZoneEntity(val entity: Entity) {
 
     fun asShapedEntity() = ShapedEntity(entity)
 
-    val position
-        get() = entity[OriginPositionComponent]
+    val entityCollisionTrackingZone
+        get() = entity[EntityCollisionTrackingZoneComponent]
     val goalZone
         get() = entity[GoalZoneComponent]
 }

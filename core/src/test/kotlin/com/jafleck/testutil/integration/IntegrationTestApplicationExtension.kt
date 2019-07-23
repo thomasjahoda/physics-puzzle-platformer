@@ -54,11 +54,12 @@ class IntegrationTestApplicationExtension(
                     entityModules +
                     mapLoadingModule +
                     listOf(
-                        gameplayUtilitiesModule,
-                        gameplayGadgetsModule,
-                        gameplayEntityComponentSystemBasicsModule,
-                        gameplayEntityComponentSystemLogicModule,
-                        gameplayPhysicsModule
+                        utilitiesModule,
+                        gadgetsModule,
+                        entityComponentSystemBasicsModule,
+                        entityComponentSystemLogicModule,
+                        controlAndMainPhasesModule,
+                        physicsModule
                     )
                 if (loadAssets) {
                     // TODO cache assets over multiple tests

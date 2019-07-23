@@ -4,6 +4,9 @@ import com.badlogic.ashley.core.Component
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
 class GoalZoneComponent(
+    /**
+     * from 0 to 1
+     */
     var progress: Float = 0f
 ) : Component {
 
