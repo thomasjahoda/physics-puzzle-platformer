@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
- <object type="platform/Trampoline" width="64" height="64">
+ <object type="Platform/Trampoline" width="64" height="64">
   <ellipse/>
  </object>
 </template>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="14">
  <objectgroup id="2" name="Entities">
-  <object id="4" template="objecttemplates/platform/horizontal.tx" name="Trampoline" type="platform/custom" x="0" y="128" width="128" height="32">
+  <object id="4" template="objecttemplates/platform/horizontal.tx" name="Trampoline" type="Platform/custom" x="0" y="128" width="128" height="32">
    <properties>
     <property name="physics_customRestitution" type="float" value="1"/>
    </properties>
@@ -12,7 +12,7 @@
    </properties>
   </object>
   <object id="10" template="objecttemplates/platform/vertical.tx" x="280" y="40"/>
-  <object id="11" template="objecttemplates/platform/circle.tx" name="colored" type="platform/custom" x="312" y="104">
+  <object id="11" template="objecttemplates/platform/circle.tx" name="colored" type="Platform/custom" x="312" y="104">
    <properties>
     <property name="vis_customBorderColor" type="color" value="#ffa40000"/>
     <property name="vis_customBorderThickness" type="float" value="2"/>

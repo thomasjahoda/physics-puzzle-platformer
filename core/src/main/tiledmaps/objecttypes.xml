@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
+ <objecttype name="DeathZone/invisible" color="#ef2929">
+  <property name="entityType" type="string" default="DeathZone"/>
+  <property name="preset" type="string" default="invisible"/>
+ </objecttype>
+ <objecttype name="DeathZone/visible" color="#a40000">
+  <property name="entityType" type="string" default="DeathZone"/>
+  <property name="preset" type="string" default="visible"/>
+ </objecttype>
  <objecttype name="GoalZone" color="#8f5902">
   <property name="entityType" type="string" default="GoalZone"/>
  </objecttype>
  <objecttype name="Platform" color="#000000">
   <property name="entityType" type="string" default="Platform"/>
  </objecttype>
- <objecttype name="platform/custom" color="#2e3436">
+ <objecttype name="Platform/custom" color="#2e3436">
   <property name="entityType" type="string" default="Platform"/>
   <property name="physics_customFriction" type="float" default="-1"/>
   <property name="physics_customRestitution" type="float" default="-1"/>
@@ -15,14 +23,14 @@
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
  </objecttype>
- <objecttype name="platform/Trampoline" color="#4e9a06">
+ <objecttype name="Platform/Trampoline" color="#4e9a06">
   <property name="entityType" type="string" default="Platform"/>
   <property name="preset" type="string" default="Trampoline"/>
  </objecttype>
- <objecttype name="Player" color="#a40000">
+ <objecttype name="Player" color="#5c3566">
   <property name="entityType" type="string" default="Player"/>
  </objecttype>
- <objecttype name="Player_custom" color="#cc0000">
+ <objecttype name="Player/custom" color="#5c3566">
   <property name="entityType" type="string" default="Player"/>
   <property name="physics_customAngularDamping" type="float" default="-1"/>
   <property name="physics_customDensity" type="float" default="-1"/>

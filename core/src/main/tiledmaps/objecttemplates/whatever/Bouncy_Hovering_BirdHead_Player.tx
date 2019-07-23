@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <template>
- <object name="Flying Player" type="Player_custom">
+ <object name="Flying Player" type="Player/custom">
   <properties>
    <property name="physics_customGravityScale" type="float" value="0.01"/>
    <property name="physics_customRestitution" type="float" value="0.7"/>

@@ -22,7 +22,9 @@ class MapEntitiesLoader(
 
         validateMapWasUnloaded()
         val mapEntity = createActiveGameMapEntity(map, tiledMap)
+
         allMapObjects.forEach(::loadMapObjectAsEntityIfPossible)
+
         mapEntity.activeGameMap.fullyLoaded = true
 
         logger.debug { "Finished loading the map entities" }
