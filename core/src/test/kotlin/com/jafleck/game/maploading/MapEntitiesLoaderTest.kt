@@ -2,11 +2,13 @@ package com.jafleck.game.maploading
 
 import com.badlogic.ashley.core.Engine
 import com.jafleck.extensions.libgdx.map.PatchedTmxMapLoader
+import com.jafleck.game.entities.ActiveGameMapEntity
 import com.jafleck.testutil.CustomClasspathAssetsFileHandleResolver
 import com.jafleck.testutil.HeadlessLibgdxExtension
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -17,6 +19,7 @@ internal class MapEntitiesLoaderTest {
     fun loadMap() {
         val gameMap = GameMap("mapLoaderTest.tmx", "mapLoaderTest.tmx")
         val tiledMap = PatchedTmxMapLoader(CustomClasspathAssetsFileHandleResolver()).load(MapLoader.MAP_ASSETS_DIRECTORY + "/${gameMap.path}")
+        val engine = Engine()
 
         val mapEntityLoaderLocator = mockk<MapEntityLoaderLocator>()
         val mockedMapEntityLoader = mockk<MapEntityLoader>()
@@ -24,11 +27,13 @@ internal class MapEntitiesLoaderTest {
         every { mapEntityLoaderLocator.getMapEntityLoader("Player") } returns mockedMapEntityLoader
         every { mockedMapEntityLoader.loadEntity(any()) } returns null
 
-        val uut = MapEntitiesLoader(mapEntityLoaderLocator, Engine())
+        val uut = MapEntitiesLoader(mapEntityLoaderLocator, engine)
         uut.loadMapEntities(gameMap, tiledMap)
 
         verify { mapEntityLoaderLocator.getMapEntityLoader("Platform") }
         verify { mapEntityLoaderLocator.getMapEntityLoader("Player") }
         verify { mockedMapEntityLoader.loadEntity(any()) }
+
+        Assertions.assertThat(ActiveGameMapEntity.getCurrentMap(engine) != null)
     }
 }

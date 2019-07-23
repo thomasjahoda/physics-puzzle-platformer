@@ -14,7 +14,9 @@ import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.gameplay.controlandmainphases.FinishedMapSuccessfullyHandler
 import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
+import com.jafleck.game.gameplay.controlandmainphases.MapReloader
 import com.jafleck.game.gameplay.controlandmainphases.PostSystemUpdatePhaseActionExecutor
+import com.jafleck.game.gameplay.standaloneentitylisteners.PlayerDeathEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.TriangulateVisualPolygonShapesEntityListener
 import com.jafleck.game.gameplay.systems.*
@@ -102,7 +104,8 @@ internal val entityComponentSystemLogicModule = module {
 
         val standaloneEntityListeners = listOf<EntityListener>(
             SyncRemovedBodiesToWorldEntityListener(get()),
-            TriangulateVisualPolygonShapesEntityListener()
+            TriangulateVisualPolygonShapesEntityListener(),
+            PlayerDeathEntityListener(get(), get())
         )
 
         val logicLoader: EngineLogicLoader = object : EngineLogicLoader {
@@ -127,6 +130,7 @@ internal val controlAndMainPhasesModule = module {
     single { GameLogicTickExecutor(get(), get(), get(), get(), getOrNull()) }
     single { PostSystemUpdatePhaseActionExecutor() }
     single { FinishedMapSuccessfullyHandler(get(), get(), get()) }
+    single { MapReloader(get(), get(), get(), get()) }
 }
 
 internal val gadgetsModule = module {

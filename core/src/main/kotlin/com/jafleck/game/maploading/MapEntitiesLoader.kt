@@ -37,6 +37,7 @@ class MapEntitiesLoader(
     private fun createActiveGameMapEntity(map: GameMap, tiledMap: TiledMap): ActiveGameMapEntity {
         return engine.createEntity().apply {
             add(ActiveGameMapComponent(map, tiledMap, fullyLoaded = false))
+            engine.addEntity(this)
         }.let { ActiveGameMapEntity(it) }
     }
 
