@@ -12,6 +12,14 @@ class VisualShapeCreator {
         return visualShapeComponent
     }
 
+    fun createVisualShapeIfColorIsSet(customization: GenericEntityCustomization): VisualShapeComponent? {
+        return if (customization.fillColor != null) {
+            createVisualShape(customization)
+        } else {
+            null
+        }
+    }
+
     fun customizeVisualShape(visualShapeComponent: VisualShapeComponent,
                              customization: GenericEntityCustomization) {
         withItIfNotNull(customization.fillColor) {

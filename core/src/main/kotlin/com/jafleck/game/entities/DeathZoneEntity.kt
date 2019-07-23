@@ -23,6 +23,7 @@ import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
+import com.jafleck.game.util.ashley.addIfNotNull
 import com.jafleck.game.util.libgdx.map.preset
 import ktx.box2d.filter
 import ktx.graphics.copy
@@ -71,10 +72,7 @@ class DeathZoneEntityCreator(
                 apply(genericCustomization, genericPhysicsBodyCustomizer)
                 isSensor = true
             }
-            val visualShape = visualShapeCreator.createVisualShape(genericCustomization)
-            if (visualShape.fillColor != null) {
-                add(visualShape)
-            }
+            addIfNotNull(visualShapeCreator.createVisualShapeIfColorIsSet(genericCustomization))
             add(EntityCollisionTrackingZoneComponent())
             add(DeathZoneComponent())
             engine.addEntity(this)

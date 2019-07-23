@@ -1,5 +1,6 @@
 package com.jafleck.game.util.ashley
 
+import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.Entity
 
 fun Entity.getComponentsDebugDump(): String {
@@ -16,3 +17,8 @@ fun Entity.getDebugDump(): String {
 }
 
 
+fun Entity.addIfNotNull(component: Component?) {
+    if (component != null) {
+        add(component)
+    }
+}
