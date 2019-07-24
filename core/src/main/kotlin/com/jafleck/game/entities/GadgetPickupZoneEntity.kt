@@ -34,7 +34,7 @@ import ktx.graphics.copy
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-inline class GadgetPickupEntity(val entity: Entity) {
+inline class GadgetPickupZoneEntity(val entity: Entity) {
 
     fun asShapedEntity() = ShapedEntity(entity)
 
@@ -46,7 +46,7 @@ inline class GadgetPickupEntity(val entity: Entity) {
         get() = entity[GadgetPickupComponent]
 }
 
-class GadgetPickupEntityCreator(
+class GadgetPickupZoneEntityCreator(
     private val engine: Engine,
     private val genericEntityCustomizationLoader: GenericEntityCustomizationLoader,
     private val mapObjectFormExtractor: MapObjectFormExtractor,
@@ -67,9 +67,9 @@ class GadgetPickupEntityCreator(
         get() = "GadgetPickup"
 
     override fun loadEntity(mapObject: MapObject): Entity {
-        val preset = gadgetPickupPresets.getPresetOrDefault(mapObject.preset)
+        val preset = gadgetPickupZonePresets.getPresetOrDefault(mapObject.preset)
         val genericConfig = preset.genericConfig.combine(genericEntityCustomizationLoader.load(mapObject))
-        val gadgetPickupZoneEntityConfig = preset.customEntityConfig.combine(GadgetPickupConfig.fromMapObject(mapObject))
+        val gadgetPickupZoneEntityConfig = preset.customEntityConfig.combine(GadgetPickupZoneConfig.fromMapObject(mapObject))
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericConfig, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
@@ -94,30 +94,30 @@ class GadgetPickupEntityCreator(
 }
 
 
-internal val gadgetPickupPresets = listOf(
+internal val gadgetPickupZonePresets = listOf(
     Preset(genericConfig = GenericEntityConfig(
         fillColor = Color.BLUE.copy(alpha = 0.4f)
-    ), customEntityConfig = GadgetPickupConfig(
+    ), customEntityConfig = GadgetPickupZoneConfig(
         gadget = null
     ))
 ).asMap()
 
-internal data class GadgetPickupConfig(
+internal data class GadgetPickupZoneConfig(
     var gadget: String?
 ) {
 
-    fun combine(other: GadgetPickupConfig): GadgetPickupConfig {
+    fun combine(other: GadgetPickupZoneConfig): GadgetPickupZoneConfig {
         return copy().apply(other)
     }
 
-    fun apply(other: GadgetPickupConfig): GadgetPickupConfig {
+    fun apply(other: GadgetPickupZoneConfig): GadgetPickupZoneConfig {
         withItIfNotNull(other.gadget) { gadget = it }
         return this
     }
 
     companion object {
-        fun fromMapObject(mapObject: MapObject): GadgetPickupConfig {
-            return GadgetPickupConfig(
+        fun fromMapObject(mapObject: MapObject): GadgetPickupZoneConfig {
+            return GadgetPickupZoneConfig(
                 mapObject.gadget
             )
         }
@@ -128,6 +128,6 @@ internal val MapObject.gadget
     get() = properties.getNullableStringProperty("gadget")
 
 
-val gadgetPickupModule = module {
-    single { GadgetPickupEntityCreator(get(), get(), get(), get(), get(), get(), get(), get()) } bind MapEntityLoader::class
+val gadgetPickupZoneModule = module {
+    single { GadgetPickupZoneEntityCreator(get(), get(), get(), get(), get(), get(), get(), get()) } bind MapEntityLoader::class
 }

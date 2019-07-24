@@ -9,7 +9,7 @@ val entityModules = listOf(
     waterModule,
     goalZoneModule,
     deathZoneModule,
-    gadgetPickupModule,
+    gadgetPickupZoneModule,
     thrownBallModule,
     ropeModule,
     visualDebugMarkerModule,
