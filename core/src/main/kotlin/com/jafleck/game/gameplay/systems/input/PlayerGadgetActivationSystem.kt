@@ -48,7 +48,7 @@ class PlayerGadgetActivationSystem(
         if (deltaSeconds == 0f) return
 
         if (lastClickedWorldPosition != null) {
-            val gadget = playerEntity.selectedGadget.value
+            val gadget = playerEntity.gadgetHolder.selectedGadget
             if (gadget is MouseActivatedGadget) {
                 logger.debug { "Activating gadget at world position $lastClickedWorldPosition" }
                 gadget.activate(playerEntity.entity, lastClickedWorldPosition!!)

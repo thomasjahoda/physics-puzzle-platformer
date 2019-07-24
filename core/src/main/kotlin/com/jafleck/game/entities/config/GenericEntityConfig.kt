@@ -1,10 +1,10 @@
-package com.jafleck.game.entities.customizations
+package com.jafleck.game.entities.config
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.jafleck.extensions.kotlin.withItIfNotNull
 
-data class GenericEntityCustomization(
+data class GenericEntityConfig(
     var initialVelocity: Vector2? = null,
     var density: Float? = null,
     var friction: Float? = null,
@@ -17,11 +17,11 @@ data class GenericEntityCustomization(
     var borderColor: Color? = null,
     var borderThickness: Float? = null
 ) {
-    fun combine(other: GenericEntityCustomization): GenericEntityCustomization {
+    fun combine(other: GenericEntityConfig): GenericEntityConfig {
         return copy().apply(other)
     }
 
-    fun apply(other: GenericEntityCustomization): GenericEntityCustomization {
+    fun apply(other: GenericEntityConfig): GenericEntityConfig {
         withItIfNotNull(other.initialVelocity) { initialVelocity = it }
         withItIfNotNull(other.density) { density = it }
         withItIfNotNull(other.friction) { friction = it }

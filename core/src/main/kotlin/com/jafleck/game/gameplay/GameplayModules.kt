@@ -12,6 +12,7 @@ import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.BallThrowerGadget
 import com.jafleck.game.gadgets.RopeThrowerGadget
+import com.jafleck.game.gadgets.gadgetsModule
 import com.jafleck.game.gameplay.controlandmainphases.FinishedMapSuccessfullyHandler
 import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
 import com.jafleck.game.gameplay.controlandmainphases.MapReloader
@@ -131,11 +132,6 @@ internal val controlAndMainPhasesModule = module {
     single { PostSystemUpdatePhaseActionExecutor() }
     single { FinishedMapSuccessfullyHandler(get(), get(), get()) }
     single { MapReloader(get(), get(), get(), get()) }
-}
-
-internal val gadgetsModule = module {
-    single { BallThrowerGadget(get()) }
-    single { RopeThrowerGadget(get(), get()) }
 }
 
 internal val physicsModule = module {

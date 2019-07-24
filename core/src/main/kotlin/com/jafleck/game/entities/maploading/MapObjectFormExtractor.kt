@@ -21,7 +21,7 @@ import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.maploading.scaleFromMapToWorld
 import com.jafleck.game.util.math.PolygonNotHavingVerticesOnSameLineValidator
 import com.jafleck.game.util.math.QuickDuplicateVertexDetector
@@ -30,14 +30,14 @@ import kotlin.math.max
 class MapObjectFormExtractor {
 
     fun extractShapeAndPositionComponents(mapObject: MapObject,
-                                          config: GenericEntityConfig,
-                                          customization: GenericEntityCustomization): List<Component> {
+                                          genericEntityTypeConfig: GenericEntityTypeConfig,
+                                          genericEntityConfig: GenericEntityConfig): List<Component> {
         val components = ArrayList<Component>(3)
 
-        val rotationDegrees = extractRotation(mapObject, config.rotates, components)
+        val rotationDegrees = extractRotation(mapObject, genericEntityTypeConfig.rotates, components)
         extractAnyShapeAndPosition(mapObject, rotationDegrees, components)
-        extractInitialVelocity(mapObject, customization, config.moves, components)
-        if (config.trackMapObject) components.add(MapObjectComponent(mapObject))
+        extractInitialVelocity(mapObject, genericEntityConfig, genericEntityTypeConfig.moves, components)
+        if (genericEntityTypeConfig.trackMapObject) components.add(MapObjectComponent(mapObject))
 
         return components
     }
@@ -139,11 +139,11 @@ class MapObjectFormExtractor {
         }
     }
 
-    private fun extractInitialVelocity(mapObject: MapObject, customization: GenericEntityCustomization, moves: Boolean, components: ArrayList<Component>) {
+    private fun extractInitialVelocity(mapObject: MapObject, config: GenericEntityConfig, moves: Boolean, components: ArrayList<Component>) {
         if (!moves) {
-            require(customization.initialVelocity == null) { "Object with name ${mapObject.name} has initial velocity but it is not supported for this type because moves==false" }
+            require(config.initialVelocity == null) { "Object with name ${mapObject.name} has initial velocity but it is not supported for this type because moves==false" }
         } else {
-            val velocity = customization.initialVelocity ?: Vector2(0f, 0f)
+            val velocity = config.initialVelocity ?: Vector2(0f, 0f)
             components.add(VelocityComponent(velocity))
         }
     }
@@ -166,7 +166,7 @@ class MapObjectFormExtractor {
     }
 }
 
-class GenericEntityConfig(
+class GenericEntityTypeConfig(
     val rotates: Boolean,
     val moves: Boolean,
     val trackMapObject: Boolean = true
@@ -181,9 +181,9 @@ class GenericEntityConfig(
  * - component for linking map object
  */
 fun Entity.loadGeneralComponentsFrom(mapObject: MapObject,
-                                     config: GenericEntityConfig,
-                                     customization: GenericEntityCustomization,
+                                     entityTypeConfig: GenericEntityTypeConfig,
+                                     genericEntityConfig: GenericEntityConfig,
                                      mapObjectFormExtractor: MapObjectFormExtractor) {
-    mapObjectFormExtractor.extractShapeAndPositionComponents(mapObject, config, customization)
+    mapObjectFormExtractor.extractShapeAndPositionComponents(mapObject, entityTypeConfig, genericEntityConfig)
         .forEach { this@loadGeneralComponentsFrom.add(it) }
 }

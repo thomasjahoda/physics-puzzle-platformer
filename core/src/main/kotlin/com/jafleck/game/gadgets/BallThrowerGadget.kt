@@ -22,6 +22,13 @@ class BallThrowerGadget(
 
     private val logger = logger(this::class)
 
+    companion object {
+        const val NAME = "BallThrower"
+    }
+
+    override val name: String
+        get() = NAME
+
     override fun activate(handler: Entity, targetPosition: Vector2) {
         val shapedEntity = ShapedEntity(handler)
         val entityRectangleSize = shapedEntity.shape.getRectangleAroundShape(Vector2())

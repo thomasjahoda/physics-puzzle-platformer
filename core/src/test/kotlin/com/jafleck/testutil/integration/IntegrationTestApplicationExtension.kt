@@ -11,6 +11,7 @@ import com.jafleck.game.entities.RopeEntityCreatorTest
 import com.jafleck.game.entities.VisualDebugMarkerEntityCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.entityModules
+import com.jafleck.game.gadgets.gadgetsModule
 import com.jafleck.game.gameplay.*
 import com.jafleck.game.maploading.GameMap
 import com.jafleck.game.maploading.MapLoader

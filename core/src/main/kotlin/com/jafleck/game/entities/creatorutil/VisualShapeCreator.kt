@@ -2,39 +2,39 @@ package com.jafleck.game.entities.creatorutil
 
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.game.components.visual.VisualShapeComponent
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 
 class VisualShapeCreator {
 
-    fun createVisualShape(customization: GenericEntityCustomization): VisualShapeComponent {
+    fun createVisualShape(config: GenericEntityConfig): VisualShapeComponent {
         val visualShapeComponent = VisualShapeComponent(null, null, null)
-        customizeVisualShape(visualShapeComponent, customization)
+        customizeVisualShape(visualShapeComponent, config)
         return visualShapeComponent
     }
 
-    fun createVisualShapeIfColorIsSet(customization: GenericEntityCustomization): VisualShapeComponent? {
-        return if (customization.fillColor != null) {
-            createVisualShape(customization)
+    fun createVisualShapeIfColorIsSet(config: GenericEntityConfig): VisualShapeComponent? {
+        return if (config.fillColor != null) {
+            createVisualShape(config)
         } else {
             null
         }
     }
 
     fun customizeVisualShape(visualShapeComponent: VisualShapeComponent,
-                             customization: GenericEntityCustomization) {
-        withItIfNotNull(customization.fillColor) {
+                             config: GenericEntityConfig) {
+        withItIfNotNull(config.fillColor) {
             visualShapeComponent.fillColor = it.cpy()
         }
-        withItIfNotNull(customization.borderColor) {
+        withItIfNotNull(config.borderColor) {
             visualShapeComponent.borderColor = it.cpy()
         }
-        withItIfNotNull(customization.borderThickness) {
+        withItIfNotNull(config.borderThickness) {
             visualShapeComponent.borderThickness = it
         }
     }
 }
 
-fun VisualShapeComponent.apply(genericEntityCustomization: GenericEntityCustomization, visualShapeCreator: VisualShapeCreator): VisualShapeComponent {
-    visualShapeCreator.customizeVisualShape(this, genericEntityCustomization)
+fun VisualShapeComponent.apply(genericEntityConfig: GenericEntityConfig, visualShapeCreator: VisualShapeCreator): VisualShapeComponent {
+    visualShapeCreator.customizeVisualShape(this, genericEntityConfig)
     return this
 }

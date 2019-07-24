@@ -1,13 +1,13 @@
 package com.jafleck.game.entities.maploading
 
 import com.badlogic.gdx.maps.MapObject
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.util.libgdx.maps.*
 
 class GenericEntityCustomizationLoader {
 
-    fun load(mapObject: MapObject): GenericEntityCustomization {
-        return GenericEntityCustomization(
+    fun load(mapObject: MapObject): GenericEntityConfig {
+        return GenericEntityConfig(
             initialVelocity = mapObject.initialVelocity,
             density = mapObject.customDensity,
             friction = mapObject.customFriction,

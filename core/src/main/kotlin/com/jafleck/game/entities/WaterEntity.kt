@@ -7,24 +7,25 @@ import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.WaterComponent
+import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.creatorutil.apply
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
-import com.jafleck.game.entities.maploading.GenericEntityConfig
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
+import com.jafleck.game.entities.maploading.GenericEntityTypeConfig
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
 import com.jafleck.game.entities.physics.CollisionEntityCategory
-import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
+import com.jafleck.game.entities.presets.genericPreset
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.maps.preset
 import ktx.box2d.filter
 import ktx.graphics.copy
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 inline class WaterEntity(val entity: Entity) {
@@ -46,7 +47,7 @@ class WaterEntityCreator(
     private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer
 ) : MapEntityLoader {
     companion object {
-        private val ENTITY_CONFIG = GenericEntityConfig(
+        private val ENTITY_CONFIG = GenericEntityTypeConfig(
             rotates = false,
             moves = false
         )
@@ -57,17 +58,17 @@ class WaterEntityCreator(
 
     override fun loadEntity(mapObject: MapObject): Entity {
         val preset = waterPresets.getPresetOrDefault(mapObject.preset)
-        val genericCustomization = preset.genericCustomization.combine(genericEntityCustomizationLoader.load(mapObject))
+        val genericConfig = preset.genericConfig.combine(genericEntityCustomizationLoader.load(mapObject))
         return engine.createEntity().apply {
-            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
+            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericConfig, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
                 filter {
                     categoryBits = CollisionEntityCategory.environment
                 }
-                apply(genericCustomization, genericPhysicsBodyCustomizer)
+                apply(genericConfig, genericPhysicsBodyCustomizer)
                 isSensor = true
             }
-            add(visualShapeCreator.createVisualShape(genericCustomization))
+            add(visualShapeCreator.createVisualShape(genericConfig))
             add(WaterComponent())
             engine.addEntity(this)
         }
@@ -75,12 +76,12 @@ class WaterEntityCreator(
 
 }
 
-val waterPresets = listOf(
-    Preset(genericCustomization = GenericEntityCustomization(
+internal val waterPresets = listOf(
+    genericPreset(genericConfig = GenericEntityConfig(
         fillColor = Color.BLUE.copy(alpha = 0.6f)
     ))
 ).asMap()
 
 val waterModule = module {
-    single { WaterEntityCreator(get(), get(), get(), get(), get(), get()) }
+    single { WaterEntityCreator(get(), get(), get(), get(), get(), get()) } bind MapEntityLoader::class
 }

@@ -8,24 +8,25 @@ import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.entities.GoalZoneComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
+import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCustomizer
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.creatorutil.apply
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
-import com.jafleck.game.entities.maploading.GenericEntityConfig
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
+import com.jafleck.game.entities.maploading.GenericEntityTypeConfig
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
 import com.jafleck.game.entities.physics.CollisionEntityCategory
-import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
+import com.jafleck.game.entities.presets.genericPreset
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.families.ShapedEntity
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.maps.preset
 import ktx.box2d.filter
 import ktx.graphics.copy
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 inline class GoalZoneEntity(val entity: Entity) {
@@ -49,7 +50,7 @@ class GoalZoneEntityCreator(
     private val genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer
 ) : MapEntityLoader {
     companion object {
-        private val ENTITY_CONFIG = GenericEntityConfig(
+        private val ENTITY_CONFIG = GenericEntityTypeConfig(
             rotates = false,
             moves = false
         )
@@ -62,18 +63,18 @@ class GoalZoneEntityCreator(
 
     override fun loadEntity(mapObject: MapObject): Entity {
         val preset = goalZonePresets.getPresetOrDefault(mapObject.preset)
-        val genericCustomization = preset.genericCustomization.combine(genericEntityCustomizationLoader.load(mapObject))
+        val genericConfig = preset.genericConfig.combine(genericEntityCustomizationLoader.load(mapObject))
         return engine.createEntity().apply {
-            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericCustomization, mapObjectFormExtractor)
+            loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericConfig, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
                 filter {
                     categoryBits = CollisionEntityCategory.default
                     maskBits = CollisionEntityCategory.player
                 }
-                apply(genericCustomization, genericPhysicsBodyCustomizer)
+                apply(genericConfig, genericPhysicsBodyCustomizer)
                 isSensor = true
             }
-            val visualShape = visualShapeCreator.createVisualShape(genericCustomization)
+            val visualShape = visualShapeCreator.createVisualShape(genericConfig)
             add(visualShape)
             add(EntityCollisionTrackingZoneComponent())
             add(GoalZoneComponent(startColor = visualShape.fillColor!!.cpy(), endColor = END_COLOR))
@@ -83,8 +84,8 @@ class GoalZoneEntityCreator(
 
 }
 
-val goalZonePresets = listOf(
-    Preset(genericCustomization = GenericEntityCustomization(
+internal val goalZonePresets = listOf(
+    genericPreset(genericConfig = GenericEntityConfig(
         fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR,
         borderColor = GoalZoneEntityCreator.DEFAULT_START_COLOR.copy(alpha = 1f),
         borderThickness = 0.1f
@@ -92,5 +93,5 @@ val goalZonePresets = listOf(
 ).asMap()
 
 val goalZoneModule = module {
-    single { GoalZoneEntityCreator(get(), get(), get(), get(), get(), get()) }
+    single { GoalZoneEntityCreator(get(), get(), get(), get(), get(), get()) } bind MapEntityLoader::class
 }

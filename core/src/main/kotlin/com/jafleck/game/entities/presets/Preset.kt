@@ -1,30 +1,30 @@
 package com.jafleck.game.entities.presets
 
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 
-data class Preset(
+data class Preset<CustomEntityConfig>(
     val name: String = "default",
-    val genericCustomization: GenericEntityCustomization = GenericEntityCustomization()) {
+    val genericConfig: GenericEntityConfig = GenericEntityConfig(),
+    val customEntityConfig: CustomEntityConfig
+) {
 
-    fun applyIfNotNull(other: Preset?): Preset {
-        return if (other == null) {
-            this
-        } else {
-            apply(other)
-        }
-    }
-
-    fun apply(other: Preset): Preset {
-        genericCustomization.apply(other.genericCustomization)
-        return this
+    fun customEntityConfig(): CustomEntityConfig {
+        return customEntityConfig!!
     }
 }
 
-fun List<Preset>.asMap(): Map<String, Preset> {
+fun genericPreset(name: String = "default",
+                  genericConfig: GenericEntityConfig = GenericEntityConfig()): Preset<Any> {
+    return Preset(name,
+        genericConfig,
+        customEntityConfig = false)
+}
+
+fun <SpecificEntityCustomization> List<Preset<SpecificEntityCustomization>>.asMap(): Map<String, Preset<SpecificEntityCustomization>> {
     return this.associateBy { it.name }
 }
 
-fun Map<String, Preset>.getPresetOrDefault(name: String?): Preset {
+fun <SpecificEntityCustomization> Map<String, Preset<SpecificEntityCustomization>>.getPresetOrDefault(name: String?): Preset<SpecificEntityCustomization> {
     return if (name != null) {
         get(name) ?: error("Could not find preset with name '$name'")
     } else {

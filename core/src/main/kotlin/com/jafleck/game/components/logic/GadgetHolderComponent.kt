@@ -4,9 +4,9 @@ import com.badlogic.ashley.core.Component
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 import com.jafleck.game.gadgets.Gadget
 
-data class SelectedGadgetComponent(
-    var value: Gadget
+data class GadgetHolderComponent(
+    var selectedGadget: Gadget?
 ) : Component {
 
-    companion object : ComponentMapperAccessor<SelectedGadgetComponent>(SelectedGadgetComponent::class)
+    companion object : ComponentMapperAccessor<GadgetHolderComponent>(GadgetHolderComponent::class)
 }

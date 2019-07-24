@@ -30,6 +30,13 @@ class RopeThrowerGadget(
 
     private val logger = logger(this::class)
 
+    companion object {
+        const val NAME = "RopeThrower"
+    }
+
+    override val name: String
+        get() = NAME
+
     override fun activate(handler: Entity, targetPosition: Vector2) {
         if (withItIfNotNull(handler.getOrNull(ThrowerOfRopeComponent)) {
                 delete(it.thrownRope)

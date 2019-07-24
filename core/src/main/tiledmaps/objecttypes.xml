@@ -29,9 +29,11 @@
  </objecttype>
  <objecttype name="Player" color="#5c3566">
   <property name="entityType" type="string" default="Player"/>
+  <property name="initialGadget" type="string"/>
  </objecttype>
  <objecttype name="Player/custom" color="#5c3566">
   <property name="entityType" type="string" default="Player"/>
+  <property name="initialGadget" type="string"/>
   <property name="physics_customAngularDamping" type="float" default="-1"/>
   <property name="physics_customDensity" type="float" default="-1"/>
   <property name="physics_customFixedRotation" type="string"/>

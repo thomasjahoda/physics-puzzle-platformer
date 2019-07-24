@@ -42,7 +42,11 @@
   <object id="61" type="Platform/Trampoline" x="3864" y="5896" rotation="-14.7479">
    <polygon points="-331.483,90.1807 -316.399,164.888 -299.708,227.189 -263.882,311.073 -224,384 -136,472 8,520 96,544 88,592 -80,568 -200,528 -298.503,442.592 -357.539,352.599 -395.253,213.036 -391.317,103.804 -372.988,34.1757 -345.296,-8.16987 -313.94,-33.0061"/>
   </object>
-  <object id="62" template="objecttemplates/player/circle.tx" x="4480" y="6256"/>
+  <object id="62" template="objecttemplates/player/circle.tx" name="RopeThrower" x="4480" y="6256">
+   <properties>
+    <property name="initialGadget" value="RopeThrower"/>
+   </properties>
+  </object>
   <object id="63" type="Platform/Trampoline" x="4904" y="5224" width="168" height="24" rotation="140.126">
    <ellipse/>
   </object>

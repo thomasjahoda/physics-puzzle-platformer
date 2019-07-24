@@ -18,7 +18,7 @@ import com.jafleck.game.components.basic.VelocityComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.PolygonShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.maploading.scaleFromWorldToMap
 import com.jafleck.testutil.HeadlessLibgdxExtension
 import com.jafleck.testutil.maps.LibGdxTiledMapLoader
@@ -32,12 +32,12 @@ import kotlin.math.hypot
 internal class MapObjectFormExtractorTest {
 
     companion object {
-        private val ALL_OPTIONS = GenericEntityConfig(
+        private val ALL_OPTIONS = GenericEntityTypeConfig(
             rotates = true,
             moves = true,
             trackMapObject = true
         )
-        private val EXCLUDE_MAP_OBJECT_COMPONENT = GenericEntityConfig(
+        private val EXCLUDE_MAP_OBJECT_COMPONENT = GenericEntityTypeConfig(
             rotates = true,
             moves = true,
             trackMapObject = false
@@ -51,7 +51,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, ALL_OPTIONS, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, ALL_OPTIONS, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(10f + (4f / 2), 20f + (2f / 2)))
         Assertions.assertThat(entity[RectangleShapeComponent].vector).isEqualTo(Vector2(4f, 2f))
@@ -69,7 +69,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         // related map is saved in rotatedPlatformVisualHelp.tmx with a lot of documentation if you need help to cross-check values.
         // Important: Tiled saves rectangles position from the top-left position but the LibGDX loader already converts this to bottom-left
@@ -88,7 +88,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         // related map is saved in rotatedPlatformVisualHelp.tmx with a lot of documentation if you need help to cross-check values.
         // Important: Tiled saves rectangles position from the top-left position but the LibGDX loader already converts this to bottom-left
@@ -106,7 +106,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         // libgdx has in fact NOT already converted to an origin position
@@ -123,7 +123,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 2.5f))
@@ -141,7 +141,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
@@ -162,7 +162,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)  // 360° - 90°
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.25f, 1.25f))
@@ -184,7 +184,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(4f, 2f))
@@ -205,7 +205,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(2.5f, 2f))
@@ -221,7 +221,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 2f))
@@ -239,7 +239,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(0f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(3f, 2f))
@@ -253,7 +253,7 @@ internal class MapObjectFormExtractorTest {
 
         val entity = Entity()
         val uut = MapObjectFormExtractor()
-        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityCustomization(), uut)
+        entity.loadGeneralComponentsFrom(mapObject, EXCLUDE_MAP_OBJECT_COMPONENT, GenericEntityConfig(), uut)
 
         Assertions.assertThat(entity[RotationComponent].degrees).isEqualTo(270f)
         Assertions.assertThat(entity[OriginPositionComponent].vector).isEqualTo(Vector2(1.5f, 1.5f))

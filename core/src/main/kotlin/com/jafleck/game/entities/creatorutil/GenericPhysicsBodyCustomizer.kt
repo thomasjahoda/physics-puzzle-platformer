@@ -2,7 +2,7 @@ package com.jafleck.game.entities.creatorutil
 
 import com.badlogic.gdx.physics.box2d.Body
 import com.jafleck.extensions.kotlin.withItIfNotNull
-import com.jafleck.game.entities.customizations.GenericEntityCustomization
+import com.jafleck.game.entities.config.GenericEntityConfig
 import ktx.box2d.FixtureDefinition
 
 class GenericPhysicsBodyCustomizer {
@@ -10,48 +10,48 @@ class GenericPhysicsBodyCustomizer {
     /**
      * Customizes physics properties of fixture and the resulting body .
      */
-    fun customizePhysicsProperties(customization: GenericEntityCustomization,
+    fun customizePhysicsProperties(config: GenericEntityConfig,
                                    fixtureDefinition: FixtureDefinition) {
-        withItIfNotNull(customization.density) {
+        withItIfNotNull(config.density) {
             fixtureDefinition.density = it
         }
-        withItIfNotNull(customization.friction) {
+        withItIfNotNull(config.friction) {
             fixtureDefinition.friction = it
         }
-        withItIfNotNull(customization.restitution) {
+        withItIfNotNull(config.restitution) {
             fixtureDefinition.restitution = it
         }
 
-        customizeBodyPropertiesWhenBodyIsReady(customization, fixtureDefinition)
+        customizeBodyPropertiesWhenBodyIsReady(config, fixtureDefinition)
 
     }
 
-    private fun customizeBodyPropertiesWhenBodyIsReady(customization: GenericEntityCustomization,
+    private fun customizeBodyPropertiesWhenBodyIsReady(config: GenericEntityConfig,
                                                        fixtureDefinition: FixtureDefinition) {
         if (fixtureDefinition.creationCallback != null) error("would overwrite creationCallback")
         fixtureDefinition.creationCallback = { fixture ->
-            customizePhysicsPropertiesOfBody(customization, fixture.body)
+            customizePhysicsPropertiesOfBody(config, fixture.body)
         }
     }
 
-    private fun customizePhysicsPropertiesOfBody(customization: GenericEntityCustomization, body: Body) {
-        withItIfNotNull(customization.linearDamping) {
+    private fun customizePhysicsPropertiesOfBody(config: GenericEntityConfig, body: Body) {
+        withItIfNotNull(config.linearDamping) {
             body.linearDamping = it
         }
-        withItIfNotNull(customization.angularDamping) {
+        withItIfNotNull(config.angularDamping) {
             body.angularDamping = it
         }
-        withItIfNotNull(customization.gravityScale) {
+        withItIfNotNull(config.gravityScale) {
             body.gravityScale = it
         }
-        withItIfNotNull(customization.fixedRotation) {
+        withItIfNotNull(config.fixedRotation) {
             body.isFixedRotation = it
         }
     }
 }
 
-fun FixtureDefinition.apply(customization: GenericEntityCustomization,
+fun FixtureDefinition.apply(config: GenericEntityConfig,
                             genericPhysicsBodyCustomizer: GenericPhysicsBodyCustomizer): FixtureDefinition {
-    genericPhysicsBodyCustomizer.customizePhysicsProperties(customization, this)
+    genericPhysicsBodyCustomizer.customizePhysicsProperties(config, this)
     return this
 }
