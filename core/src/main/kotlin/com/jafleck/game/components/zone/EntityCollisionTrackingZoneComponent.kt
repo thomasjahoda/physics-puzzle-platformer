@@ -10,8 +10,10 @@ data class EntityCollisionTrackingZoneComponent(
     /**
      * This needs to be tracked because there might be multiple fixtures of one body in contact with another entity.
      */
-    val fixturesWithinZoneByEntity: MutableMap<Entity, MutableSet<Fixture>> = mutableMapOf()
+    val fixtureCollisionsWithinZoneByEntity: MutableMap<Entity, MutableSet<FixtureInZoneCollision>> = mutableMapOf()
 ) : Component {
 
     companion object : ComponentMapperAccessor<EntityCollisionTrackingZoneComponent>(EntityCollisionTrackingZoneComponent::class)
 }
+
+data class FixtureInZoneCollision(val fixtureInZone: Fixture, val zoneFixture: Fixture)

@@ -31,14 +31,14 @@ class PlayerMovementSystem : PlayerEntitySystem() {
 
     private fun acceleratePlayerLinearly(playerEntity: PlayerEntity, acceleration: Float) {
         if (acceleration != 0f) {
-            logger.debug { "Accelerating player linearly with $acceleration" }
+//            logger.debug { "Accelerating player linearly with $acceleration" }
             playerEntity.body.value.applyLinearImpulse(Vector2(acceleration * playerEntity.body.value.mass, 0f), playerEntity.position.vector, true)
         }
     }
 
     private fun acceleratePlayerAngularly(playerEntity: PlayerEntity, acceleration: Float) {
         if (acceleration != 0f) {
-            logger.debug { "Accelerating player angularly with $acceleration" }
+//            logger.debug { "Accelerating player angularly with $acceleration" }
             playerEntity.body.value.applyAngularImpulse(acceleration * playerEntity.body.value.mass, true)
         }
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="50">
+ <objectgroup id="2" name="Entities">
+  <object id="23" template="objecttemplates/platform/horizontal.tx" x="352" y="816" width="736" height="32"/>
+  <object id="25" template="objecttemplates/platform/horizontal.tx" x="1024" y="432" width="288" height="32" rotation="90"/>
+  <object id="39" type="Player" x="464" y="592">
+   <polygon points="0,0 3,-6 8,-11 12,-14 16,-15 20,-14 25,-11 30,-6 32,0 32,192 56,200 64,224 -32,224 -24,200 0,192"/>
+  </object>
+  <object id="40" template="objecttemplates/platform/horizontal.tx" x="440" y="400" width="584" height="32" rotation="0"/>
+  <object id="43" type="Platform" x="960" y="816">
+   <polygon points="0,0 6.66702,-0.38879 12.9629,-1.35931 18.1447,-2.40398 24.7112,-4.34396 29.4608,-6.08696 34.8486,-8.22742 39.8794,-10.6625 43.037,-12.4314 46.9004,-14.5324 51.1846,-17.427 55.3526,-20.7836 57.6348,-22.8176 64,-24 64,0"/>
+  </object>
+  <object id="45" type="Platform" x="544" y="800" width="80" height="32">
+   <ellipse/>
+  </object>
+  <object id="46" type="Platform" x="992" y="752">
+   <polygon points="0,-32 3.33351,-31.6112 6.48145,-30.6407 9.07235,-29.596 12.3556,-27.656 14.7304,-25.913 17.4243,-23.7726 19.9397,-21.3375 21.5185,-19.5686 23.4502,-17.4676 25.5923,-14.573 27.6763,-11.2164 28.8174,-9.1824 32,-8 32,-32"/>
+  </object>
+  <object id="47" type="GoalZone" x="1032" y="768">
+   <polygon points="0,-13.3333 0,-40 224.696,-40 272,0 224.696,40 0,40 0,13.3333 201.043,13.3333 224.696,0 201.043,-13.3333"/>
+  </object>
+ </objectgroup>
+</map>

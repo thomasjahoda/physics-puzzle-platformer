@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse
 import com.badlogic.gdx.physics.box2d.ContactListener
 import com.badlogic.gdx.physics.box2d.Manifold
 import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
+import com.jafleck.game.components.zone.FixtureInZoneCollision
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.libgdx.box2d.entity
 import com.jafleck.game.util.libgdx.box2d.processIfComponentInvolved
@@ -25,7 +26,7 @@ class EntityCollisionTrackingZoneSystem(
         contactListenerMultiplexer.addListener(this)
     }
 
-    override fun removedFromEngine(engine: Engine?) {
+    override fun removedFromEngine(engine: Engine) {
         super.removedFromEngine(engine)
         contactListenerMultiplexer.removeListener(this)
     }
@@ -35,28 +36,28 @@ class EntityCollisionTrackingZoneSystem(
         //  To prevent this, an entity family listener should be set up to remove the removed entity from any currently colliding entity.
         //  Another map must be set up to track this entity collision status.
         //  Either a global map or an Component added to the other entity, something like CollidingWithEntityTrackingZoneComponent (which could be poolable)
-        contact.processIfComponentInvolved(EntityCollisionTrackingZoneComponent) { _, relevantComponent, _, otherFixture ->
+        contact.processIfComponentInvolved(EntityCollisionTrackingZoneComponent) { _, relevantComponent, ownerFixture, otherFixture ->
             val otherEntity = otherFixture.body.entity
-            val fixturesWithinZone = relevantComponent.fixturesWithinZoneByEntity[otherEntity]
+            val fixturesWithinZone = relevantComponent.fixtureCollisionsWithinZoneByEntity[otherEntity]
             if (fixturesWithinZone == null) {
                 relevantComponent.entitiesWithinZone.add(otherEntity)
-                relevantComponent.fixturesWithinZoneByEntity[otherEntity] = mutableSetOf(otherFixture)
+                relevantComponent.fixtureCollisionsWithinZoneByEntity[otherEntity] = mutableSetOf(FixtureInZoneCollision(otherFixture, ownerFixture))
             } else {
-                fixturesWithinZone.add(otherFixture)
+                fixturesWithinZone.add(FixtureInZoneCollision(otherFixture, ownerFixture))
             }
         }
     }
 
     override fun endContact(contact: Contact) {
-        contact.processIfComponentInvolved(EntityCollisionTrackingZoneComponent) { _, relevantComponent, _, otherFixture ->
+        contact.processIfComponentInvolved(EntityCollisionTrackingZoneComponent) { _, relevantComponent, ownerFixture, otherFixture ->
             val otherEntity = otherFixture.body.entity
-            val fixturesWithinZone = relevantComponent.fixturesWithinZoneByEntity[otherEntity]
+            val fixturesWithinZone = relevantComponent.fixtureCollisionsWithinZoneByEntity[otherEntity]
                 ?: error("This should never happen")
             if (fixturesWithinZone.size == 1) {
                 relevantComponent.entitiesWithinZone.remove(otherEntity)
-                relevantComponent.fixturesWithinZoneByEntity.remove(otherEntity)
+                relevantComponent.fixtureCollisionsWithinZoneByEntity.remove(otherEntity)
             } else {
-                fixturesWithinZone.remove(otherFixture)
+                fixturesWithinZone.remove(FixtureInZoneCollision(otherFixture, ownerFixture))
             }
         }
     }

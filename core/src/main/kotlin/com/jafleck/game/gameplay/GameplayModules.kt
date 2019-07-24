@@ -29,6 +29,7 @@ import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
 import com.jafleck.game.gameplay.systems.visual.TextRenderSystem
 import com.jafleck.game.gameplay.ui.*
 import com.jafleck.game.util.ashley.EntityFamilyListener
+import com.jafleck.game.util.ashley.add
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
@@ -119,7 +120,7 @@ internal val entityComponentSystemLogicModule = module {
                 }
                 standaloneEntityListeners.forEach {
                     if (it is EntityFamilyListener) {
-                        engine.addEntityListener(it.family, it)
+                        engine.add(it)
                     } else {
                         engine.addEntityListener(it)
                     }
