@@ -86,9 +86,10 @@ class GoalZoneEntityCreator(
 
 internal val goalZonePresets = listOf(
     genericPreset(genericConfig = GenericEntityConfig(
-        fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR,
-        borderColor = GoalZoneEntityCreator.DEFAULT_START_COLOR.copy(alpha = 1f),
-        borderThickness = 0.1f
+        fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR
+        // alpha and borders currently do not work as expected currently, therefore disabled
+//        borderColor = GoalZoneEntityCreator.DEFAULT_START_COLOR.copy(alpha = 1f),
+//        borderThickness = 0.1f
     ))
 ).asMap()
 
