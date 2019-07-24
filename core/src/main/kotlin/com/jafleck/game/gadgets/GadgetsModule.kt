@@ -9,5 +9,5 @@ val gadgetsModule = module {
     single { GadgetSelector(get()) }
     // actual gadgets
     single { BallThrowerGadget(get()) } bind Gadget::class
-    single { RopeThrowerGadget(get(), get()) } bind Gadget::class
+    single { RopeThrowerGadget(get(), get(), get()) } bind Gadget::class
 }

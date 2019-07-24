@@ -11,10 +11,7 @@ import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
 import com.jafleck.game.gadgets.gadgetsModule
-import com.jafleck.game.gameplay.controlandmainphases.FinishedMapSuccessfullyHandler
-import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
-import com.jafleck.game.gameplay.controlandmainphases.MapReloader
-import com.jafleck.game.gameplay.controlandmainphases.PostSystemUpdatePhaseActionExecutor
+import com.jafleck.game.gameplay.controlandmainphases.*
 import com.jafleck.game.gameplay.standaloneentitylisteners.PlayerDeathEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.SyncRemovedBodiesToWorldEntityListener
 import com.jafleck.game.gameplay.standaloneentitylisteners.TriangulateVisualPolygonShapesEntityListener
@@ -24,6 +21,7 @@ import com.jafleck.game.gameplay.systems.debug.PlayerManualTeleportDebugSystem
 import com.jafleck.game.gameplay.systems.input.CurrentCursorPositionInputSystem
 import com.jafleck.game.gameplay.systems.input.PlayerGadgetActivationSystem
 import com.jafleck.game.gameplay.systems.input.PlayerMovementInputSystem
+import com.jafleck.game.gameplay.systems.phaseactions.PostPhysicsPhaseActionExecutorSystem
 import com.jafleck.game.gameplay.systems.physicssync.SyncMovingBodySystem
 import com.jafleck.game.gameplay.systems.physicssync.SyncRotatingBodySystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
@@ -59,6 +57,7 @@ internal val entityComponentSystemLogicModule = module {
         single { CursorDebugSystem(get(), get(), get()) }
         single { PlayerManualTeleportDebugSystem(get(), get()) }
     }
+    single { PostPhysicsPhaseActionExecutorSystem() }
     single {
         val systems = mutableListOf<EntitySystem>()
         systems.add(get<CurrentCursorPositionInputSystem>())
@@ -80,6 +79,9 @@ internal val entityComponentSystemLogicModule = module {
             GoalZoneSystem(get()),
             GadgetPickupZoneSystem(get()),
 
+            // == inter-phase-hook:
+            get<PostPhysicsPhaseActionExecutorSystem>(),
+
             // == logic
             RemoveEntityAfterDurationSystem(),
             PlayerMovementSystem(),
@@ -91,7 +93,7 @@ internal val entityComponentSystemLogicModule = module {
             TextRenderSystem(get(), get()),
             RenderDrawableRectangleComponentsSystem(get(), get())
 
-            // == phase-hook: at end of tick
+            // == phase-hook:
 //            get<PostSystemUpdatePhaseActionExecutor>()
         ))
 

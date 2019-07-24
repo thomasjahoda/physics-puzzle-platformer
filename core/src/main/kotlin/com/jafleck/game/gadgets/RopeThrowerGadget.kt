@@ -14,6 +14,7 @@ import com.jafleck.game.entities.RopePartEntity
 import com.jafleck.game.entities.ThrownRopeEntity
 import com.jafleck.game.families.PhysicalShapedEntity
 import com.jafleck.game.families.ShapedEntity
+import com.jafleck.game.gameplay.systems.phaseactions.PostPhysicsPhaseActionExecutorSystem
 import com.jafleck.game.util.logger
 import ktx.ashley.remove
 import ktx.math.div
@@ -23,7 +24,8 @@ import ktx.math.times
 
 class RopeThrowerGadget(
     private val ropeEntityCreator: RopeEntityCreator,
-    private val engine: Engine
+    private val engine: Engine,
+    private val postPhysicsPhaseActionExecutorSystem: PostPhysicsPhaseActionExecutorSystem
 ) : MouseActivatedGadget {
 
     private val throwSpeed = 40f
@@ -42,7 +44,9 @@ class RopeThrowerGadget(
                 delete(it.thrownRope)
             }) {
         } else {
-            throwRope(handler, targetPosition)
+            postPhysicsPhaseActionExecutorSystem.executeActionAfterTheCurrentTick {
+                throwRope(handler, targetPosition)
+            }
         }
     }
 
