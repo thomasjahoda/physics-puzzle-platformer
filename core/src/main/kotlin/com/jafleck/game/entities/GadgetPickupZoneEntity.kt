@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.assets.GameFonts
-import com.jafleck.game.components.entities.GadgetPickupComponent
+import com.jafleck.game.components.entities.GadgetPickupZoneComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.components.visual.VisualTextComponent
 import com.jafleck.game.components.zone.EntityCollisionTrackingZoneComponent
@@ -42,8 +42,8 @@ inline class GadgetPickupZoneEntity(val entity: Entity) {
         get() = entity[VisualShapeComponent]
     val entityCollisionTrackingZone
         get() = entity[EntityCollisionTrackingZoneComponent]
-    val gadgetPickup
-        get() = entity[GadgetPickupComponent]
+    val gadgetPickupZone
+        get() = entity[GadgetPickupZoneComponent]
 }
 
 class GadgetPickupZoneEntityCreator(
@@ -86,8 +86,7 @@ class GadgetPickupZoneEntityCreator(
             val gadget = gadgetLocator.getGadget(gadgetPickupZoneEntityConfig.gadget
                 ?: error("gadget must be configured"))
             add(VisualTextComponent(gadgetPickupZoneEntityConfig.gadget!!, Color.BROWN, gameFonts.`bold 0_5f world size font`))
-            add(GadgetPickupComponent(gadget
-            ))
+            add(GadgetPickupZoneComponent(gadget))
             engine.addEntity(this)
         }
     }

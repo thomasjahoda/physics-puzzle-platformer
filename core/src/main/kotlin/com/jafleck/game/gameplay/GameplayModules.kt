@@ -78,6 +78,7 @@ internal val entityComponentSystemLogicModule = module {
             WaterSystem(get()),
             DeathZoneSystem(),
             GoalZoneSystem(get()),
+            GadgetPickupZoneSystem(get()),
 
             // == logic
             RemoveEntityAfterDurationSystem(),
