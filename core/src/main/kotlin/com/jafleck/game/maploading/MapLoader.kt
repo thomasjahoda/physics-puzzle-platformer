@@ -1,6 +1,6 @@
 package com.jafleck.game.maploading
 
-import com.jafleck.extensions.libgdx.map.PatchedTmxMapLoader
+import com.jafleck.extensions.libgdx.maps.PatchedTmxMapLoader
 import com.jafleck.game.util.files.AssetsFileHandleResolver
 import com.jafleck.game.util.logger
 

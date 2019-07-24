@@ -23,7 +23,7 @@ import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.maploading.MapEntityLoader
-import com.jafleck.game.util.libgdx.map.preset
+import com.jafleck.game.util.libgdx.maps.preset
 import ktx.box2d.filter
 import org.koin.dsl.module
 

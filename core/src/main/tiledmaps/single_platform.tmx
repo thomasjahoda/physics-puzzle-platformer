@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="9">
  <objectgroup id="2" name="Entities">
-  <object id="4" template="objecttemplates/platform/horizontal.tx" x="0" y="64" width="128" height="32"/>
-  <object id="7" template="objecttemplates/player/rectangle.tx" x="64" y="40"/>
+  <object id="4" template="objecttemplates/platform/horizontal.tx" x="256" y="288" width="128" height="32"/>
+  <object id="7" template="objecttemplates/player/rectangle.tx" x="320" y="224"/>
  </objectgroup>
 </map>

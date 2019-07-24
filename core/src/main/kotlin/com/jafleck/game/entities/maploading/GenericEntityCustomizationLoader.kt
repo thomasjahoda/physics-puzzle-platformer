@@ -2,7 +2,7 @@ package com.jafleck.game.entities.maploading
 
 import com.badlogic.gdx.maps.MapObject
 import com.jafleck.game.entities.customizations.GenericEntityCustomization
-import com.jafleck.game.util.libgdx.map.*
+import com.jafleck.game.util.libgdx.maps.*
 
 class GenericEntityCustomizationLoader {
 

@@ -118,7 +118,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `polygon - actualMap - triangle as easy convex example`() {
-        val map = LibGdxTiledMapLoader().loadMap("polygonTest1_triangle.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("polygonTest1_triangle.tmx")
         val mapObject = map.layers[0].objects[0] as PolygonMapObject
 
         val entity = Entity()
@@ -136,7 +136,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `polygon - actualMap - whatever - concave but no intersection of lines`() {
-        val map = LibGdxTiledMapLoader().loadMap("polygonTest2_whatever.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("polygonTest2_whatever.tmx")
         val mapObject = map.layers[0].objects[0] as PolygonMapObject
 
         val entity = Entity()
@@ -157,7 +157,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `polygon - actualMap - 90° retard-rotation map`() {
-        val map = LibGdxTiledMapLoader().loadMap("polygonTest3_rotation.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("polygonTest3_rotation.tmx")
         val mapObject = map.layers[0].objects[0] as PolygonMapObject
 
         val entity = Entity()
@@ -177,7 +177,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `polygon - actualMap - 90° retard-rotation map unrotated`() {
-        val map = LibGdxTiledMapLoader().loadMap("polygonTest3_rotation.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("polygonTest3_rotation.tmx")
         val mapObject = map.layers[0].objects[0] as PolygonMapObject
         // overwrite rotation to compare rotated and unrotated polygons
         mapObject.properties.put("rotation", 0f)
@@ -198,7 +198,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `ellipse - actualMap - 1 to 1 unrotated ellipse is circle`() {
-        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
         val mapObject = map.layers[0].objects[0] as EllipseMapObject
         // overwrite rotation to compare rotated and unrotated circle
         mapObject.properties.put("rotation", 0f)
@@ -216,7 +216,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `ellipse - actualMap - 1 to 1 rotated ellipse is circle`() {
-        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("ellipseTest1_1to1ellipse_is_circle_rotated.tmx")
         val mapObject = map.layers[0].objects[0] as EllipseMapObject
 
         val entity = Entity()
@@ -232,7 +232,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `ellipse - actualMap - 2 to 1 unrotated ellipse`() {
-        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_2to1ratio_rotated.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("ellipseTest1_2to1ratio_rotated.tmx")
         val mapObject = map.layers[0].objects[0] as EllipseMapObject
         // overwrite rotation to compare rotated and unrotated ellipse
         mapObject.properties.put("rotation", 0f)
@@ -248,7 +248,7 @@ internal class MapObjectFormExtractorTest {
 
     @Test
     fun `ellipse - actualMap - 2 to 1 rotated ellipse`() {
-        val map = LibGdxTiledMapLoader().loadMap("ellipseTest1_2to1ratio_rotated.tmx")
+        val map = LibGdxTiledMapLoader.loadMap("ellipseTest1_2to1ratio_rotated.tmx")
         val mapObject = map.layers[0].objects[0] as EllipseMapObject
 
         val entity = Entity()

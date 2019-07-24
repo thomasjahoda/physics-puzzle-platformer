@@ -3,16 +3,17 @@ package com.jafleck.game.maploading
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.maps.MapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
-import com.jafleck.extensions.libgdx.map.id
+import com.jafleck.extensions.libgdx.maps.id
 import com.jafleck.game.components.map.ActiveGameMapComponent
 import com.jafleck.game.entities.ActiveGameMapEntity
-import com.jafleck.game.util.libgdx.map.entityType
+import com.jafleck.game.util.libgdx.maps.entityType
 import com.jafleck.game.util.logger
 
 
 class MapEntitiesLoader(
     private val mapEntityLoaderLocator: MapEntityLoaderLocator,
-    private val engine: Engine
+    private val engine: Engine,
+    private val mapDeathBorderLoader: MapDeathBorderLoader
 ) {
     private val logger = logger(this::class)
 
@@ -24,6 +25,7 @@ class MapEntitiesLoader(
         val mapEntity = createActiveGameMapEntity(map, tiledMap)
 
         allMapObjects.forEach(::loadMapObjectAsEntityIfPossible)
+        mapDeathBorderLoader.createInvisibleDeathBorder(tiledMap)
 
         mapEntity.activeGameMap.fullyLoaded = true
 

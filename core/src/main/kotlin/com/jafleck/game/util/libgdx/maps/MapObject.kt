@@ -1,9 +1,9 @@
-package com.jafleck.game.util.libgdx.map
+package com.jafleck.game.util.libgdx.maps
 
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.maps.MapObject
 import com.badlogic.gdx.math.Vector2
-import com.jafleck.extensions.libgdx.map.id
+import com.jafleck.extensions.libgdx.maps.id
 import com.jafleck.game.maploading.scaleFromMapToWorld
 
 

@@ -2,7 +2,7 @@ package com.jafleck.game.components.basic
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.maps.MapObject
-import com.jafleck.extensions.libgdx.map.id
+import com.jafleck.extensions.libgdx.maps.id
 import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 
 data class MapObjectComponent(

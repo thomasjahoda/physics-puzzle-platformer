@@ -29,7 +29,7 @@ import com.jafleck.game.families.PhysicalShapedEntity
 import com.jafleck.game.gadgets.Gadget
 import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.maploading.MapEntityLoader
-import com.jafleck.game.util.libgdx.map.preset
+import com.jafleck.game.util.libgdx.maps.preset
 import ktx.ashley.allOf
 import ktx.box2d.filter
 import org.koin.dsl.module

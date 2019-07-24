@@ -1,4 +1,4 @@
-package com.jafleck.extensions.libgdx.map
+package com.jafleck.extensions.libgdx.maps
 
 import com.badlogic.gdx.maps.MapObject
 
