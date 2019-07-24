@@ -9,6 +9,7 @@ import kotlin.math.max
 
 private val moduleLogger = logger("NinePatchAutoScaling")
 
+// TODO refactor to be like GameFontAutoScaling.kt
 
 fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch,
                                                       initialScaling: Vector2) {
@@ -18,26 +19,25 @@ fun ScreenToWorldScalingPropagator.autoScaleNinePatch(ninePatch: NinePatch,
     ninePatch.scale(initialScaling.x, initialScaling.y)
     moduleLogger.debug { "- Middle width after scaling with initialScaling ($initialScaling): ${ninePatch.middleWidth}" }
 
-    ninePatch.scale(scaling.x, scaling.y)
+    ninePatch.scale(worldToScreenScalingFactor.x, worldToScreenScalingFactor.y)
     moduleLogger.debug { "- Middle width after applying current scale: ${ninePatch.middleWidth}" }
 
-    registerObserver { oldScaling, newScaling ->
-        val oldScalar = keepAspectWhenScaling(oldScaling)
-        val newScalar = keepAspectWhenScaling(newScaling)
-        moduleLogger.debug { "New Scaling for nine-patch: $newScaling, converted to scalar $newScalar" }
+    worldToScreenScalingFactorListeners.addListener { newWorldToScreenScaling, oldWorldToScreenScaling, _ ->
+        require(newWorldToScreenScaling.x == newWorldToScreenScaling.y)
+        val oldScreenToWorldScaling = 1f / oldWorldToScreenScaling.x
+        val newScreenToWorldScaling = 1f / newWorldToScreenScaling.x
+        moduleLogger.debug { "New Scaling for nine-patch: $newScreenToWorldScaling" }
         moduleLogger.debug { "- middle width before change: ${ninePatch.middleWidth}" }
 
         // revert old scaling
-        ninePatch.scale(1f / oldScalar, 1f / oldScalar)
+        ninePatch.scale(1f / oldScreenToWorldScaling, 1f / oldScreenToWorldScaling)
         moduleLogger.debug { "- middle with after reverting old scaling: ${ninePatch.middleWidth}" }
 
         // apply new scaling
-        ninePatch.scale(newScalar, newScalar)
+        ninePatch.scale(newScreenToWorldScaling, newScreenToWorldScaling)
         moduleLogger.debug { "- middle with after applying old scaling: ${ninePatch.middleWidth}" }
     }
 }
-
-private fun keepAspectWhenScaling(oldScaling: Vector2) = max(oldScaling.x, oldScaling.y)
 
 fun NinePatchDrawable.autoScale(screenToWorldScalingPropagator: ScreenToWorldScalingPropagator,
                                 initialScaling: Vector2) {

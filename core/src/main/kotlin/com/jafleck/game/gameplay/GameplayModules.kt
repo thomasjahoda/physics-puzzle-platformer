@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage
 import com.jafleck.extensions.kotlin.withItIfNotNull
 import com.jafleck.game.config.GeneralDebugConfiguration
 import com.jafleck.game.config.PhysicsConfiguration
-import com.jafleck.game.gadgets.BallThrowerGadget
-import com.jafleck.game.gadgets.RopeThrowerGadget
 import com.jafleck.game.gadgets.gadgetsModule
 import com.jafleck.game.gameplay.controlandmainphases.FinishedMapSuccessfullyHandler
 import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
@@ -30,6 +28,7 @@ import com.jafleck.game.gameplay.systems.physicssync.SyncMovingBodySystem
 import com.jafleck.game.gameplay.systems.physicssync.SyncRotatingBodySystem
 import com.jafleck.game.gameplay.systems.visual.RenderDrawableRectangleComponentsSystem
 import com.jafleck.game.gameplay.systems.visual.ShapeRenderSystem
+import com.jafleck.game.gameplay.systems.visual.TextRenderSystem
 import com.jafleck.game.gameplay.ui.*
 import com.jafleck.game.util.ashley.EntityFamilyListener
 import com.jafleck.game.util.box2d.ContactListenerMultiplexer
@@ -88,7 +87,8 @@ internal val entityComponentSystemLogicModule = module {
             // == rendering
             TrackPlayerWithCameraSystem(get()),
             ShapeRenderSystem(get()),
-            RenderDrawableRectangleComponentsSystem(get(), get(), get())
+            TextRenderSystem(get(), get()),
+            RenderDrawableRectangleComponentsSystem(get(), get())
 
             // == phase-hook: at end of tick
 //            get<PostSystemUpdatePhaseActionExecutor>()

@@ -3,6 +3,7 @@ package com.jafleck.testutil.integration
 import com.badlogic.ashley.core.Engine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.physics.box2d.World
+import com.jafleck.game.assets.GameFonts
 import com.jafleck.game.assets.GdxHoloSkin
 import com.jafleck.game.assets.assetsModule
 import com.jafleck.game.config.LoggingConfig
@@ -19,12 +20,14 @@ import com.jafleck.game.maploading.mapLoadingModule
 import com.jafleck.game.util.LoggingLevel
 import com.jafleck.game.util.asGdxLoggingLevel
 import com.jafleck.testutil.preferences.testPreferencesModule
+import io.mockk.mockk
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback
 import org.junit.jupiter.api.extension.BeforeTestExecutionCallback
 import org.junit.jupiter.api.extension.ExtensionContext
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.dsl.module
 
 class IntegrationTestApplicationExtension(
     private val loadAssets: Boolean = false,
@@ -62,9 +65,18 @@ class IntegrationTestApplicationExtension(
                         controlAndMainPhasesModule,
                         physicsModule
                     )
-                if (loadAssets) {
-                    // TODO cache assets over multiple tests
-                    modules = modules + assetsModule
+                modules = if (loadAssets) {
+                    // TODO cache assets over multiple tests if this is ever necessary
+                    modules + assetsModule
+                } else {
+                    modules + module {
+                        single {
+                            GameFonts(
+                                `regular 0_5f world size font` = mockk(),
+                                `regular 1f world size font` = mockk()
+                            )
+                        }
+                    }
                 }
                 modules
             }())

@@ -71,6 +71,7 @@ project(":desktop") {
         api("com.badlogicgames.gdx:gdx-backend-lwjgl:${DependencyVersions.gdxVersion}")
         api("com.badlogicgames.gdx:gdx-platform:${DependencyVersions.gdxVersion}:natives-desktop")
         api("com.badlogicgames.gdx:gdx-box2d-platform:${DependencyVersions.gdxVersion}:natives-desktop")
+        api("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-desktop")
         api("org.jetbrains.kotlin:kotlin-stdlib:${DependencyVersions.kotlinVersion}")
         api("org.redundent:kotlin-xml-builder:${DependencyVersions.thirdPartyKotlinXmlBuilder}")
 
@@ -103,6 +104,12 @@ project(":android") {
         natives("com.badlogicgames.gdx:gdx-box2d-platform:${DependencyVersions.gdxVersion}:natives-x86")
         natives("com.badlogicgames.gdx:gdx-box2d-platform:${DependencyVersions.gdxVersion}:natives-x86_64")
         api("com.badlogicgames.ashley:ashley:${DependencyVersions.ashleyVersion}")
+        api("com.badlogicgames.gdx:gdx-freetype:${DependencyVersions.gdxVersion}")
+        natives("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-armeabi")
+        natives("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-armeabi-v7a")
+        natives("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-arm64-v8a")
+        natives("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-x86")
+        natives("com.badlogicgames.gdx:gdx-freetype-platform:${DependencyVersions.gdxVersion}:natives-x86_64")
         api("org.jetbrains.kotlin:kotlin-stdlib:${DependencyVersions.kotlinVersion}")
     }
 }
@@ -134,6 +141,7 @@ project(":core") {
         api("com.badlogicgames.gdx:gdx:${DependencyVersions.gdxVersion}")
         api("com.badlogicgames.gdx:gdx-box2d:${DependencyVersions.gdxVersion}")
         api("com.badlogicgames.ashley:ashley:${DependencyVersions.ashleyVersion}")
+        api("com.badlogicgames.gdx:gdx-freetype:${DependencyVersions.gdxVersion}")
         api("org.jetbrains.kotlin:kotlin-stdlib:${DependencyVersions.kotlinVersion}")
         api("org.jetbrains.kotlin:kotlin-reflect:${DependencyVersions.kotlinVersion}")
         api("com.beust:klaxon:${DependencyVersions.klaxonJsonLibraryVersion}")

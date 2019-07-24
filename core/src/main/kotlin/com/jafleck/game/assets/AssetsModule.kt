@@ -22,4 +22,5 @@ val assetsModule = module {
     }
     single { ScreenToWorldScalingPropagator() }
     single { GdxHoloSkin(get()) }
+    single { GameFontsLoader(get(), get()).loadGameFonts() }
 }

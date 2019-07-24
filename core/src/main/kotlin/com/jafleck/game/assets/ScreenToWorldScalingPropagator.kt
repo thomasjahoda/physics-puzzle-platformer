@@ -1,16 +1,14 @@
 package com.jafleck.game.assets
 
 import com.badlogic.gdx.math.Vector2
+import com.jafleck.game.util.listeners.PropertyChangeListenerMultiplexer
 import kotlin.properties.Delegates
 
 class ScreenToWorldScalingPropagator {
-    private val observers: MutableList<(oldScaling: Vector2, newScaling: Vector2) -> Unit> = arrayListOf()
-    var scaling: Vector2 by Delegates.observable(Vector2(1f, 1f)) { _, oldValue, newValue ->
+    val worldToScreenScalingFactorListeners = PropertyChangeListenerMultiplexer<Vector2>()
+    var worldToScreenScalingFactor: Vector2 by Delegates.observable(Vector2(1f, 1f)) { property, oldValue, newValue ->
         if (oldValue != newValue) {
-            observers.forEach { it(oldValue, newValue) }
+            worldToScreenScalingFactorListeners(newValue, oldValue, property)
         }
     }
-
-    fun registerObserver(observer: (oldScaling: Vector2, newScaling: Vector2) -> Unit) = observers.add(observer)
-
 }

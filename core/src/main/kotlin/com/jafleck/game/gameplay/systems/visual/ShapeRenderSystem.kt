@@ -18,7 +18,7 @@ import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
 import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
-import com.jafleck.game.families.VisualShape
+import com.jafleck.game.families.VisualShapeEntity
 import com.jafleck.game.gameplay.ui.GameCamera
 import com.jafleck.game.util.logger
 
@@ -36,7 +36,7 @@ class ShapeRenderSystem(
     private val logger = logger(this::class)
 
     override fun addedToEngine(engine: Engine) {
-        entities = engine.getEntitiesFor(VisualShape.family)
+        entities = engine.getEntitiesFor(VisualShapeEntity.family)
     }
 
     override fun removedFromEngine(engine: Engine) {
@@ -48,7 +48,7 @@ class ShapeRenderSystem(
 
         sr.begin(ShapeRenderer.ShapeType.Filled)
         for (untypedEntity in entities) {
-            val entity = VisualShape(untypedEntity)
+            val entity = VisualShapeEntity(untypedEntity)
             val position = entity.position
             val renderedShape = entity.renderedShape
             val borderThickness = renderedShape.borderThickness

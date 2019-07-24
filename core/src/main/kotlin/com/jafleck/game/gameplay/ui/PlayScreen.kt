@@ -9,8 +9,11 @@ import com.jafleck.game.assets.ScreenToWorldScalingPropagator
 import com.jafleck.game.gameplay.controlandmainphases.GameLogicTickExecutor
 import com.jafleck.game.util.input.GameInputMultiplexer
 import com.jafleck.game.util.input.UiInputMultiplexer
+import com.jafleck.game.util.logger
 import ktx.app.KtxScreen
+import ktx.math.minus
 import ktx.scene2d.table
+import kotlin.math.max
 
 
 class PlayScreen(
@@ -26,6 +29,8 @@ class PlayScreen(
     private val manualTimeControl: ManualTimeControl?,
     private val fpsCounter: FpsCounter?
 ) : KtxScreen {
+
+    private val logger = logger(this::class)
 
     private val rootTable = table {
         setFillParent(true)
@@ -72,7 +77,11 @@ class PlayScreen(
         gameViewport.update(width, height, false)
         uiViewport.update(width, height, true)
 
-        screenToWorldScalingPropagator.scaling = Vector2(gameViewport.camera.combined.scaleX, gameViewport.camera.combined.scaleY)
+        val worldToScreenCoordinateScalar = (gameViewport.project(Vector2(1f, 1f)) - gameViewport.project(Vector2(0f, 0f))).let {
+            max(it.x, it.y) // mitigate rounding issues
+        }
+        logger.debug { "New worldToScreenCoordinateScalar $worldToScreenCoordinateScalar" }
+        screenToWorldScalingPropagator.worldToScreenScalingFactor = Vector2(worldToScreenCoordinateScalar, worldToScreenCoordinateScalar)
     }
 
     override fun hide() {

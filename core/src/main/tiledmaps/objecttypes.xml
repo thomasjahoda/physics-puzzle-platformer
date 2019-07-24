@@ -50,4 +50,8 @@
  <objecttype name="Water" color="#00007f">
   <property name="entityType" type="string" default="Water"/>
  </objecttype>
+ <objecttype name="GadgetPickup" color="#3A8F8E">
+  <property name="entityType" type="string" default="GadgetPickup"/>
+  <property name="gadget" type="string"/>
+ </objecttype>
 </objecttypes>

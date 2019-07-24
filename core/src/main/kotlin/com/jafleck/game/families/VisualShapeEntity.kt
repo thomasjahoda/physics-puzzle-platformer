@@ -14,7 +14,7 @@ import com.jafleck.game.components.visual.VisualShapeComponent
 import ktx.ashley.allOf
 import ktx.ashley.oneOf
 
-inline class VisualShape(val entity: Entity) {
+inline class VisualShapeEntity(val entity: Entity) {
     companion object {
         val family: Family = allOf(
             OriginPositionComponent::class,
