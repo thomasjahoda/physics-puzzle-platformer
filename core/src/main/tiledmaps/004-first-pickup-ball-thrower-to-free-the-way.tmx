@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="50" height="50"
-     tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="35">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="37">
  <objectgroup id="2" name="Entities">
   <object id="21" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="1232" y="768" width="64" height="64"/>
   <object id="22" template="objecttemplates/player/circle.tx" x="320" y="800"/>
@@ -8,12 +7,10 @@
   <object id="24" template="objecttemplates/platform/horizontal.tx" x="1184" y="832" width="160" height="32"/>
   <object id="25" template="objecttemplates/platform/horizontal.tx" x="736" y="832" width="160" height="32"/>
   <object id="26" type="Platform" x="448" y="832">
-   <polygon
-    points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
+   <polygon points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
   </object>
   <object id="33" type="Platform" x="864" y="832">
-   <polygon
-    points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
+   <polygon points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
   </object>
   <object id="34" type="GadgetPickup" x="392" y="776" width="24" height="48">
    <properties>

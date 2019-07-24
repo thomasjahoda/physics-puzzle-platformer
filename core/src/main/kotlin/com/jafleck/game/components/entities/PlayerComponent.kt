@@ -13,5 +13,14 @@ data class PlayerComponent(
 enum class PlayerMovementState {
     LEFT,
     NONE,
-    RIGHT
+    RIGHT;
+
+    val horizontalDirectionSign: Int
+        get() {
+            return when (this) {
+                LEFT -> -1
+                RIGHT -> 1
+                NONE -> 0
+            }
+        }
 }
