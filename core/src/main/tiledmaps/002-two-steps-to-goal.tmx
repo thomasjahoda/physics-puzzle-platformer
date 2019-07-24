@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="26">
+ <objectgroup id="2" name="Entities">
+  <object id="21" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="1008" y="928" width="64" height="64"/>
+  <object id="22" template="objecttemplates/player/circle.tx" x="576" y="672"/>
+  <object id="23" template="objecttemplates/platform/horizontal.tx" x="512" y="704" width="160" height="32"/>
+  <object id="24" template="objecttemplates/platform/horizontal.tx" x="960" y="992" width="160" height="32"/>
+  <object id="25" template="objecttemplates/platform/horizontal.tx" x="736" y="864" width="160" height="32"/>
+ </objectgroup>
+</map>
