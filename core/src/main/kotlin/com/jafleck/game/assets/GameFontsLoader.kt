@@ -11,23 +11,32 @@ class GameFontsLoader(
     private val screenToWorldScalingPropagator: ScreenToWorldScalingPropagator
 ) {
     fun loadGameFonts(): GameFonts {
-        val generator = FreeTypeFontGenerator(assetsFileHandleResolver.resolve("fonts/opensans/OpenSans-Regular.ttf"))
+        val generator = FreeTypeFontGenerator(assetsFileHandleResolver.resolve("fonts/opensans/OpenSans-Bold.ttf"))
 
         val gameFonts = GameFonts(
-            `regular 0_5f world size font` = generator.generateGameFont(12, 0.5f) {
-                shadowColor = Color.BLACK
-                shadowOffsetX = 1
-                shadowOffsetY = 1
+            `bold 0_5f world size font` = generator.generateGameFont(16, 0.5f) {
+                blackThickBorder()
+                blackShadow()
             },
-            `regular 1f world size font` = generator.generateGameFont(12, 1f) {
-                shadowColor = Color.BLACK
-                shadowOffsetX = 1
-                shadowOffsetY = 1
+            `bold 1f world size font` = generator.generateGameFont(32, 1f) {
+                blackThickBorder()
+                blackShadow()
             }
         )
 
         generator.dispose()
         return gameFonts
+    }
+
+    private fun FreeTypeFontParameter.blackThickBorder() {
+        borderColor = Color.BLACK
+        borderWidth = 1f
+    }
+
+    private fun FreeTypeFontParameter.blackShadow() {
+        shadowColor = Color.BLACK
+        shadowOffsetX = 1
+        shadowOffsetY = 1
     }
 
     private inline fun FreeTypeFontGenerator.generateGameFont(pixelFontSize: Int, worldFontSize: Float, parameterBlock: FreeTypeFontParameter.() -> Unit): GameFont {
@@ -47,6 +56,6 @@ class GameFontsLoader(
 
 
 class GameFonts(
-    val `regular 0_5f world size font`: GameFont,
-    val `regular 1f world size font`: GameFont
+    val `bold 0_5f world size font`: GameFont,
+    val `bold 1f world size font`: GameFont
 )

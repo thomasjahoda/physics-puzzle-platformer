@@ -72,8 +72,8 @@ class IntegrationTestApplicationExtension(
                     modules + module {
                         single {
                             GameFonts(
-                                `regular 0_5f world size font` = mockk(),
-                                `regular 1f world size font` = mockk()
+                                `bold 0_5f world size font` = mockk(),
+                                `bold 1f world size font` = mockk()
                             )
                         }
                     }
