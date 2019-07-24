@@ -46,6 +46,12 @@ class RopeThrowerGadget(
         }
     }
 
+    override fun unselected(handler: Entity) {
+        withItIfNotNull(handler.getOrNull(ThrowerOfRopeComponent)) {
+            delete(it.thrownRope)
+        }
+    }
+
     private fun delete(thrownRopeEntity: ThrownRopeEntity) {
         thrownRopeEntity.rope.parts.forEach {
             engine.removeEntity(it)
