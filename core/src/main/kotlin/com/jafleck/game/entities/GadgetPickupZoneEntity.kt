@@ -85,7 +85,7 @@ class GadgetPickupZoneEntityCreator(
             add(EntityCollisionTrackingZoneComponent())
             val gadget = gadgetLocator.getGadget(gadgetPickupZoneEntityConfig.gadget
                 ?: error("gadget must be configured"))
-            add(VisualTextComponent(gadgetPickupZoneEntityConfig.gadget!!, Color.BROWN, gameFonts.`bold 0_5f world size font`))
+            add(VisualTextComponent(gadgetPickupZoneEntityConfig.gadget!!, Color.BROWN, gameFonts.bold0_5fWorldSizeFont))
             add(GadgetPickupZoneComponent(gadget))
             engine.addEntity(this)
         }

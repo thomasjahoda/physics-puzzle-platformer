@@ -14,11 +14,11 @@ class GameFontsLoader(
         val generator = FreeTypeFontGenerator(assetsFileHandleResolver.resolve("fonts/opensans/OpenSans-Bold.ttf"))
 
         val gameFonts = GameFonts(
-            `bold 0_5f world size font` = generator.generateGameFont(16, 0.5f) {
+            bold0_5fWorldSizeFont = generator.generateGameFont(16, 0.5f) {
                 blackThickBorder()
                 blackShadow()
             },
-            `bold 1f world size font` = generator.generateGameFont(32, 1f) {
+            bold1fWorldSizeFont = generator.generateGameFont(32, 1f) {
                 blackThickBorder()
                 blackShadow()
             }
@@ -56,6 +56,6 @@ class GameFontsLoader(
 
 
 class GameFonts(
-    val `bold 0_5f world size font`: GameFont,
-    val `bold 1f world size font`: GameFont
+    val bold0_5fWorldSizeFont: GameFont,
+    val bold1fWorldSizeFont: GameFont
 )
