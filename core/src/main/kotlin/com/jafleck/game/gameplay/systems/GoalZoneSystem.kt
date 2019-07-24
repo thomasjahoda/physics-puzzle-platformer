@@ -17,7 +17,7 @@ class GoalZoneSystem(
 ) : IteratingSystem(allOf(GoalZoneComponent::class).get()) {
 
     companion object {
-        private const val PROGRESS_PER_SECOND = 0.5f
+        private const val PROGRESS_PER_SECOND = 1f
     }
 
     private val logger = logger(this::class)

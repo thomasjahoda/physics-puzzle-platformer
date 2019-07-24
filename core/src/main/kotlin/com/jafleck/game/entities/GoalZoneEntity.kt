@@ -54,7 +54,7 @@ class GoalZoneEntityCreator(
             moves = false
         )
         internal val DEFAULT_START_COLOR = Color.GOLD.copy(alpha = 0.4f)
-        internal val END_COLOR = Color.RED.copy(alpha = 0.4f)
+        internal val END_COLOR = Color.GREEN.copy(alpha = 0.4f)
     }
 
     override val type: String
@@ -85,7 +85,9 @@ class GoalZoneEntityCreator(
 
 val goalZonePresets = listOf(
     Preset(genericCustomization = GenericEntityCustomization(
-        fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR
+        fillColor = GoalZoneEntityCreator.DEFAULT_START_COLOR,
+        borderColor = GoalZoneEntityCreator.DEFAULT_START_COLOR.copy(alpha = 1f),
+        borderThickness = 0.1f
     ))
 ).asMap()
 
