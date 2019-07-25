@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="96">
+ <objectgroup id="2" name="Entities" offsetx="-8" offsety="32">
+  <object id="90" type="Platform" x="4024" y="3873" width="8" height="15"/>
+  <object id="91" name="LagerUnten" type="DynamicEnvironment/custom" x="4008" y="3872" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="92" type="Platform" x="4000" y="3873" width="8" height="15"/>
+  <object id="93" type="Platform" x="4024" y="3808" width="8" height="15"/>
+  <object id="94" name="LagerOben" type="DynamicEnvironment/custom" x="4008" y="3808" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="95" type="Platform" x="4000" y="3808" width="8" height="15"/>
+ </objectgroup>
+</map>

@@ -61,8 +61,8 @@ class VisualShapeEntityCreator(
 
 internal val visualShapePresets = listOf(
     genericPreset(genericConfig = GenericEntityConfig(
-        borderColor = Color.PURPLE, borderThickness = 0.1f,
-        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
+//        borderColor = Color.PURPLE, borderThickness = 0.1f,
+        fillColor = Color.BLACK.cpy().mulExceptAlpha(1f)
     ))
 ).asMap()
 

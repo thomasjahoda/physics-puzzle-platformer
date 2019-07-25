@@ -1,24 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="38">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="139">
  <objectgroup id="2" name="Entities">
-  <object id="21" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="1232" y="768" width="64" height="64"/>
-  <object id="22" template="objecttemplates/player/circle.tx" x="320" y="800"/>
-  <object id="23" template="objecttemplates/platform/horizontal.tx" x="256" y="832" width="224" height="32"/>
-  <object id="24" template="objecttemplates/platform/horizontal.tx" x="1184" y="832" width="160" height="32"/>
-  <object id="25" template="objecttemplates/platform/horizontal.tx" x="736" y="832" width="160" height="32"/>
-  <object id="26" type="Platform" x="448" y="832">
+  <object id="21" template="objecttemplates/GoalZone/fixed_rectangle.tx" x="1152" y="1824" width="64" height="64"/>
+  <object id="22" template="objecttemplates/player/circle.tx" x="1120" y="1568"/>
+  <object id="23" template="objecttemplates/platform/horizontal.tx" x="864" y="1600" width="416" height="32"/>
+  <object id="24" template="objecttemplates/platform/horizontal.tx" x="1104" y="1888" width="160" height="32"/>
+  <object id="25" template="objecttemplates/platform/horizontal.tx" x="1456" y="1664" width="160" height="32"/>
+  <object id="26" type="Platform" x="1248" y="1600">
    <polygon points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
   </object>
-  <object id="33" type="Platform" x="864" y="832">
+  <object id="33" type="Platform" x="1584" y="1664">
    <polygon points="0,0 3.33351,-0.194395 6.48144,-0.679656 9.07235,-1.20199 12.3556,-2.17198 14.7304,-3.04348 17.4243,-4.11371 19.9397,-5.33127 21.5185,-6.2157 23.4502,-7.26618 25.5923,-8.71349 27.6763,-10.3918 28.8174,-11.4088 29.9245,-12.4661 31.0283,-13.9665 32,-16 32,0"/>
   </object>
-  <object id="34" type="GadgetPickup" x="384" y="768" width="48" height="64">
+  <object id="34" type="GadgetPickup" x="1184" y="1536" width="48" height="64">
    <properties>
     <property name="gadget" value="BallThrower"/>
    </properties>
   </object>
-  <object id="37" x="528" y="608" width="128" height="96">
-   <text wrap="1">TODO after dynamic object</text>
+  <object id="38" template="objecttemplates/platform/horizontal.tx" x="864" y="1688" width="416" height="24"/>
+  <object id="39" template="objecttemplates/platform/horizontal.tx" x="1536" y="1408"/>
+  <object id="40" template="objecttemplates/platform/vertical.tx" x="1536" y="1248"/>
+  <object id="41" template="objecttemplates/platform/horizontal.tx" type="VisualShape" x="864" y="1632" width="416" height="56"/>
+  <object id="43" name="Pillar" type="DynamicEnvironment/custom" x="864" y="1648" width="416" height="24">
+   <properties>
+    <property name="physics_customDensity" type="float" value="0.05"/>
+   </properties>
   </object>
+  <object id="46" template="objecttemplates/platform/vertical.tx" x="864" y="1440"/>
+  <object id="47" template="objecttemplates/platform/vertical.tx" x="864" y="1216"/>
+  <object id="48" template="objecttemplates/platform/horizontal.tx" x="896" y="1216" width="384" height="32"/>
+  <object id="49" template="objecttemplates/platform/vertical.tx" x="1248" y="1248" width="32" height="256"/>
+  <object id="52" type="Platform" x="864" y="1632">
+   <polygon points="0,0 -32,-8 -64,-32 -96,-64 -112,-128 0,-192"/>
+  </object>
+  <object id="55" type="Platform" x="864" y="1680">
+   <polygon points="0,0 -32,0 -304,-160 0,-304 0,-336 -352,-176 -352,-144 -32,32 0,32"/>
+  </object>
+  <object id="56" type="VisualShape" x="472" y="1216" width="392" height="496"/>
+  <object id="73" template="objecttemplates/platform/horizontal.tx" x="1280" y="1472" width="288" height="32"/>
+  <object id="74" template="objecttemplates/platform/vertical.tx" x="1344" y="1504" width="32" height="96"/>
+  <object id="115" type="Platform" x="1048" y="1672" width="8" height="15"/>
+  <object id="116" name="LagerUnten" type="DynamicEnvironment/custom" x="1032" y="1672" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="117" type="Platform" x="1024" y="1672" width="8" height="15"/>
+  <object id="118" type="Platform" x="1048" y="1632" width="8" height="15"/>
+  <object id="119" name="LagerOben" type="DynamicEnvironment/custom" x="1032" y="1632" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="120" type="Platform" x="1024" y="1632" width="8" height="15"/>
+  <object id="121" type="Platform" x="1136" y="1672" width="8" height="15"/>
+  <object id="122" name="LagerUnten" type="DynamicEnvironment/custom" x="1120" y="1672" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="123" type="Platform" x="1112" y="1672" width="8" height="15"/>
+  <object id="124" type="Platform" x="1136" y="1632" width="8" height="15"/>
+  <object id="125" name="LagerOben" type="DynamicEnvironment/custom" x="1120" y="1632" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="126" type="Platform" x="1112" y="1632" width="8" height="15"/>
+  <object id="127" type="Platform" x="1272" y="1672" width="8" height="15"/>
+  <object id="128" name="LagerUnten" type="DynamicEnvironment/custom" x="1256" y="1672" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="129" type="Platform" x="1248" y="1672" width="8" height="15"/>
+  <object id="130" type="Platform" x="1272" y="1632" width="8" height="15"/>
+  <object id="131" name="LagerOben" type="DynamicEnvironment/custom" x="1256" y="1632" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="132" type="Platform" x="1248" y="1632" width="8" height="15"/>
+  <object id="133" type="Platform" x="1200" y="1672" width="8" height="15"/>
+  <object id="134" name="LagerUnten" type="DynamicEnvironment/custom" x="1184" y="1672" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="135" type="Platform" x="1176" y="1672" width="8" height="15"/>
+  <object id="136" type="Platform" x="1200" y="1632" width="8" height="15"/>
+  <object id="137" name="LagerOben" type="DynamicEnvironment/custom" x="1184" y="1632" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="138" type="Platform" x="1176" y="1632" width="8" height="15"/>
  </objectgroup>
 </map>

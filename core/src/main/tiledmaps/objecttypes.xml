@@ -17,8 +17,14 @@
  </objecttype>
  <objecttype name="DynamicEnvironment/custom" color="#515151">
   <property name="entityType" type="string" default="DynamicEnvironment"/>
+  <property name="physics_customAngularDamping" type="float" default="-1"/>
+  <property name="physics_customDensity" type="float" default="-1"/>
+  <property name="physics_customFixedRotation" type="string"/>
   <property name="physics_customFriction" type="float" default="-1"/>
+  <property name="physics_customGravityScale" type="float" default="-1"/>
+  <property name="physics_customLinearDamping" type="float" default="-1"/>
   <property name="physics_customRestitution" type="float" default="-1"/>
+  <property name="physics_initialVelocity" type="string"/>
   <property name="preset" type="string" default=""/>
   <property name="vis_customBorderColor" type="color"/>
   <property name="vis_customBorderThickness" type="float" default="-1"/>
@@ -72,14 +78,12 @@
  </objecttype>
  <objecttype name="VisualShape" color="#000000">
   <property name="entityType" type="string" default="VisualShape"/>
- </objecttype>
- <objecttype name="VisualShape/custom" color="#2e3436">
-  <property name="entityType" type="string" default="VisualShape"/>
-  <property name="physics_customFriction" type="float" default="-1"/>
-  <property name="physics_customRestitution" type="float" default="-1"/>
-  <property name="preset" type="string" default=""/>
   <property name="vis_customBorderColor" type="color"/>
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
+ </objecttype>
+ <objecttype name="VisualShape/Platform" color="#000000">
+  <property name="entityType" type="string" default="VisualShape"/>
+  <property name="preset" type="string" default="Platform"/>
  </objecttype>
 </objecttypes>

@@ -76,8 +76,8 @@ class DynamicEnvironmentEntityCreator(
 internal val dynamicEnvironmentPresets = listOf(
     genericPreset(genericConfig = GenericEntityConfig(
         density = 2.5f,
-        borderColor = Color.DARK_GRAY, borderThickness = 0.1f,
-        fillColor = Color.GRAY.cpy().mulExceptAlpha(0.9f)
+//        borderColor = Color.DARK_GRAY, borderThickness = 0.1f,
+        fillColor = Color.RED.cpy().mulExceptAlpha(1f)
     )),
     genericPreset("Bouncy",
         genericConfig = GenericEntityConfig(
