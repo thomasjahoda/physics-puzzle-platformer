@@ -21,6 +21,7 @@ import com.jafleck.game.util.libgdx.box2d.processIfComponentInvolved
 import com.jafleck.game.util.logger
 import ktx.ashley.allOf
 import ktx.ashley.remove
+import ktx.math.times
 import kotlin.math.min
 
 
@@ -49,9 +50,10 @@ class WaterSystem(
         val bodyDensity = body.fixtureList[0].density // multiple fixtures with different mass not supported currently
         val waterArea = (body.mass / bodyDensity) * submergedPercentage
 
-        val impulse = Vector2(0f, waterArea * WATER_DENSITY)
+        val scalarForEffectiveValues = deltaTime * 60
+        val impulse = Vector2(0f, waterArea * WATER_DENSITY) * scalarForEffectiveValues
         body.applyLinearImpulse(impulse, body.position, true)
-        body.linearDamping = (body.linearVelocity.len() * body.linearVelocity.len()) / 5
+        body.linearDamping = ((body.linearVelocity.len() * body.linearVelocity.len()) / 5) * scalarForEffectiveValues
 //        logger.debug { "impulse: $impulse" }
     }
 
