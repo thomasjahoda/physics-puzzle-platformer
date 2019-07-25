@@ -8,6 +8,26 @@
   <property name="entityType" type="string" default="DeathZone"/>
   <property name="preset" type="string" default="visible"/>
  </objecttype>
+ <objecttype name="DynamicEnvironment" color="#aaaaaa">
+  <property name="entityType" type="string" default="DynamicEnvironment"/>
+ </objecttype>
+ <objecttype name="DynamicEnvironment/Bouncy" color="#90ff97">
+  <property name="entityType" type="string" default="DynamicEnvironment"/>
+  <property name="preset" type="string" default="Bouncy"/>
+ </objecttype>
+ <objecttype name="DynamicEnvironment/custom" color="#515151">
+  <property name="entityType" type="string" default="DynamicEnvironment"/>
+  <property name="physics_customFriction" type="float" default="-1"/>
+  <property name="physics_customRestitution" type="float" default="-1"/>
+  <property name="preset" type="string" default=""/>
+  <property name="vis_customBorderColor" type="color"/>
+  <property name="vis_customBorderThickness" type="float" default="-1"/>
+  <property name="vis_customFillColor" type="color"/>
+ </objecttype>
+ <objecttype name="GadgetPickup" color="#3a8f8e">
+  <property name="entityType" type="string" default="GadgetPickup"/>
+  <property name="gadget" type="string"/>
+ </objecttype>
  <objecttype name="GoalZone" color="#8f5902">
   <property name="entityType" type="string" default="GoalZone"/>
  </objecttype>
@@ -49,9 +69,5 @@
  </objecttype>
  <objecttype name="Water" color="#00007f">
   <property name="entityType" type="string" default="Water"/>
- </objecttype>
- <objecttype name="GadgetPickup" color="#3A8F8E">
-  <property name="entityType" type="string" default="GadgetPickup"/>
-  <property name="gadget" type="string"/>
  </objecttype>
 </objecttypes>

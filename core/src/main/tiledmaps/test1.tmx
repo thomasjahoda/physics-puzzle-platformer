@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="300" height="300" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="80">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="300" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="89">
  <objectgroup id="2" name="Entities">
   <object id="26" template="objecttemplates/platform/horizontal.tx" x="4384" y="6320"/>
   <object id="27" template="objecttemplates/platform/horizontal.tx" x="4544" y="6320" rotation="23.4741"/>
@@ -77,6 +77,33 @@
    <properties>
     <property name="gadget" value="RopeThrower"/>
    </properties>
+  </object>
+  <object id="80" type="DynamicEnvironment/Bouncy" x="4712" y="6216" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="81" type="DynamicEnvironment/Bouncy" x="4928" y="6112" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="82" type="DynamicEnvironment/Bouncy" x="4752" y="6032" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="83" type="DynamicEnvironment/Bouncy" x="4600" y="6040" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="84" type="DynamicEnvironment/Bouncy" x="4608" y="6144" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="85" type="DynamicEnvironment/Bouncy" x="4472" y="6096" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="86" type="DynamicEnvironment/Bouncy" x="4320" y="6064" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="87" type="DynamicEnvironment/Bouncy" x="5152" y="5632" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object id="88" type="DynamicEnvironment/Bouncy" x="3824" y="6168" width="64" height="64">
+   <ellipse/>
   </object>
  </objectgroup>
 </map>
