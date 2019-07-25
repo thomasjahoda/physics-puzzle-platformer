@@ -87,6 +87,7 @@ internal val entityComponentSystemLogicModule = module {
             RemoveEntityAfterDurationSystem(),
             PlayerMovementSystem(),
             ThrownRopeSystem(get(), get()),
+            PassThroughFromBelowSystem(get()),
 
             // == rendering
             TrackPlayerWithCameraSystem(get()),

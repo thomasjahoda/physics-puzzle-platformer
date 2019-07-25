@@ -49,6 +49,10 @@
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
  </objecttype>
+ <objecttype name="Platform/PassThroughFromBelow" color="#2e3436">
+  <property name="entityType" type="string" default="Platform"/>
+  <property name="preset" type="string" default="PassThroughFromBelow"/>
+ </objecttype>
  <objecttype name="Platform/Trampoline" color="#4e9a06">
   <property name="entityType" type="string" default="Platform"/>
   <property name="preset" type="string" default="Trampoline"/>
@@ -73,9 +77,6 @@
   <property name="vis_customBorderThickness" type="float" default="-1"/>
   <property name="vis_customFillColor" type="color"/>
  </objecttype>
- <objecttype name="Water" color="#00007f">
-  <property name="entityType" type="string" default="Water"/>
- </objecttype>
  <objecttype name="VisualShape" color="#000000">
   <property name="entityType" type="string" default="VisualShape"/>
   <property name="vis_customBorderColor" type="color"/>
@@ -85,5 +86,8 @@
  <objecttype name="VisualShape/Platform" color="#000000">
   <property name="entityType" type="string" default="VisualShape"/>
   <property name="preset" type="string" default="Platform"/>
+ </objecttype>
+ <objecttype name="Water" color="#00007f">
+  <property name="entityType" type="string" default="Water"/>
  </objecttype>
 </objecttypes>

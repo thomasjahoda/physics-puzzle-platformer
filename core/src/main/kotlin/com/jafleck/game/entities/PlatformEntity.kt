@@ -8,6 +8,7 @@ import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.entities.PlatformComponent
+import com.jafleck.game.components.physics.OthersCanPassThroughFromBelowComponent
 import com.jafleck.game.entities.config.CommonPhysicsConfigs
 import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.entities.creatorutil.GenericPhysicsBodyCreator
@@ -19,8 +20,8 @@ import com.jafleck.game.entities.maploading.GenericEntityTypeConfig
 import com.jafleck.game.entities.maploading.MapObjectFormExtractor
 import com.jafleck.game.entities.maploading.loadGeneralComponentsFrom
 import com.jafleck.game.entities.physics.CollisionEntityCategory
+import com.jafleck.game.entities.presets.Preset
 import com.jafleck.game.entities.presets.asMap
-import com.jafleck.game.entities.presets.genericPreset
 import com.jafleck.game.entities.presets.getPresetOrDefault
 import com.jafleck.game.maploading.MapEntityLoader
 import com.jafleck.game.util.libgdx.maps.preset
@@ -57,6 +58,7 @@ class PlatformEntityCreator(
     override fun loadEntity(mapObject: MapObject): Entity {
         val preset = platformPresets.getPresetOrDefault(mapObject.preset)
         val genericConfig = preset.genericConfig.combine(genericEntityCustomizationLoader.load(mapObject))
+        val platformConfig = preset.customEntityConfig
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericConfig, mapObjectFormExtractor)
             genericPhysicsBodyCreator.createStaticBody(this) {
@@ -67,6 +69,9 @@ class PlatformEntityCreator(
             }
             add(visualShapeCreator.createVisualShape(genericConfig))
             add(PlatformComponent())
+            if (platformConfig.passThroughFromBelow) {
+                add(OthersCanPassThroughFromBelowComponent())
+            }
             engine.addEntity(this)
         }
     }
@@ -74,17 +79,35 @@ class PlatformEntityCreator(
 }
 
 internal val platformPresets = listOf(
-    genericPreset(genericConfig = GenericEntityConfig(
-        borderColor = Color.PURPLE, borderThickness = 0.1f,
-        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
-    )),
-    genericPreset("Trampoline",
+    Preset(
+        genericConfig = GenericEntityConfig(
+            borderColor = Color.PURPLE, borderThickness = 0.1f,
+            fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
+        ),
+        customEntityConfig = PlatformConfig(
+            passThroughFromBelow = false
+        )),
+    Preset("Trampoline",
         genericConfig = GenericEntityConfig(
             borderColor = Color.GREEN, borderThickness = 0.1f,
             fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
-        ).apply(CommonPhysicsConfigs.BOUNCY)
-    )
+        ).apply(CommonPhysicsConfigs.BOUNCY),
+        customEntityConfig = PlatformConfig(
+            passThroughFromBelow = false
+        )),
+    Preset("PassThroughFromBelow",
+        genericConfig = GenericEntityConfig(
+            borderColor = Color.PURPLE, borderThickness = 0.1f,
+            fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
+        ),
+        customEntityConfig = PlatformConfig(
+            passThroughFromBelow = true
+        ))
 ).asMap()
+
+internal data class PlatformConfig(
+    var passThroughFromBelow: Boolean = false
+)
 
 val platformModule = module {
     single { PlatformEntityCreator(get(), get(), get(), get(), get(), get()) } bind MapEntityLoader::class
