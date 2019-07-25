@@ -7,7 +7,8 @@ import com.jafleck.extensions.libgdxktx.ashley.ComponentMapperAccessor
 data class VisualShapeComponent(
     var borderColor: Color? = null,
     var borderThickness: Float? = null,
-    var fillColor: Color?
+    var fillColor: Color?,
+    var visualLayerIndex: Int = 0
 ) : Component {
 
     init {

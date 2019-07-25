@@ -105,6 +105,5 @@
   <object id="88" type="DynamicEnvironment/Bouncy" x="3824" y="6168" width="64" height="64">
    <ellipse/>
   </object>
-  <object id="89" type="VisualShape" x="4776" y="6000" width="312" height="32"/>
  </objectgroup>
 </map>

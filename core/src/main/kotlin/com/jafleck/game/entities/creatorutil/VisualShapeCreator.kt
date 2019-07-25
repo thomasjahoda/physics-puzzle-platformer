@@ -31,6 +31,9 @@ class VisualShapeCreator {
         withItIfNotNull(config.borderThickness) {
             visualShapeComponent.borderThickness = it
         }
+        withItIfNotNull(config.visualLayerIndex) {
+            visualShapeComponent.visualLayerIndex = it
+        }
     }
 }
 

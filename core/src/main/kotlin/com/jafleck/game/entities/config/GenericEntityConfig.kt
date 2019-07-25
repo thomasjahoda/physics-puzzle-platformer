@@ -15,7 +15,8 @@ data class GenericEntityConfig(
     var fixedRotation: Boolean? = null,
     var fillColor: Color? = null,
     var borderColor: Color? = null,
-    var borderThickness: Float? = null
+    var borderThickness: Float? = null,
+    var visualLayerIndex: Int? = null
 ) {
     fun combine(other: GenericEntityConfig): GenericEntityConfig {
         return copy().apply(other)
@@ -33,6 +34,7 @@ data class GenericEntityConfig(
         withItIfNotNull(other.fillColor) { fillColor = it }
         withItIfNotNull(other.borderColor) { borderColor = it }
         withItIfNotNull(other.borderThickness) { borderThickness = it }
+        withItIfNotNull(other.visualLayerIndex) { visualLayerIndex = it }
         return this
     }
 }

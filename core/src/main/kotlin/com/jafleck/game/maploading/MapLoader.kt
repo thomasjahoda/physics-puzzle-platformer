@@ -20,6 +20,12 @@ class MapLoader(
         val tmxMapLoader = PatchedTmxMapLoader(assetsFileHandleResolver)
         val tiledMap = tmxMapLoader.load("$MAP_ASSETS_DIRECTORY/${map.name}")
 
+        tiledMap.layers.forEachIndexed { index, layer ->
+            layer.objects.forEach {
+                it.properties.put("layerIndex", index)
+            }
+        }
+
         mapEntitiesLoader.loadMapEntities(map, tiledMap)
         logger.debug { "Finished loading the map" }
     }

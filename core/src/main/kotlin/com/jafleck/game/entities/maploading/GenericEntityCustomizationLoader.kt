@@ -18,7 +18,8 @@ class GenericEntityCustomizationLoader {
             fixedRotation = mapObject.customFixedRotation,
             fillColor = mapObject.customFillColor,
             borderColor = mapObject.customBorderColor,
-            borderThickness = mapObject.customBorderThickness
+            borderThickness = mapObject.customBorderThickness,
+            visualLayerIndex = mapObject.layerIndex
         )
     }
 }

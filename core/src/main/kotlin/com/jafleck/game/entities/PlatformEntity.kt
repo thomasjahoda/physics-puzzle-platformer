@@ -75,8 +75,8 @@ class PlatformEntityCreator(
 
 internal val platformPresets = listOf(
     genericPreset(genericConfig = GenericEntityConfig(
-//        borderColor = Color.BLACK, borderThickness = 0.1f,
-        fillColor = Color.BLACK.cpy().mulExceptAlpha(1f)
+        borderColor = Color.PURPLE, borderThickness = 0.1f,
+        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
     )),
     genericPreset("Trampoline",
         genericConfig = GenericEntityConfig(

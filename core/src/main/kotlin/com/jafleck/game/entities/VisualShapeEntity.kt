@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.MapObject
 import com.jafleck.extensions.libgdx.graphics.mulExceptAlpha
 import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
-import com.jafleck.game.components.entities.VisualShapeComponent
+import com.jafleck.game.components.entities.VisualShapeEntityComponent
 import com.jafleck.game.entities.config.GenericEntityConfig
 import com.jafleck.game.entities.creatorutil.VisualShapeCreator
 import com.jafleck.game.entities.maploading.GenericEntityCustomizationLoader
@@ -27,7 +27,7 @@ inline class VisualShapeEntity(val entity: Entity) {
     val position
         get() = entity[OriginPositionComponent]
     val visualShape
-        get() = entity[VisualShapeComponent]
+        get() = entity[VisualShapeEntityComponent]
 }
 
 class VisualShapeEntityCreator(
@@ -52,7 +52,7 @@ class VisualShapeEntityCreator(
         return engine.createEntity().apply {
             loadGeneralComponentsFrom(mapObject, ENTITY_CONFIG, genericConfig, mapObjectFormExtractor)
             add(visualShapeCreator.createVisualShape(genericConfig))
-            add(VisualShapeComponent())
+            add(VisualShapeEntityComponent())
             engine.addEntity(this)
         }
     }
@@ -61,8 +61,12 @@ class VisualShapeEntityCreator(
 
 internal val visualShapePresets = listOf(
     genericPreset(genericConfig = GenericEntityConfig(
-//        borderColor = Color.PURPLE, borderThickness = 0.1f,
-        fillColor = Color.BLACK.cpy().mulExceptAlpha(1f)
+        borderColor = Color.PURPLE, borderThickness = 0.1f,
+        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
+    )),
+    genericPreset("Platform", genericConfig = GenericEntityConfig(
+        borderColor = Color.PURPLE, borderThickness = 0.1f,
+        fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
     ))
 ).asMap()
 

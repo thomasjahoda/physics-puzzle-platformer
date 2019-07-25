@@ -1,9 +1,7 @@
 package com.jafleck.game.gameplay.systems.visual
 
 import com.badlogic.ashley.core.Engine
-import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.EntitySystem
-import com.badlogic.ashley.utils.ImmutableArray
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
@@ -13,6 +11,7 @@ import com.jafleck.extensions.libgdx.rendering.box
 import com.jafleck.extensions.libgdx.rendering.circle
 import com.jafleck.extensions.libgdx.rendering.fillRectanglePolygon
 import com.jafleck.extensions.libgdx.rendering.triangles
+import com.jafleck.extensions.libgdxktx.ashley.get
 import com.jafleck.game.components.basic.OriginPositionComponent
 import com.jafleck.game.components.shape.CircleShapeComponent
 import com.jafleck.game.components.shape.RectangleShapeComponent
@@ -20,6 +19,7 @@ import com.jafleck.game.components.visual.TriangulatedVisualPolygonComponent
 import com.jafleck.game.components.visual.VisualShapeComponent
 import com.jafleck.game.families.VisualShapeEntity
 import com.jafleck.game.gameplay.ui.GameCamera
+import com.jafleck.game.util.ashley.FamilyEntitiesSorter
 import com.jafleck.game.util.logger
 
 
@@ -30,16 +30,20 @@ class ShapeRenderSystem(
     private val sr = ShapeRenderer().apply {
         setAutoShapeType(false)
     }
-    private lateinit var entities: ImmutableArray<Entity>
     private val rectTempPolygon = RectanglePolygon.create()
+    private val entitySorter = FamilyEntitiesSorter(
+        VisualShapeEntity.family,
+        compareBy { it[VisualShapeComponent].visualLayerIndex }
+    )
 
     private val logger = logger(this::class)
 
     override fun addedToEngine(engine: Engine) {
-        entities = engine.getEntitiesFor(VisualShapeEntity.family)
+        entitySorter.addedToEngine(engine)
     }
 
     override fun removedFromEngine(engine: Engine) {
+        entitySorter.removedFromEngine(engine)
     }
 
     override fun update(deltaSeconds: Float) {
@@ -47,7 +51,7 @@ class ShapeRenderSystem(
         sr.projectionMatrix = camera.combined
 
         sr.begin(ShapeRenderer.ShapeType.Filled)
-        for (untypedEntity in entities) {
+        for (untypedEntity in entitySorter.entities) {
             val entity = VisualShapeEntity(untypedEntity)
             val position = entity.position
             val renderedShape = entity.renderedShape

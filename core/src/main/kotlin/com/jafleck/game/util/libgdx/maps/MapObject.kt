@@ -17,22 +17,22 @@ val MapObject.initialVelocity: Vector2?
     get() = properties.getNullableFloatVector2Property("physics_initialVelocity")?.scaleFromMapToWorld().also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customDensity: Float?
-    get() = properties.getNullableFloatProperty("physics_customDensity").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customDensity").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customFriction: Float?
-    get() = properties.getNullableFloatProperty("physics_customFriction").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customFriction").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customRestitution: Float?
-    get() = properties.getNullableFloatProperty("physics_customRestitution").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customRestitution").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customLinearDamping: Float?
-    get() = properties.getNullableFloatProperty("physics_customLinearDamping").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customLinearDamping").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customAngularDamping: Float?
-    get() = properties.getNullableFloatProperty("physics_customAngularDamping").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customAngularDamping").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customGravityScale: Float?
-    get() = properties.getNullableFloatProperty("physics_customGravityScale").also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("physics_customGravityScale").also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customFixedRotation: Boolean?
     get() = properties.getNullableBooleanProperty("physics_customFixedRotation").also { verifyNameSetIfCustomized(it) }
@@ -44,7 +44,10 @@ val MapObject.customBorderColor: Color?
     get() = (properties["vis_customBorderColor"] as Color?).also { verifyNameSetIfCustomized(it) }
 
 val MapObject.customBorderThickness: Float?
-    get() = properties.getNullableFloatProperty("vis_customBorderThickness")?.scaleFromMapToWorld().also { verifyNameSetIfCustomized(it) }
+    get() = properties.getNullablePositiveFloatProperty("vis_customBorderThickness")?.scaleFromMapToWorld().also { verifyNameSetIfCustomized(it) }
+
+val MapObject.layerIndex: Int?
+    get() = properties.getNullablePositiveIntProperty("layerIndex")
 
 fun <T> MapObject.verifyNameSetIfCustomized(value: T?): T? {
     if (value != null) {

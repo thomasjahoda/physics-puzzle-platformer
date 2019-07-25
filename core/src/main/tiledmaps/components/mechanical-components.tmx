@@ -1,21 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="96">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="122">
  <objectgroup id="2" name="Entities" offsetx="-8" offsety="32">
-  <object id="90" type="Platform" x="4024" y="3873" width="8" height="15"/>
-  <object id="91" name="LagerUnten" type="DynamicEnvironment/custom" x="4008" y="3872" width="16" height="16">
+  <object id="90" type="Platform" x="696" y="153" width="8" height="15"/>
+  <object id="91" name="LagerUnten" type="DynamicEnvironment/custom" x="680" y="152" width="16" height="16">
    <properties>
     <property name="physics_customFriction" type="float" value="0"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="92" type="Platform" x="4000" y="3873" width="8" height="15"/>
-  <object id="93" type="Platform" x="4024" y="3808" width="8" height="15"/>
-  <object id="94" name="LagerOben" type="DynamicEnvironment/custom" x="4008" y="3808" width="16" height="16">
+  <object id="92" type="Platform" x="672" y="153" width="8" height="15"/>
+  <object id="93" type="Platform" x="696" y="88" width="8" height="15"/>
+  <object id="94" name="LagerOben" type="DynamicEnvironment/custom" x="680" y="88" width="16" height="16">
    <properties>
     <property name="physics_customFriction" type="float" value="0"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="95" type="Platform" x="4000" y="3808" width="8" height="15"/>
+  <object id="95" type="Platform" x="672" y="88" width="8" height="15"/>
+  <object id="96" name="Pillar" type="DynamicEnvironment/custom" x="80" y="112" width="416" height="24">
+   <properties>
+    <property name="physics_customDensity" type="float" value="0.05"/>
+   </properties>
+  </object>
+  <object id="97" type="Platform" x="264" y="136" width="8" height="15"/>
+  <object id="98" name="LagerUnten" type="DynamicEnvironment/custom" x="248" y="136" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="99" type="Platform" x="240" y="136" width="8" height="15"/>
+  <object id="100" type="Platform" x="264" y="96" width="8" height="15"/>
+  <object id="101" name="LagerOben" type="DynamicEnvironment/custom" x="248" y="96" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="102" type="Platform" x="240" y="96" width="8" height="15"/>
+  <object id="103" type="Platform" x="352" y="136" width="8" height="15"/>
+  <object id="104" name="LagerUnten" type="DynamicEnvironment/custom" x="336" y="136" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="105" type="Platform" x="328" y="136" width="8" height="15"/>
+  <object id="106" type="Platform" x="352" y="96" width="8" height="15"/>
+  <object id="107" name="LagerOben" type="DynamicEnvironment/custom" x="336" y="96" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="108" type="Platform" x="328" y="96" width="8" height="15"/>
+  <object id="109" type="Platform" x="488" y="136" width="8" height="15"/>
+  <object id="110" name="LagerUnten" type="DynamicEnvironment/custom" x="472" y="136" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="111" type="Platform" x="464" y="136" width="8" height="15"/>
+  <object id="112" type="Platform" x="488" y="96" width="8" height="15"/>
+  <object id="113" name="LagerOben" type="DynamicEnvironment/custom" x="472" y="96" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="114" type="Platform" x="464" y="96" width="8" height="15"/>
+  <object id="115" type="Platform" x="416" y="136" width="8" height="15"/>
+  <object id="116" name="LagerUnten" type="DynamicEnvironment/custom" x="400" y="136" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="117" type="Platform" x="392" y="136" width="8" height="15"/>
+  <object id="118" type="Platform" x="416" y="96" width="8" height="15"/>
+  <object id="119" name="LagerOben" type="DynamicEnvironment/custom" x="400" y="96" width="16" height="16">
+   <properties>
+    <property name="physics_customFriction" type="float" value="0"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="120" type="Platform" x="392" y="96" width="8" height="15"/>
+  <object id="121" x="192" y="-8" width="136" height="64">
+   <text fontfamily="MS Shell Dlg 2" pixelsize="37" wrap="1">PILLAR</text>
+  </object>
  </objectgroup>
 </map>

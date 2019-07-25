@@ -1,16 +1,20 @@
 package com.jafleck.game.util.libgdx.maps
 
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.maps.MapObject
 import com.badlogic.gdx.maps.MapProperties
 import com.badlogic.gdx.math.Vector2
-import com.jafleck.extensions.libgdx.maps.id
-import com.jafleck.game.maploading.scaleFromMapToWorld
 
 
-fun MapProperties.getNullableFloatProperty(propertyName: String): Float? {
+fun MapProperties.getNullablePositiveFloatProperty(propertyName: String): Float? {
     val value = this[propertyName] as Float?
     if (value == null || value == -1f) {
+        return null
+    }
+    return value
+}
+
+fun MapProperties.getNullablePositiveIntProperty(propertyName: String): Int? {
+    val value = this[propertyName] as Int?
+    if (value == null || value == -1) {
         return null
     }
     return value
