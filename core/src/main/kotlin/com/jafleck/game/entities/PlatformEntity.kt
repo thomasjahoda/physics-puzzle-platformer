@@ -97,7 +97,7 @@ internal val platformPresets = listOf(
         )),
     Preset("PassThroughFromBelow",
         genericConfig = GenericEntityConfig(
-            borderColor = Color.PURPLE, borderThickness = 0.1f,
+            borderColor = Color.CORAL, borderThickness = 0.1f,
             fillColor = Color.WHITE.cpy().mulExceptAlpha(0.9f)
         ),
         customEntityConfig = PlatformConfig(
