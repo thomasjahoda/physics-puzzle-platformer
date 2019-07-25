@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="300" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="89">
- <objectgroup id="2" name="Entities">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="300" height="300" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="90">
+ <objectgroup id="2" name="Entities" offsetx="-8" offsety="32">
   <object id="26" template="objecttemplates/platform/horizontal.tx" x="4384" y="6320"/>
   <object id="27" template="objecttemplates/platform/horizontal.tx" x="4544" y="6320" rotation="23.4741"/>
   <object id="28" template="objecttemplates/platform/horizontal.tx" type="Platform/Trampoline" x="4768" y="6536" width="320" height="32"/>
@@ -84,7 +84,7 @@
   <object id="81" type="DynamicEnvironment/Bouncy" x="4928" y="6112" width="64" height="64">
    <ellipse/>
   </object>
-  <object id="82" type="DynamicEnvironment/Bouncy" x="4752" y="6032" width="64" height="64">
+  <object id="82" type="DynamicEnvironment/Bouncy" x="4600" y="5920" width="64" height="64">
    <ellipse/>
   </object>
   <object id="83" type="DynamicEnvironment/Bouncy" x="4600" y="6040" width="64" height="64">
@@ -105,5 +105,6 @@
   <object id="88" type="DynamicEnvironment/Bouncy" x="3824" y="6168" width="64" height="64">
    <ellipse/>
   </object>
+  <object id="89" type="VisualShape" x="4776" y="6000" width="312" height="32"/>
  </objectgroup>
 </map>

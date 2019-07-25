@@ -15,5 +15,6 @@ val entityModules = listOf(
     visualDebugMarkerModule,
     entityMaploadingModule,
     entityCreatorUtilModule,
-    dynamicEnvironmentModule
+    dynamicEnvironmentModule,
+    visualShapeModule
 )
